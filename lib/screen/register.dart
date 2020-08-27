@@ -146,6 +146,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             Navigator.pushReplacementNamed(
                                 context, '/dashboard');
                           }
+                          //-------
                         });
                       },
                       color: Color.fromRGBO(0, 157, 68, 1),
