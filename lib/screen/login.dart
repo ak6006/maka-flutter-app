@@ -1,5 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:maka/utils/databasehelper.dart';
 import 'package:maka/utils/password_text_field.dart';
 import 'package:maka/utils/primary_text_field.dart';
 
@@ -26,7 +27,8 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
-  static String _email;
+  DatabaseHelper databaseHelper = new DatabaseHelper();
+  static String _name;
   static String _password;
   bool isValid;
   @override
@@ -69,18 +71,18 @@ class _LogInState extends State<LogIn> {
               PrimaryTextField(
                 label: 'اسم المستخدم',
                 onChanged: (value) {
-                  _email = value.trim();
-                  isValid = EmailValidator.validate(_email);
+                  _name = value.trim();
+                  //isValid = EmailValidator.validate(_email);
                 },
-                validate: (String value) {
-                  if (value.isEmpty) {
-                    return 'Please enter your email';
-                  } else if (isValid == false) {
-                    return 'Please enter a valid email';
-                  } else {
-                    return null;
-                  }
-                },
+                // validate: (String value) {
+                //   if (value.isEmpty) {
+                //     return 'Please enter your email';
+                //   } else if (isValid == false) {
+                //     return 'Please enter a valid email';
+                //   } else {
+                //     return null;
+                //   }
+                // },
               ),
               SizedBox(
                 height: 12.0,
@@ -89,15 +91,15 @@ class _LogInState extends State<LogIn> {
                 onChanged: (value) {
                   _password = value.trim();
                 },
-                validatorFun: (String value) {
-                  if (value.isEmpty) {
-                    return 'Please enter your Password';
-                  } else if (value.length < 8) {
-                    return 'Must be more than 8 charater';
-                  } else {
-                    return null;
-                  }
-                },
+                // validatorFun: (String value) {
+                //   if (value.isEmpty) {
+                //     return 'Please enter your Password';
+                //   } else if (value.length < 8) {
+                //     return 'Must be more than 8 charater';
+                //   } else {
+                //     return null;
+                //   }
+                // },
               ),
 
               // new Padding(
@@ -209,7 +211,19 @@ class _LogInState extends State<LogIn> {
                 height: 40,
                 width: 160,
                 child: new FlatButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    databaseHelper.loginData(_name, _password).whenComplete(() {
+                      if (databaseHelper.status) {
+                        // _showDialog();
+                        //  msgStatus = 'Check email or password';
+                        _showDialog(databaseHelper.stateMsg);
+                      } else {
+                        // _showDialog();
+                        Navigator.pushReplacementNamed(context, '/dashboard');
+                      }
+                      //-------
+                    });
+                  },
                   color: Color.fromRGBO(0, 157, 68, 1),
                   child: new Text(
                     'دخول',
@@ -246,5 +260,26 @@ class _LogInState extends State<LogIn> {
         ),
       ),
     );
+  }
+
+  void _showDialog(String msg) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text('خطاء'),
+            content: new Text('$msg'),
+            actions: <Widget>[
+              new RaisedButton(
+                child: new Text(
+                  'Close',
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 }

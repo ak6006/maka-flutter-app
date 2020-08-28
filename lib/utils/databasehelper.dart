@@ -4,32 +4,55 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DatabaseHelper {
   String serverUrl =
-      "http://192.168.100.21:92/api/"; //"http://flutterapitutorial.codeforiraq.org/api";
+      "http://192.168.100.21:92"; //"http://flutterapitutorial.codeforiraq.org/api";
   String serverip = "192.168.100.21:92";
-  var status = false;
+  var status;
+  var stateMsg;
   var codest;
 
   var token;
 
+  // loginData(String name, String password) async {
+  //   String myUrl = "$serverUrl/login";
+  //   final response = await http.post(myUrl,
+  //       headers: {'Accept': 'application/json'},
+  //       body: {"UserName": "$name", "password": "$password"});
+  //   status = response.body.contains('error');
+
+  //   var data = json.decode(response.body);
+
+  //   if (status) {
+  //     print('data : ${data["error"]}');
+  //   } else {
+  //     print('data : ${data["token"]}');
+  //     _save(data["token"]);
+  //   }
+  // }
+
   loginData(String name, String password) async {
     String myUrl = "$serverUrl/login";
-    final response = await http.post(myUrl,
-        headers: {'Accept': 'application/json'},
-        body: {"UserName": "$name", "password": "$password"});
+    final response = await http.post(myUrl, headers: {
+      'Accept': 'application/json'
+    }, body: {
+      "UserName": "$name",
+      "password": "$password",
+      "grant_type": "password"
+    });
     status = response.body.contains('error');
 
-    // var data = json.decode(response.body);
+    var data = json.decode(response.body);
 
-    // if (status) {
-    //   print('data : ${data["error"]}');
-    // } else {
-    //   print('data : ${data["token"]}');
-    //   _save(data["token"]);
-    // }
+    if (status) {
+      print('data : ${data["error_description"]}');
+      stateMsg = data["error_description"];
+    } else {
+      print('data : ${data["access_token"]}');
+      _save(data["access_token"]);
+    }
   }
 
   registerData(String name, String mobile, String password) async {
-    String myUrl = "$serverUrl/account/Register/";
+    String myUrl = "$serverUrl/api/account/Register/";
     codest = 0;
     final response1 = await http.post(myUrl, headers: {
       'Accept': 'application/json'
@@ -172,4 +195,21 @@ class DatabaseHelper {
     final value = prefs.get(key) ?? 0;
     print('read : $value');
   }
+
+  _saveUserData(String user, String pass) async {
+    final prefs = await SharedPreferences.getInstance();
+    final name = 'user';
+    final nameval = user;
+    prefs.setString(name, nameval);
+    final pass = 'pass';
+    final passval = pass;
+    prefs.setString(pass, passval);
+  }
+
+  // _readUserData() async {
+  //   final prefs = await SharedPreferences.getInstance();
+  //   final key = 'token';
+  //   final value = token;
+  //   prefs.setString(key, value);
+  // }
 }
