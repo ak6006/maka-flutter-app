@@ -77,19 +77,6 @@ class DatabaseHelper {
     // }
   }
 
-  // Future<List> getData() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final key = 'token';
-  //   final value = prefs.get(key) ?? 0;
-
-  //   String myUrl = serverUrl; // "$serverUrl/products/";
-  //   http.Response response = await http.get(myUrl, headers: {
-  //     'Accept': 'application/json' //,
-  //      'Authorization': 'Bearer $value'
-  //   });
-  //   return json.decode(response.body);
-  // }
-
   getData(String qrid) async {
     // final prefs = await SharedPreferences.getInstance();
     // final key = 'token';
@@ -103,17 +90,17 @@ class DatabaseHelper {
     //   'Accept': 'application/json' //,
     //   // 'Authorization': 'Bearer $value'
     // });
-    print(uri);
+    //  print(uri);
     //return 'ewafdsfdsdsfsggg';
     //
-    var hr;
+    var tdata;
     final response1 = await http.get(
       uri,
       headers: {'Accept': 'application/json'},
     ).then((response) {
       // print('Response status : ${response.statusCode}');
       //print('Response body : ${response.body}');
-      hr = response.body;
+      tdata = response.body;
 
       // Map mapValue = json.decode(response.body);
       // print('Token value : ${mapValue.values.toString()}');
@@ -121,14 +108,7 @@ class DatabaseHelper {
 
     // print(response.body);
     // return response.body;
-    return hr;
-    // .then((response1) {
-    //   print('Response status : ${response1.statusCode}');
-    //   print('Response body : ${response1.body}');
-
-    // });
-    //print(response.body);
-    //return json.decode(response.body);
+    return tdata;
   }
 
   void deleteData(int id) async {

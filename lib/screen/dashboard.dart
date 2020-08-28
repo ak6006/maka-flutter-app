@@ -91,26 +91,67 @@ class _DashBoardPageState extends State<DashBoardPage> {
               new Padding(
                 padding: new EdgeInsets.only(top: 20.0),
               ),
-              Container(
-                // color: Color.fromRGBO(0, 51, 94, 1),
-                // decoration: new BoxDecoration(
-                //   borderRadius: new BorderRadius.circular(16.0),
-                //   color: Colors.green,
-                // ),
-                child: Flexible(
-                  child: Hero(
-                    tag: 'logo',
-                    child: Container(
-                      height: 180.0,
-                      child: Center(
-                        child: Image(
-                          height: 250,
-                          image: AssetImage('assets/images/lg2.jpg'),
+              Row(
+                children: <Widget>[
+                  Container(
+                    // color: Color.fromRGBO(0, 51, 94, 1),
+                    // decoration: new BoxDecoration(
+                    //   borderRadius: new BorderRadius.circular(16.0),
+                    //   color: Colors.green,
+                    // ),
+                    child: Flexible(
+                      child: Hero(
+                        tag: 'logo',
+                        child: Container(
+                          height: 180.0,
+                          child: Center(
+                            child: Image(
+                              height: 250,
+                              image: AssetImage('assets/images/lg2.jpg'),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
+                  Container(
+                    height: 60,
+                    width: 60,
+                    child: new IconButton(
+                      onPressed: () {
+                        Navigator.pushReplacementNamed(context, '/MyHomePage');
+                      },
+                      color: Color.fromRGBO(0, 157, 68, 1),
+                      icon: Icon(Icons.logout),
+                    ),
+                  ),
+                  // Container(
+                  //   width: 50,
+                  //   height: 50,
+                  //   // color: Color.fromRGBO(0, 51, 94, 1),
+                  //   decoration: new BoxDecoration(
+                  //     borderRadius: new BorderRadius.circular(16.0),
+                  //     color: Colors.blue[600],
+                  //   ),
+                  //   child: Flexible(
+                  //     child: Hero(
+                  //       tag: 'logo',
+                  //       child: Container(
+                  //         height: 180.0,
+                  //         child: Center(
+                  //           child: Image(
+                  //             height: 250,
+                  //             image: AssetImage('assets/images/logout2.png'),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                ],
               ),
               Container(
                 height: 85,
@@ -155,26 +196,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 width: 200,
                 child: new FlatButton(
                   onPressed: () async {
-                    // Map gg = {
-                    //   "store_store_id": 1,
-                    //   "store_has_productDate": null,
-                    //   "shiftName": "الصباح من 9 الى 4",
-                    //   "Shift_Name": "علي محمد",
-                    //   "Customer_Name": "مصر الفيوم",
-                    //   "transVehcile_num": "258",
-                    //   "transVehcile_driver_name": "عيسوي",
-                    //   "date": "2020-08-27T00:00:00",
-                    //   "productName": "علف بادي",
-                    //   "weight_net": 25,
-                    //   "barcode_serialNumber": "139875543424455"
-                    // };
-                    // dynamic databaseEncode;
-                    // dynamic databaseDecode;
-                    // String convertStr, convertStr1;
                     var brcode = await scanBarcodeNormal();
-                    print("gggggggggggggggg");
+
                     //----------------------------
                     dynamic result = await databaseHelper.getData(brcode);
+                    //----------------------------------------
                     //     .whenComplete(() {
                     //   if (databaseHelper.codest != 200) {
                     //     _showDialog();
@@ -188,19 +214,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
                     // });
 
                     //----------------------------
-                    //  print("ccccccccccccccccc");
 
                     print('$brcode');
                     print('${result}');
                     if (result == '[]') return;
-                    //convertStr = result.replaceAll('[', '');
-                    //convertStr1 = convertStr.replacAll(']', '');
+
                     String output = _textSelect(result);
 
-                    // databaseEncode = json.encode(output);
-                    // databaseDecode = json.decode(output);
-                    print('fffffff$output');
-                    // return;
                     queryBarCode = queryBarCodeFromJson(output);
                     //  print(databaseEncode);
                     print(queryBarCode.customerName);

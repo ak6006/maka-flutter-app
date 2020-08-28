@@ -101,112 +101,9 @@ class _LogInState extends State<LogIn> {
                 //   }
                 // },
               ),
-
-              // new Padding(
-              //   padding: new EdgeInsets.only(top: 20.0),
-              // ),
-              // Container(
-              //   height: 40,
-              //   width: 160,
-              //   child: new FlatButton(
-              //     onPressed: () {},
-              //     color: Color.fromRGBO(0, 157, 68, 1),
-              //     child: new Text(
-              //       'تسجيل الدخول',
-              //       style: new TextStyle(
-              //         color: Colors.white,
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // new Padding(
-              //   padding: new EdgeInsets.only(top: 40.0),
-              // ),
-              // Container(
-              //   height: 40,
-              //   width: 160,
-              //   child: new FlatButton(
-              //     onPressed: () {},
-              //     color: Color.fromRGBO(174, 0, 145, 1),
-              //     child: new Text(
-              //       'تسجيل حساب جديد',
-              //       style: new TextStyle(
-              //         color: Colors.white,
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              // new Padding(
-              //   padding: new EdgeInsets.only(top: 40.0),
-              // ),
-              // TextFormField(
-              //   // keyboardType: TextInputType,
-              //   // expands: expandable,
-              //   // maxLines: expandable ? null : 1,
-              //   textAlignVertical: TextAlignVertical.top,
-              //   decoration: InputDecoration(
-              //       border: OutlineInputBorder(
-              //         borderRadius: BorderRadius.circular(15.0),
-              //       ),
-              //       // labelText: label,
-              //       alignLabelWithHint: true),
-              //   // onChanged: onChanged,
-              //   // validator: validate,
-              // ),
-              // Container(
-              //   height: 40,
-              //   width: 160,
-              //   child: new Text(
-              //     'trsult',
-              //     style: new TextStyle(
-              //       color: Colors.white,
-              //     ),
-              //   ),
-              // ),
-              // Container(
-              //   padding: EdgeInsets.only(left: 180),
-              //   color: const Color.fromRGBO(0, 51, 94, 1),
-              //   child: Padding(
-              //     padding: const EdgeInsets.fromLTRB(0, 20, 0, 1),
-              //     child: Text('السريال',
-              //         style: TextStyle(color: Colors.white, fontSize: 18)),
-              //   ),
-              // ),
-
-              // Container(
-              //   padding: EdgeInsets.only(left: 0),
-              //   color: const Color.fromRGBO(0, 51, 94, 1),
-              //   child: Padding(
-              //     padding: const EdgeInsets.fromLTRB(0, 20, 0, 1),
-              //     child: Text('_______________________________',
-              //         style: TextStyle(color: Colors.white, fontSize: 12)),
-              //   ),
-              // ),
-
-              // Container(
-              //   padding: EdgeInsets.only(left: 180),
-              //   color: const Color.fromRGBO(0, 51, 94, 1),
-              //   child: Padding(
-              //     padding: const EdgeInsets.fromLTRB(0, 20, 0, 1),
-              //     child: Text('تاريخ الانتاج',
-              //         style: TextStyle(color: Colors.white, fontSize: 18)),
-              //   ),
-              // ),
-
-              // Container(
-              //   padding: EdgeInsets.only(left: 0),
-              //   color: const Color.fromRGBO(0, 51, 94, 1),
-              //   child: Padding(
-              //     padding: const EdgeInsets.fromLTRB(0, 20, 0, 1),
-              //     child: Text('_______________________________',
-              //         style: TextStyle(color: Colors.white, fontSize: 12)),
-              //   ),
-              // ),
-
               new Padding(
                 padding: new EdgeInsets.only(top: 40.0),
               ),
-
               Container(
                 height: 40,
                 width: 160,
@@ -237,7 +134,6 @@ class _LogInState extends State<LogIn> {
               new Padding(
                 padding: new EdgeInsets.only(top: 40.0),
               ),
-
               Container(
                 height: 40,
                 width: 160,
