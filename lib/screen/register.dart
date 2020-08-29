@@ -16,6 +16,13 @@ class _RegisterPageState extends State<RegisterPage> {
   bool isValid;
   DatabaseHelper databaseHelper = new DatabaseHelper();
   String msgStatus = '';
+
+  void initState() {
+    _name = '';
+    _mobile = '';
+    _password = '';
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromRGBO(0, 51, 94, 1),

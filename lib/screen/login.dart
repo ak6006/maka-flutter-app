@@ -28,12 +28,16 @@ class LogIn extends StatefulWidget {
 
 class _LogInState extends State<LogIn> {
   DatabaseHelper databaseHelper = new DatabaseHelper();
-  static String _name;
-  static String _password;
+  static String _name = '';
+  static String _password = '';
   bool isValid;
   @override
+  void initState() {
+    _name = '';
+    _password = '';
+  }
+
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color.fromRGBO(0, 51, 94, 1),
       // appBar: AppBar(
@@ -46,7 +50,7 @@ class _LogInState extends State<LogIn> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               new Padding(
-                padding: new EdgeInsets.only(top: size.height*0.05),
+                padding: new EdgeInsets.only(top: 20.0),
               ),
               Container(
                 // color: Color.fromRGBO(0, 51, 94, 1),
@@ -58,10 +62,10 @@ class _LogInState extends State<LogIn> {
                   child: Hero(
                     tag: 'logo',
                     child: Container(
-                      height: size.height*0.3,
+                      height: 250.0,
                       child: Center(
                         child: Image(
-                          height: size.height*0.3,
+                          height: 250,
                           image: AssetImage('assets/images/lg2.jpg'),
                         ),
                       ),
@@ -86,7 +90,7 @@ class _LogInState extends State<LogIn> {
                 // },
               ),
               SizedBox(
-                height:size.height*0.02,
+                height: 12.0,
               ),
               PasswordTextField(
                 onChanged: (value) {
@@ -103,14 +107,16 @@ class _LogInState extends State<LogIn> {
                 // },
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: size.height*0.03),
+                padding: new EdgeInsets.only(top: 40.0),
               ),
               Container(
-                height: size.height*0.05,
-                width: size.width*0.4,
+                height: 40,
+                width: 160,
                 child: new FlatButton(
                   onPressed: () {
                     databaseHelper.loginData(_name, _password).whenComplete(() {
+                      print('kkkkkkkk${databaseHelper.status}');
+                      // return;
                       if (databaseHelper.status) {
                         // _showDialog();
                         //  msgStatus = 'Check email or password';
@@ -133,11 +139,11 @@ class _LogInState extends State<LogIn> {
                 ),
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: size.height*0.04),
+                padding: new EdgeInsets.only(top: 40.0),
               ),
               Container(
-                height: size.height*0.05,
-                width: size.width*0.4,
+                height: 40,
+                width: 160,
                 child: new FlatButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/register');

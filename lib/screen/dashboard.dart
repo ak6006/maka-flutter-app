@@ -13,13 +13,11 @@ import 'package:maka/utils/primary_text_field.dart';
 import 'barcodescannr.dart';
 
 class DashBoardPage extends StatefulWidget {
-
   @override
   _DashBoardPageState createState() => _DashBoardPageState();
 }
 
 class _DashBoardPageState extends State<DashBoardPage> {
-
   static String _email;
   static String _password;
   bool isValid;
@@ -86,13 +84,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
       //SingleChildScrollView
       body: Padding(
-        padding: EdgeInsets.all(12.0),
+        padding: EdgeInsets.all(0.0),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               new Padding(
-                padding: new EdgeInsets.only(top: size.height*0.05),
+                padding: new EdgeInsets.only(top: size.height * 0.05),
               ),
               Row(
                 children: <Widget>[
@@ -106,10 +104,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
                       child: Hero(
                         tag: 'logo',
                         child: Container(
-                          height: size.height*0.2,
+                          height: size.height * 0.2,
                           child: Center(
                             child: Image(
-                              height: size.height*0.2,
+                              height: size.height * 0.2,
                               image: AssetImage('assets/images/lg2.jpg'),
                             ),
                           ),
@@ -118,24 +116,24 @@ class _DashBoardPageState extends State<DashBoardPage> {
                     ),
                   ),
                   Container(
-                    height: size.height*0.05,
-                    width: size.width*0.08,
+                    height: size.height * 0.05,
+                    width: size.width * 0.08,
                     child: new IconButton(
                       onPressed: () {
                         Navigator.pushReplacementNamed(context, '/MyHomePage');
                       },
                       color: Color.fromRGBO(0, 157, 68, 1),
-                      icon: Icon(Icons.save),
+                      icon: Icon(Icons.logout),
                     ),
                   ),
                   SizedBox(
-                    width:size.width*0.04,
+                    width: size.width * 0.04,
                   ),
                 ],
               ),
               Container(
-                height:size.height*0.13,
-                width: size.width*0.6,
+                height: size.height * 0.16,
+                width: size.width * 0.6,
                 child: Container(
                   color: Color.fromRGBO(2, 36, 67, 1),
                   child: Row(
@@ -161,7 +159,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                         ],
                       ),
                       Image(
-                        height: size.height*0.06,
+                        height: size.height * 0.06,
                         image: AssetImage('assets/images/Home-Icon.png'),
                       ),
                     ],
@@ -169,23 +167,22 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 ),
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: size.height*0.08),
+                padding: new EdgeInsets.only(top: size.height * 0.08),
               ),
               Container(
-                height: size.height*0.06,
-                width: size.width*0.5,
+                height: size.height * 0.06,
+                width: size.width * 0.5,
                 child: new FlatButton(
                   onPressed: () async {
                     var brcode = await scanBarcodeNormal();
 
                     //----------------------------
                     dynamic result = await databaseHelper.getData(brcode);
-                    //----------------------------------------
-                    //     .whenComplete(() {
+                    // .whenComplete(() {
                     //   if (databaseHelper.codest != 200) {
-                    //     _showDialog();
-                    //     msgStatus = 'Check email or password';
-                    //     print(msgStatus);
+                    //     // _showDialog();
+                    //     // msgStatus = 'Check email or password';
+                    //     // print(msgStatus);
                     //   } else {
                     //     // _showDialog();
                     //     Navigator.pushReplacementNamed(
@@ -237,11 +234,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 ),
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: size.height*0.05),
+                padding: new EdgeInsets.only(top: size.height * 0.05),
               ),
               Container(
-                height: size.height*0.06,
-                width: size.width*0.5,
+                height: size.height * 0.06,
+                width: size.width * 0.5,
                 child: new FlatButton(
                   onPressed: () {},
                   color: Color.fromRGBO(0, 157, 68, 1),
@@ -255,11 +252,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 ),
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: size.height*0.05),
+                padding: new EdgeInsets.only(top: size.height * 0.05),
               ),
               Container(
-                height: size.height*0.06,
-                width: size.width*0.5,
+                height: size.height * 0.06,
+                width: size.width * 0.5,
                 child: new FlatButton(
                   onPressed: () async {
                     var ss = await scanQR();
