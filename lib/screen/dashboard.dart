@@ -125,29 +125,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
                       icon: Icon(Icons.logout),
                     ),
                   ),
-                  // Container(
-                  //   width: 50,
-                  //   height: 50,
-                  //   // color: Color.fromRGBO(0, 51, 94, 1),
-                  //   decoration: new BoxDecoration(
-                  //     borderRadius: new BorderRadius.circular(16.0),
-                  //     color: Colors.blue[600],
-                  //   ),
-                  //   child: Flexible(
-                  //     child: Hero(
-                  //       tag: 'logo',
-                  //       child: Container(
-                  //         height: 180.0,
-                  //         child: Center(
-                  //           child: Image(
-                  //             height: 250,
-                  //             image: AssetImage('assets/images/logout2.png'),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  // ),
                   SizedBox(
                     width: 10,
                   ),
@@ -217,7 +194,17 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
                     print('$brcode');
                     print('${result}');
-                    if (result == '[]') return;
+                    if (result == '') {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => BarCodePage(
+                                  queryBarCode: new QueryBarCode(),
+                                )),
+                      );
+
+                      return;
+                    }
 
                     String output = _textSelect(result);
 

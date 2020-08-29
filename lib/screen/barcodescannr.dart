@@ -56,53 +56,52 @@ class _BarCodePageState extends State<BarCodePage> {
               ),
             ],
           ),
-          // Container(
-          //   height: 44.0,
-          //   child: ListView(
-          //     scrollDirection: Axis.vertical,
-          //     children: <Widget>[
-
-          //     ],
-          //   ),
-          // ),
-          Wrow(
-            lable: "السريال",
-            val: '${widget.queryBarCode.barcodeSerialNumber}',
+          Expanded(
+            child: Container(
+              //height: 90.0,
+              child: ListView(
+                scrollDirection: Axis.vertical,
+                children: <Widget>[
+                  Wrow(
+                    lable: "السريال",
+                    val: '${widget.queryBarCode.barcodeSerialNumber}',
+                  ),
+                  Wrow(
+                    lable: "تاريخ الانتاج",
+                    val: widget.queryBarCode.storeHasProductDate,
+                  ),
+                  Wrow(
+                    lable: "نوع المنتج",
+                    val: widget.queryBarCode.productName,
+                  ),
+                  Wrow(
+                    lable: "الوزن",
+                    val: '${widget.queryBarCode.weightNet}',
+                  ),
+                  Wrow(
+                    lable: "تاريخ البيع",
+                    val: '${widget.queryBarCode.date}',
+                  ),
+                  Wrow(
+                    lable: "اسم الوكيل",
+                    val: '${widget.queryBarCode.customerName}',
+                  ),
+                  Wrow(
+                    lable: "رقم عربية النقل",
+                    val: '${widget.queryBarCode.transVehcileNum}',
+                  ),
+                  Wrow(
+                    lable: "اسم السائق",
+                    val: '${widget.queryBarCode.transVehcileDriverName}',
+                  ),
+                  Wrow(
+                    lable: "مدير الوردية",
+                    val: '${widget.queryBarCode.shiftName}',
+                  ),
+                ],
+              ),
+            ),
           ),
-          Wrow(
-            lable: "تاريخ الانتاج",
-            val: widget.queryBarCode.storeHasProductDate,
-          ),
-          Wrow(
-            lable: "نوع المنتج",
-            val: widget.queryBarCode.productName,
-          ),
-
-          Wrow(
-            lable: "الوزن",
-            val: '${widget.queryBarCode.weightNet}',
-          ),
-          Wrow(
-            lable: "تاريخ البيع",
-            val: '${widget.queryBarCode.date}',
-          ),
-          Wrow(
-            lable: "اسم الوكيل",
-            val: '${widget.queryBarCode.customerName}',
-          ),
-          Wrow(
-            lable: "رقم عربية النقل",
-            val: '${widget.queryBarCode.transVehcileNum}',
-          ),
-          Wrow(
-            lable: "اسم السائق",
-            val: '${widget.queryBarCode.transVehcileDriverName}',
-          ),
-          Wrow(
-            lable: "مدير الوردية",
-            val: '${widget.queryBarCode.shiftName}',
-          ),
-
           new Padding(
             padding: new EdgeInsets.only(top: 40.0),
           ),
@@ -147,23 +146,23 @@ class _WrowState extends State<Wrow> {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Container(
-          width: 130,
+          width: 190,
           // padding: EdgeInsets.only(left: 0),
           color: const Color.fromRGBO(0, 51, 94, 1),
           child: Text('${widget.val}',
-              style: TextStyle(color: Colors.white, fontSize: 12)),
+              style: TextStyle(color: Colors.white, fontSize: 18)),
         ),
         SizedBox(
-          width: 70,
+          width: 40,
         ),
         Container(
-          width: 90,
+          width: 80,
           // padding: EdgeInsets.only(left: 30),
           color: const Color.fromRGBO(0, 51, 94, 1),
           child: Text('${widget.lable}',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 12,
+                fontSize: 18,
                 fontFamily: 'beIN',
               )),
         ),

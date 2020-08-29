@@ -4,8 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DatabaseHelper {
   String serverUrl =
-      "http://192.168.100.21:92"; //"http://flutterapitutorial.codeforiraq.org/api";
-  String serverip = "192.168.100.21:92";
+      "http://192.168.100.65:92"; //"http://flutterapitutorial.codeforiraq.org/api";
+  String serverip = "192.168.100.65:92";
   var status;
   var stateMsg;
   var codest;
@@ -78,9 +78,9 @@ class DatabaseHelper {
   }
 
   getData(String qrid) async {
-    // final prefs = await SharedPreferences.getInstance();
-    // final key = 'token';
-    // final value = prefs.get(key) ?? 0;
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'access_token';
+    final value = prefs.get(key) ?? 0;
     //String myUrl = "$serverUrl/account/Register";
     var queryParameters = {'Key': '$qrid'};
     var uri = Uri.http('$serverip', '/api/Values/Data/', queryParameters);
@@ -96,11 +96,13 @@ class DatabaseHelper {
     var tdata;
     final response1 = await http.get(
       uri,
-      headers: {'Accept': 'application/json'},
+      headers: {'Accept': 'application/json', 'Authorization': 'bearer $value'},
     ).then((response) {
       // print('Response status : ${response.statusCode}');
       //print('Response body : ${response.body}');
       tdata = response.body;
+      print('sssss$value');
+      print(response.body);
 
       // Map mapValue = json.decode(response.body);
       // print('Token value : ${mapValue.values.toString()}');
@@ -164,7 +166,7 @@ class DatabaseHelper {
 
   _save(String token) async {
     final prefs = await SharedPreferences.getInstance();
-    final key = 'token';
+    final key = 'access_token';
     final value = token;
     prefs.setString(key, value);
   }
