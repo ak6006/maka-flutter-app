@@ -33,6 +33,7 @@ class _LogInState extends State<LogIn> {
   bool isValid;
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color.fromRGBO(0, 51, 94, 1),
       // appBar: AppBar(
@@ -45,7 +46,7 @@ class _LogInState extends State<LogIn> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               new Padding(
-                padding: new EdgeInsets.only(top: 20.0),
+                padding: new EdgeInsets.only(top: size.height*0.05),
               ),
               Container(
                 // color: Color.fromRGBO(0, 51, 94, 1),
@@ -57,10 +58,10 @@ class _LogInState extends State<LogIn> {
                   child: Hero(
                     tag: 'logo',
                     child: Container(
-                      height: 250.0,
+                      height: size.height*0.3,
                       child: Center(
                         child: Image(
-                          height: 250,
+                          height: size.height*0.3,
                           image: AssetImage('assets/images/lg2.jpg'),
                         ),
                       ),
@@ -85,7 +86,7 @@ class _LogInState extends State<LogIn> {
                 // },
               ),
               SizedBox(
-                height: 12.0,
+                height:size.height*0.02,
               ),
               PasswordTextField(
                 onChanged: (value) {
@@ -102,11 +103,11 @@ class _LogInState extends State<LogIn> {
                 // },
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: 40.0),
+                padding: new EdgeInsets.only(top: size.height*0.03),
               ),
               Container(
-                height: 40,
-                width: 160,
+                height: size.height*0.05,
+                width: size.width*0.4,
                 child: new FlatButton(
                   onPressed: () {
                     databaseHelper.loginData(_name, _password).whenComplete(() {
@@ -132,11 +133,11 @@ class _LogInState extends State<LogIn> {
                 ),
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: 40.0),
+                padding: new EdgeInsets.only(top: size.height*0.04),
               ),
               Container(
-                height: 40,
-                width: 160,
+                height: size.height*0.05,
+                width: size.width*0.4,
                 child: new FlatButton(
                   onPressed: () {
                     Navigator.pushReplacementNamed(context, '/register');
