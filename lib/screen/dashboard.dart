@@ -13,11 +13,13 @@ import 'package:maka/utils/primary_text_field.dart';
 import 'barcodescannr.dart';
 
 class DashBoardPage extends StatefulWidget {
+
   @override
   _DashBoardPageState createState() => _DashBoardPageState();
 }
 
 class _DashBoardPageState extends State<DashBoardPage> {
+
   static String _email;
   static String _password;
   bool isValid;
@@ -78,6 +80,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color.fromRGBO(0, 51, 94, 1),
 
@@ -89,7 +92,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               new Padding(
-                padding: new EdgeInsets.only(top: 20.0),
+                padding: new EdgeInsets.only(top: size.height*0.05),
               ),
               Row(
                 children: <Widget>[
@@ -103,10 +106,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
                       child: Hero(
                         tag: 'logo',
                         child: Container(
-                          height: 180.0,
+                          height: size.height*0.2,
                           child: Center(
                             child: Image(
-                              height: 250,
+                              height: size.height*0.2,
                               image: AssetImage('assets/images/lg2.jpg'),
                             ),
                           ),
@@ -115,14 +118,14 @@ class _DashBoardPageState extends State<DashBoardPage> {
                     ),
                   ),
                   Container(
-                    height: 60,
-                    width: 60,
+                    height: size.height*0.05,
+                    width: size.width*0.08,
                     child: new IconButton(
                       onPressed: () {
                         Navigator.pushReplacementNamed(context, '/MyHomePage');
                       },
                       color: Color.fromRGBO(0, 157, 68, 1),
-                      icon: Icon(Icons.logout),
+                      icon: Icon(Icons.save),
                     ),
                   ),
                   // Container(
@@ -149,13 +152,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   //   ),
                   // ),
                   SizedBox(
-                    width: 10,
+                    width:size.width*0.04,
                   ),
                 ],
               ),
               Container(
-                height: 85,
-                width: 250,
+                height:size.height*0.13,
+                width: size.width*0.6,
                 child: Container(
                   color: Color.fromRGBO(2, 36, 67, 1),
                   child: Row(
@@ -181,7 +184,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                         ],
                       ),
                       Image(
-                        height: 65,
+                        height: size.height*0.06,
                         image: AssetImage('assets/images/Home-Icon.png'),
                       ),
                     ],
@@ -189,11 +192,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 ),
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: 70.0),
+                padding: new EdgeInsets.only(top: size.height*0.08),
               ),
               Container(
-                height: 45,
-                width: 200,
+                height: size.height*0.06,
+                width: size.width*0.5,
                 child: new FlatButton(
                   onPressed: () async {
                     var brcode = await scanBarcodeNormal();
@@ -247,11 +250,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 ),
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: 35.0),
+                padding: new EdgeInsets.only(top: size.height*0.05),
               ),
               Container(
-                height: 45,
-                width: 200,
+                height: size.height*0.06,
+                width: size.width*0.5,
                 child: new FlatButton(
                   onPressed: () {},
                   color: Color.fromRGBO(0, 157, 68, 1),
@@ -265,11 +268,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 ),
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: 35.0),
+                padding: new EdgeInsets.only(top: size.height*0.05),
               ),
               Container(
-                height: 45,
-                width: 200,
+                height: size.height*0.06,
+                width: size.width*0.5,
                 child: new FlatButton(
                   onPressed: () async {
                     var ss = await scanQR();

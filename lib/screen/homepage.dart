@@ -53,6 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Color.fromRGBO(0, 51, 94, 1),
       // appBar: AppBar(
@@ -63,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             new Padding(
-              padding: new EdgeInsets.only(top: 40.0),
+              padding:EdgeInsets.only(top:size.height*0.2),
             ),
             Container(
               // color: Color.fromRGBO(0, 51, 94, 1),
@@ -74,10 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Hero(
                 tag: 'logo',
                 child: Container(
-                  height: 250.0,
+                  height: size.height*0.15,
                   child: Center(
                     child: Image(
-                      height: 250,
+                      height: size.height*0.2,
                       image: AssetImage('assets/images/lg2.jpg'),
                     ),
                   ),
@@ -86,11 +87,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             new Padding(
-              padding: new EdgeInsets.only(top: 20.0),
+              padding:EdgeInsets.only(top: size.height*0.08),
             ),
             Container(
-              height: 40,
-              width: 160,
+              height: size.height*0.07,
+              width: size.width*0.4,
               child: new FlatButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, '/login');
@@ -106,11 +107,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             new Padding(
-              padding: new EdgeInsets.only(top: 40.0),
+              padding: new EdgeInsets.only(top: size.height*0.05),
             ),
             Container(
-              height: 40,
-              width: 160,
+              height: size.height*0.07,
+              width: size.width*0.4,
               child: new FlatButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, '/register');
@@ -126,11 +127,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             new Padding(
-              padding: new EdgeInsets.only(top: 40.0),
+              padding: new EdgeInsets.only(top: size.height*0.06),
             ),
             Container(
-              height: 40,
-              width: 160,
+              height: size.height*0.07,
+              width: size.width*0.4,
               child: new FlatButton(
                 onPressed: () async {
                   var ss = await scanQR();
