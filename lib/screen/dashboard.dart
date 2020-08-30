@@ -133,7 +133,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               context, '/MyHomePage');
                         },
                         color: Color.fromRGBO(0, 157, 68, 1),
-                        icon: Icon(Icons.logout),
+                        icon: Icon(Icons.save),
                       ),
                     ),
                     SizedBox(
