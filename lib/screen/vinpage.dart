@@ -25,6 +25,7 @@ class _VinPageState extends State<VinPage> {
                 padding: new EdgeInsets.only(top: 20.0),
               ),
               Container(
+                //-----------------------
                 // color: Color.fromRGBO(0, 51, 94, 1),
                 // decoration: new BoxDecoration(
                 //   borderRadius: new BorderRadius.circular(16.0),
