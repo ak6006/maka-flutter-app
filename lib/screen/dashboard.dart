@@ -133,7 +133,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               context, '/MyHomePage');
                         },
                         color: Color.fromRGBO(0, 157, 68, 1),
-                        icon: Icon(Icons.save),
+                        icon: Icon(Icons.logout),
                       ),
                     ),
                     SizedBox(
@@ -243,7 +243,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                     },
                     color: Color.fromRGBO(179, 0, 34, 1),
                     child: new Text(
-                      ' Bar Code Scanner',
+                      'Bar Code Scanner',
                       style: new TextStyle(
                         color: Colors.white,
                         fontFamily: 'beIN',

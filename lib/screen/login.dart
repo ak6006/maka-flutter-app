@@ -34,11 +34,26 @@ class _LogInState extends State<LogIn> {
   static String _password = '';
   bool isValid;
   bool showSpinner = false;
+  final TextEditingController _passwordController = new TextEditingController();
+  final TextEditingController _usernameController = new TextEditingController();
+
   @override
+  void setState(fn) {
+    // TODO: implement setState
+    super.setState(fn);
+    _passwordController.text = '';
+  }
+
   void initState() {
     _name = '';
     _password = '';
     showSpinner = false;
+    //_passwordController.addListener(_printLatestValue);
+  }
+
+  _printLatestValue() {
+    print("Second text field: ${_passwordController.text}");
+    // _passwordController.text = '';
   }
 
   Widget build(BuildContext context) {
@@ -71,7 +86,7 @@ class _LogInState extends State<LogIn> {
                     child: Hero(
                       tag: 'logo',
                       child: Container(
-                        height: 250.0,
+                        height: 200.0,
                         child: Center(
                           child: Image(
                             height: 250,
@@ -82,21 +97,30 @@ class _LogInState extends State<LogIn> {
                     ),
                   ),
                 ),
+                // TextFormField(
+                //   validator: (value) {
+                //     if (value.isEmpty) {
+                //       return 'Please enter some text';
+                //     }
+                //     return null;
+                //   },
+                // ),
                 PrimaryTextField(
                   label: 'اسم المستخدم',
                   onChanged: (value) {
                     _name = value.trim();
                     //isValid = EmailValidator.validate(_email);
                   },
-                  // validate: (String value) {
-                  //   if (value.isEmpty) {
-                  //     return 'Please enter your email';
-                  //   } else if (isValid == false) {
-                  //     return 'Please enter a valid email';
-                  //   } else {
-                  //     return null;
-                  //   }
-                  // },
+                  validate: (String value) {
+                    if (value.isEmpty) {
+                      return 'الرجاء ادخال اسم المستخدم';
+                    } //else if (isValid == false) {
+                    //return 'Please enter a valid email';
+                    //}
+                    else {
+                      return null;
+                    }
+                  },
                 ),
                 SizedBox(
                   height: 12.0,
@@ -107,13 +131,18 @@ class _LogInState extends State<LogIn> {
                   },
                   validatorFun: (String value) {
                     if (value.isEmpty) {
-                      return 'Please enter your Password';
+                      return 'الرجاء التاكد من اسم المستخدم وكلمة السر';
                     } else if (value.length < 6) {
-                      return 'Must be more than 6 charater';
+                      return 'كلمة السر اقل من ستة حروف';
+                    } else if (!(value.contains(new RegExp(r'[A-Z]')))) {
+                      return 'كلمة السر يجب ان تحتوي على حرف كبير';
+                    } else if (!(value.contains(new RegExp(r'[0-9]')))) {
+                      return 'كلمة السر يجب ان رقم من 0 الى 9';
                     } else {
                       return null;
                     }
                   },
+                  controller: _passwordController,
                   // validatorFun: (String value) {
                   //   if (value.isEmpty) {
                   //     return 'Please enter your Password';
@@ -125,16 +154,26 @@ class _LogInState extends State<LogIn> {
                   // },
                 ),
                 new Padding(
-                  padding: new EdgeInsets.only(top: 40.0),
+                  padding: new EdgeInsets.only(top: 20.0),
                 ),
                 Container(
                   height: 40,
                   width: 160,
                   child: new FlatButton(
                     onPressed: () {
-                      setState(() {
-                        showSpinner = true;
-                      });
+                      //  setState(() {
+                      // If the form is valid,
+                      if (_formKey.currentState.validate()) {
+                      } else {
+                        setState(() {
+                          _passwordController.value = null;
+                          _password = '';
+                        });
+
+                        return;
+                      }
+                      showSpinner = true;
+                      //});
                       databaseHelper
                           .loginData(_name, _password)
                           .whenComplete(() {
@@ -143,12 +182,13 @@ class _LogInState extends State<LogIn> {
                         if (databaseHelper.status) {
                           // _showDialog();
                           //  msgStatus = 'Check email or password';
-                          _showDialog(databaseHelper.stateMsg);
+
+                          //_showDialog(databaseHelper.stateMsg);
                           setState(() {
                             showSpinner = false;
                           });
                         } else {
-                          // _showDialog();
+                          //_showDialog();
                           Navigator.pushReplacementNamed(context, '/dashboard');
                         }
                         //-------
@@ -165,7 +205,7 @@ class _LogInState extends State<LogIn> {
                   ),
                 ),
                 new Padding(
-                  padding: new EdgeInsets.only(top: 40.0),
+                  padding: new EdgeInsets.only(top: 20.0),
                 ),
                 Container(
                   height: 40,

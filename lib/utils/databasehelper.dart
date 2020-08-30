@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DatabaseHelper {
-  String serverUrl = "http://192.168.100.21:92";
+  String serverUrl = "http://192.168.100.65:92";
   String serverip = "192.168.100.21:92";
   var status;
   var stateMsg;

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class PasswordTextField extends StatefulWidget {
   final Function onChanged;
   final Function validatorFun;
-  PasswordTextField({this.onChanged, this.validatorFun});
+  final TextEditingController controller;
+
+  PasswordTextField({this.onChanged, this.validatorFun, this.controller});
 
   @override
   _PasswordTextFieldState createState() => _PasswordTextFieldState();
@@ -15,6 +17,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       style: TextStyle(
         // backgroundColor: Colors.white,
         color: Colors.white,

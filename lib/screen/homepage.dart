@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Hero(
                 tag: 'logo',
                 child: Container(
-                  height: size.height * 0.20,
+                  height: 70, //size.height * 0.20,
                   child: Center(
                     child: Image(
                       height: size.height * 0.2,
