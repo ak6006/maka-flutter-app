@@ -38,11 +38,11 @@ class _LogInState extends State<LogIn> {
   final TextEditingController _usernameController = new TextEditingController();
 
   @override
-  // void setState(fn) {
-  //   // TODO: implement setState
-  //   super.setState(fn);
-  //   // _passwordController.text = '';
-  // }
+  void setState(fn) {
+    // TODO: implement setState
+    super.setState(fn);
+    _passwordController.text = '';
+  }
 
   void initState() {
     _name = '';
@@ -131,16 +131,17 @@ class _LogInState extends State<LogIn> {
                   },
                   validatorFun: (String value) {
                     if (value.isEmpty) {
-                      return 'الرجاء التاكد من اسم المستخدم وكلمة السر';
+                      return 'الرجاء التاكد من اسم المستخدم او كلمة السر';
                     } else if (value.length < 6) {
-                      return 'كلمة السر اقل من ستة حروف';
+                      return 'الرجاء التاكد من اسم المستخدم او كلمة السر';
                     }
                     // else if (!(value.contains(new RegExp(r'[A-Z]')))) {
                     //   return 'كلمة السر يجب ان تحتوي على حرف كبير';
                     // }
-                    else if (!(value.contains(new RegExp(r'[0-9]')))) {
-                      return 'كلمة السر يجب ان رقم من 0 الى 9';
-                    } else {
+                    // else if (!(value.contains(new RegExp(r'[0-9]')))) {
+                    //   return 'كلمة السر يجب ان رقم من 0 الى 9';
+                    // }
+                    else {
                       return null;
                     }
                   },
@@ -166,6 +167,9 @@ class _LogInState extends State<LogIn> {
                       //  setState(() {
                       // If the form is valid,
                       if (_formKey.currentState.validate()) {
+                        setState(() {
+                          showSpinner = true;
+                        });
                       } else {
                         // setState(() {
                         //   _passwordController.value = null;
@@ -174,9 +178,6 @@ class _LogInState extends State<LogIn> {
 
                         // return;
                       }
-                      setState(() {
-                        showSpinner = true;
-                      });
 
                       print('dddd$showSpinner');
                       //});
@@ -192,6 +193,7 @@ class _LogInState extends State<LogIn> {
                           //_showDialog(databaseHelper.stateMsg);
                           setState(() {
                             showSpinner = false;
+                            _formKey.currentState.validate();
                           });
                         } else {
                           //_showDialog();
