@@ -130,6 +130,7 @@ class _LogInState extends State<LogIn> {
                     _password = value.trim();
                   },
                   validatorFun: (String value) {
+                    //00000000000000
                     if (value.isEmpty) {
                       return 'الرجاء التاكد من اسم المستخدم او كلمة السر';
                     } else if (value.length < 6) {
