@@ -64,7 +64,7 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             new Padding(
-              padding:EdgeInsets.only(top:size.height*0.2),
+              padding: EdgeInsets.only(top: size.height * 0.2),
             ),
             Container(
               // color: Color.fromRGBO(0, 51, 94, 1),
@@ -75,10 +75,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Hero(
                 tag: 'logo',
                 child: Container(
-                  height: size.height*0.15,
+                  height: size.height * 0.20,
                   child: Center(
                     child: Image(
-                      height: size.height*0.2,
+                      height: size.height * 0.2,
                       image: AssetImage('assets/images/lg2.jpg'),
                     ),
                   ),
@@ -87,11 +87,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
 
             new Padding(
-              padding:EdgeInsets.only(top: size.height*0.08),
+              padding: EdgeInsets.only(top: size.height * 0.08),
             ),
             Container(
-              height: size.height*0.07,
-              width: size.width*0.4,
+              height: size.height * 0.07,
+              width: size.width * 0.4,
               child: new FlatButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, '/login');
@@ -107,11 +107,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             new Padding(
-              padding: new EdgeInsets.only(top: size.height*0.05),
+              padding: new EdgeInsets.only(top: size.height * 0.05),
             ),
             Container(
-              height: size.height*0.07,
-              width: size.width*0.4,
+              height: size.height * 0.07,
+              width: size.width * 0.4,
               child: new FlatButton(
                 onPressed: () {
                   Navigator.pushReplacementNamed(context, '/register');
@@ -127,11 +127,11 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             new Padding(
-              padding: new EdgeInsets.only(top: size.height*0.06),
+              padding: new EdgeInsets.only(top: size.height * 0.06),
             ),
             Container(
-              height: size.height*0.07,
-              width: size.width*0.4,
+              height: size.height * 0.07,
+              width: size.width * 0.4,
               child: new FlatButton(
                 onPressed: () async {
                   var ss = await scanQR();

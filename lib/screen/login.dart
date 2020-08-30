@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'package:maka/utils/password_text_field.dart';
 import 'package:maka/utils/primary_text_field.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class LogIn extends StatefulWidget {
   // MyHomePage({Key key, this.title}) : super(key: key);
@@ -27,14 +28,17 @@ class LogIn extends StatefulWidget {
 }
 
 class _LogInState extends State<LogIn> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   DatabaseHelper databaseHelper = new DatabaseHelper();
   static String _name = '';
   static String _password = '';
   bool isValid;
+  bool showSpinner = false;
   @override
   void initState() {
     _name = '';
     _password = '';
+    showSpinner = false;
   }
 
   Widget build(BuildContext context) {
@@ -43,122 +47,143 @@ class _LogInState extends State<LogIn> {
       // appBar: AppBar(
       //   title: Text(widget.title),
       // ),
-      body: Padding(
-        padding: EdgeInsets.all(16.0),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: <Widget>[
-              new Padding(
-                padding: new EdgeInsets.only(top: 20.0),
-              ),
-              Container(
-                // color: Color.fromRGBO(0, 51, 94, 1),
-                // decoration: new BoxDecoration(
-                //   borderRadius: new BorderRadius.circular(16.0),
-                //   color: Colors.green,
-                // ),
-                child: Flexible(
-                  child: Hero(
-                    tag: 'logo',
-                    child: Container(
-                      height: 250.0,
-                      child: Center(
-                        child: Image(
-                          height: 250,
-                          image: AssetImage('assets/images/lg2.jpg'),
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                new Padding(
+                  padding: new EdgeInsets.only(top: 20.0),
+                ),
+                Container(
+                  // color: Color.fromRGBO(0, 51, 94, 1),
+                  // decoration: new BoxDecoration(
+                  //   borderRadius: new BorderRadius.circular(16.0),
+                  //   color: Colors.green,
+                  // ),
+                  child: Flexible(
+                    child: Hero(
+                      tag: 'logo',
+                      child: Container(
+                        height: 250.0,
+                        child: Center(
+                          child: Image(
+                            height: 250,
+                            image: AssetImage('assets/images/lg2.jpg'),
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              PrimaryTextField(
-                label: 'اسم المستخدم',
-                onChanged: (value) {
-                  _name = value.trim();
-                  //isValid = EmailValidator.validate(_email);
-                },
-                // validate: (String value) {
-                //   if (value.isEmpty) {
-                //     return 'Please enter your email';
-                //   } else if (isValid == false) {
-                //     return 'Please enter a valid email';
-                //   } else {
-                //     return null;
-                //   }
-                // },
-              ),
-              SizedBox(
-                height: 12.0,
-              ),
-              PasswordTextField(
-                onChanged: (value) {
-                  _password = value.trim();
-                },
-                // validatorFun: (String value) {
-                //   if (value.isEmpty) {
-                //     return 'Please enter your Password';
-                //   } else if (value.length < 8) {
-                //     return 'Must be more than 8 charater';
-                //   } else {
-                //     return null;
-                //   }
-                // },
-              ),
-              new Padding(
-                padding: new EdgeInsets.only(top: 40.0),
-              ),
-              Container(
-                height: 40,
-                width: 160,
-                child: new FlatButton(
-                  onPressed: () {
-                    databaseHelper.loginData(_name, _password).whenComplete(() {
-                      print('kkkkkkkk${databaseHelper.status}');
-                      // return;
-                      if (databaseHelper.status) {
-                        // _showDialog();
-                        //  msgStatus = 'Check email or password';
-                        _showDialog(databaseHelper.stateMsg);
-                      } else {
-                        // _showDialog();
-                        Navigator.pushReplacementNamed(context, '/dashboard');
-                      }
-                      //-------
-                    });
+                PrimaryTextField(
+                  label: 'اسم المستخدم',
+                  onChanged: (value) {
+                    _name = value.trim();
+                    //isValid = EmailValidator.validate(_email);
                   },
-                  color: Color.fromRGBO(0, 157, 68, 1),
-                  child: new Text(
-                    'دخول',
-                    style: new TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'beIN',
+                  // validate: (String value) {
+                  //   if (value.isEmpty) {
+                  //     return 'Please enter your email';
+                  //   } else if (isValid == false) {
+                  //     return 'Please enter a valid email';
+                  //   } else {
+                  //     return null;
+                  //   }
+                  // },
+                ),
+                SizedBox(
+                  height: 12.0,
+                ),
+                PasswordTextField(
+                  onChanged: (value) {
+                    _password = value.trim();
+                  },
+                  validatorFun: (String value) {
+                    if (value.isEmpty) {
+                      return 'Please enter your Password';
+                    } else if (value.length < 6) {
+                      return 'Must be more than 6 charater';
+                    } else {
+                      return null;
+                    }
+                  },
+                  // validatorFun: (String value) {
+                  //   if (value.isEmpty) {
+                  //     return 'Please enter your Password';
+                  //   } else if (value.length < 8) {
+                  //     return 'Must be more than 8 charater';
+                  //   } else {
+                  //     return null;
+                  //   }
+                  // },
+                ),
+                new Padding(
+                  padding: new EdgeInsets.only(top: 40.0),
+                ),
+                Container(
+                  height: 40,
+                  width: 160,
+                  child: new FlatButton(
+                    onPressed: () {
+                      setState(() {
+                        showSpinner = true;
+                      });
+                      databaseHelper
+                          .loginData(_name, _password)
+                          .whenComplete(() {
+                        // print('kkkkkkkk${databaseHelper.status}');
+                        // return;
+                        if (databaseHelper.status) {
+                          // _showDialog();
+                          //  msgStatus = 'Check email or password';
+                          _showDialog(databaseHelper.stateMsg);
+                          setState(() {
+                            showSpinner = false;
+                          });
+                        } else {
+                          // _showDialog();
+                          Navigator.pushReplacementNamed(context, '/dashboard');
+                        }
+                        //-------
+                      });
+                    },
+                    color: Color.fromRGBO(0, 157, 68, 1),
+                    child: new Text(
+                      'دخول',
+                      style: new TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'beIN',
+                      ),
                     ),
                   ),
                 ),
-              ),
-              new Padding(
-                padding: new EdgeInsets.only(top: 40.0),
-              ),
-              Container(
-                height: 40,
-                width: 160,
-                child: new FlatButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, '/register');
-                  },
-                  color: Color.fromRGBO(179, 0, 34, 1),
-                  child: new Text(
-                    ' تسجيل حساب جديد',
-                    style: new TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'beIN',
+                new Padding(
+                  padding: new EdgeInsets.only(top: 40.0),
+                ),
+                Container(
+                  height: 40,
+                  width: 160,
+                  child: new FlatButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(context, '/register');
+                    },
+                    color: Color.fromRGBO(179, 0, 34, 1),
+                    child: new Text(
+                      ' تسجيل حساب جديد',
+                      style: new TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'beIN',
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

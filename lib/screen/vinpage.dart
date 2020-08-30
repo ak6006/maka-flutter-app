@@ -62,7 +62,7 @@ class _VinPageState extends State<VinPage> {
                 ),
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: 90.0),
+                padding: new EdgeInsets.only(top: 80.0),
               ),
               Container(
                 height: 45,
@@ -80,7 +80,7 @@ class _VinPageState extends State<VinPage> {
                 ),
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: 40.0),
+                padding: new EdgeInsets.only(top: 30.0),
               ),
               Container(
                 height: 45,
@@ -98,8 +98,25 @@ class _VinPageState extends State<VinPage> {
                 ),
               ),
               new Padding(
-                padding: new EdgeInsets.only(top: 20.0),
-              )
+                padding: new EdgeInsets.only(top: 30.0),
+              ),
+              Container(
+                height: 45,
+                width: 200,
+                child: new FlatButton(
+                  onPressed: () {
+                    Navigator.pushReplacementNamed(context, '/dashboard');
+                  },
+                  color: Color.fromRGBO(174, 0, 145, 1),
+                  child: new Text(
+                    'رجوع',
+                    style: new TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'beIN',
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

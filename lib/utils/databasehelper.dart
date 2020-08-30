@@ -3,9 +3,8 @@ import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DatabaseHelper {
-  String serverUrl =
-      "http://192.168.100.65:92"; //"http://flutterapitutorial.codeforiraq.org/api";
-  String serverip = "192.168.100.65:92";
+  String serverUrl = "http://192.168.100.21:92";
+  String serverip = "192.168.100.21:92";
   var status;
   var stateMsg;
   var codest;
@@ -39,10 +38,10 @@ class DatabaseHelper {
       "grant_type": "password"
     });
     status = response.body.contains('error');
-    print('yhhhhhhhhhhhhhh${response.body}');
+    // print('yhhhhhhhhhhhhhh${response.body}');
 
     var data = json.decode(response.body);
-    print('ffffffffffff$status');
+    // print('ffffffffffff$status');
 
     if (status) {
       print('data : ${data["error_description"]}');

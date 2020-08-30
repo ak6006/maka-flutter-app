@@ -150,7 +150,7 @@ class _WrowState extends State<Wrow> {
           // padding: EdgeInsets.only(left: 0),
           color: const Color.fromRGBO(0, 51, 94, 1),
           child: Text('${widget.val}',
-              style: TextStyle(color: Colors.white, fontSize: 18)),
+              style: TextStyle(color: Colors.white, fontSize: 16)),
         ),
         SizedBox(
           width: 40,
@@ -162,7 +162,7 @@ class _WrowState extends State<Wrow> {
           child: Text('${widget.lable}',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 18,
+                fontSize: 16,
                 fontFamily: 'beIN',
               )),
         ),
