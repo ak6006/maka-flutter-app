@@ -345,6 +345,59 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   new Padding(
                     padding: new EdgeInsets.only(top: size.height * 0.05),
                   ),
+
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(254, 88, 0, 1),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    // color: Color.fromRGBO(254, 88, 0, 1),
+                    //height: 40, //size.height * 0.07,
+                    //  width: 220, //size.width * 0.7,
+                    height: size.height * 0.06,
+                    width: size.width * 0.7,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            // height: size.height * 0.07,
+                            width: size.width * 0.35,
+                            child: new FlatButton.icon(
+                              label: Container(
+                                //margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                width: size.width * 0.45,
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(size.width * 0.2,
+                                      0, size.width * 0.01, 0),
+                                  child: Text(
+                                    'اجمالي الناتج',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(255, 255, 255, 1),
+                                        fontFamily: 'beIN',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                ),
+                              ),
+                              icon: Container(
+                                //  margin: EdgeInsets.only(left: 30),
+                                // margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
+                                child: Image.asset('assets/images/van.png'),
+                              ),
+                              onPressed: () {
+                                Navigator.pushReplacementNamed(
+                                    context, '/total');
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  new Padding(
+                    padding: new EdgeInsets.only(top: size.height * 0.05),
+                  ),
                 ],
               ),
             ),
