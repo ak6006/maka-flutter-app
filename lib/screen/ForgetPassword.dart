@@ -1,26 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'package:maka/utils/password_text_field.dart';
 import 'package:maka/utils/primary_text_field.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 
-// Future<void> main() async {
-//   SharedPreferences prefs = await SharedPreferences.getInstance();
-//   var _name = prefs.getString('email');
-//   print(_name);
-//   runApp(MaterialApp(home: _name == null ? LogIn() : MyHomePage()));
-// }
-
-class LogIn extends StatefulWidget {
+class ForgetPassword extends StatefulWidget {
   @override
-  _LogInState createState() => _LogInState();
+  _ForgetPasswordState createState() => _ForgetPasswordState();
 }
 
-class _LogInState extends State<LogIn> {
+class _ForgetPasswordState extends State<ForgetPassword> {
+  @override
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   DatabaseHelper databaseHelper = new DatabaseHelper();
@@ -32,60 +23,12 @@ class _LogInState extends State<LogIn> {
   final TextEditingController _passwordController = new TextEditingController();
   final TextEditingController _usernameController = new TextEditingController();
 
-  // SharedPreferences logindata;
-  // bool newuser;
-
-  @override
-  void setState(fn) {
-    super.setState(fn);
-    // _passwordController.text = '';
-  }
-
-  void initState() {
-    // super.initState();
-    _name = '';
-    _password = '';
-    showSpinner = false;
-    // _usernameController.addListener(() {
-    //   _printLatestValueUser();
-    // });
-    // _printLatestValueUser();
-    //_printLatestValuePass();
-    //check_if_already_login();
-    //_passwordController.addListener(_printLatestValue);
-    readLogin();
-  }
-
-  readLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    final keyUser = 'user';
-    final keyPass = 'pass';
-    //final keyPass = _passwordController;
-    final valueUser = prefs.get(keyUser) ?? '';
-    final valuePass = prefs.get(keyPass) ?? '';
-    print('read : $valueUser');
-    print('read : $valuePass');
-    _usernameController.text = valueUser;
-    _passwordController.text = valuePass;
-  }
-
-  // _printLatestValueUser() {
-  //   print("First text field: ${_name}");
-  //   // _usernameController.text = '';
-  // }
-
-  // _printLatestValuePass() {
-  //   print("Second text field: ${_password}");
-  //   // _passwordController.text = '';
-  // }
-
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       //resizeToAvoidBottomPadding: false,
       // backgroundColor: Color.fromRGBO(0, 51, 94, 1),
       backgroundColor: Colors.black,
-
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Container(
@@ -269,7 +212,7 @@ class _LogInState extends State<LogIn> {
                                 databaseHelper
                                     .loginData(_usernameController.text,
                                         _passwordController.text)
-                                    .whenComplete(() async {
+                                    .whenComplete(() {
                                   _name = _usernameController.text;
                                   _password = _passwordController.text;
                                   if (_name != '' && _password != '') {
@@ -283,8 +226,7 @@ class _LogInState extends State<LogIn> {
                                     // _showDialog();
                                     //  msgStatus = 'Check email or password';
                                     if (databaseHelper.connection) {
-                                      _alertDialog('لا يوجد اتصال بالسيرفر');
-                                      //_alertDialog('ssss');
+                                      _showDialog('لا يوجد اتصال بالسيرفر');
                                       setState(() {
                                         showSpinner = false;
                                       });
@@ -304,28 +246,6 @@ class _LogInState extends State<LogIn> {
                                     //         builder: (BuildContext ctx) =>
                                     //             MyHomePage()));
                                     // _showDialog();
-
-                                    // print(result);
-                                    final prefs =
-                                        await SharedPreferences.getInstance();
-                                    final key = 'CustomerName';
-                                    final value = prefs.get(key) ?? 0;
-                                    print('valueeeeeeeeeeeeeee${value}');
-                                    if (value == 0) {
-                                      dynamic result = await databaseHelper
-                                          .getCustomerName();
-                                      final prefs =
-                                          await SharedPreferences.getInstance();
-                                      final key = 'CustomerName';
-                                      final value1 = prefs.get(key) ?? 0;
-                                      print('new valueeeewww');
-                                      agentCustomerName = value1;
-                                    } else {
-                                      agentCustomerName = value;
-                                    }
-                                    // agentNameModel =
-                                    //     agentNameModelFromJson(result);
-                                    // print(agentNameModel);
                                     print('logged in successfully');
 
                                     Navigator.pushReplacementNamed(
@@ -376,20 +296,6 @@ class _LogInState extends State<LogIn> {
     );
   }
 
-  _alertDialog(String msg) {
-    return AwesomeDialog(
-        context: context,
-        dialogType: DialogType.ERROR,
-        animType: AnimType.RIGHSLIDE,
-        headerAnimationLoop: false,
-        title: 'خطاء في الاتصال',
-        desc: 'لا يوجد اتصال بالسيرفر حاول لاحقا',
-        btnOkOnPress: () {},
-        btnOkIcon: Icons.cancel,
-        btnOkColor: Colors.red)
-      ..show();
-  }
-
   void _showDialog(String msg) {
     showDialog(
         context: context,
@@ -398,41 +304,16 @@ class _LogInState extends State<LogIn> {
             title: new Text('خطأ'),
             content: new Text('$msg'),
             actions: <Widget>[
-              new FlatButton(
+              new RaisedButton(
                 child: new Text(
-                  'موافق',
-                  style: TextStyle(color: Colors.black),
-                  textAlign: TextAlign.right,
+                  'Close',
                 ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
               ),
             ],
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(20.0),
-              ),
-            ),
-            backgroundColor: Colors.yellowAccent[300],
           );
         });
   }
-
-  // void check_if_already_login() async {
-  //   logindata = await SharedPreferences.getInstance();
-  //   newuser = (logindata.getBool('login') ?? true);
-  //   print(newuser);
-  //   if (newuser == false) {
-  //     Navigator.pushReplacement(
-  //         context, MaterialPageRoute(builder: (context) => MyHomePage()));
-  //   }
-  // }
-
-  // void dispose() {
-  //   _usernameController.dispose();
-  //   _passwordController.dispose();
-  //   super.dispose();
-  // }
 }

@@ -6,6 +6,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import 'package:maka/models/customertransquery.dart';
+import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
 
 class CustomerTransPage extends StatefulWidget {
@@ -104,19 +105,33 @@ class _CustomerTransPageState extends State<CustomerTransPage> {
                 SizedBox(
                   width: 10,
                 ),
-                Container(
-                  // padding: const EdgeInsets.only(left: 30),
-                  width: 190,
-                  alignment: Alignment.center,
-                  color: Color.fromRGBO(254, 88, 0, 1),
-                  child: new Text(
-                    'بيانات عربيات الوكيل',
-                    style: new TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'beIN',
-                      fontSize: 18,
+                Column(
+                  children: [
+                    Container(
+                      // padding: const EdgeInsets.only(left: 30),
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.05),
+                      width: 190,
+                      alignment: Alignment.center,
+                      color: Color.fromRGBO(254, 88, 0, 1),
+                      child: new Text(
+                        'بيانات عربيات الوكيل',
+                        style: new TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'beIN',
+                          fontSize: 18,
+                        ),
+                      ),
                     ),
-                  ),
+                    Container(
+                      margin: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.02),
+                      child: CustomerNameRow(
+                        lable: '  اهلا',
+                        val: agentCustomerName,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -446,6 +461,40 @@ class _LightsState extends State<Lights> {
         ),
         SizedBox(
           width: 0,
+        ),
+      ],
+    );
+  }
+}
+
+class CustomerNameRow extends StatefulWidget {
+  String lable;
+  String val;
+  CustomerNameRow({this.lable, this.val});
+  @override
+  _CustomerNameRowState createState() => _CustomerNameRowState();
+}
+
+class _CustomerNameRowState extends State<CustomerNameRow> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('${widget.val}',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 17,
+              fontFamily: 'beIN',
+            ),
+            textAlign: TextAlign.right),
+        Text(
+          '${widget.lable}',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 17,
+            fontFamily: 'beIN',
+          ),
         ),
       ],
     );

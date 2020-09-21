@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:maka/utils/confirm_pass_text_field.dart';
@@ -377,7 +378,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         if (databaseHelper.status) {
                                           //databaseHelper.codest > 299
                                           if (databaseHelper.connection) {
-                                            _showDialog(
+                                            _alertDialog(
                                                 'لا يوجد اتصال بالسيرفر');
                                             setState(() {
                                               showSpinner = false;
@@ -429,6 +430,20 @@ class _RegisterPageState extends State<RegisterPage> {
         ),
       ),
     );
+  }
+
+  _alertDialog(String msg) {
+    return AwesomeDialog(
+        context: context,
+        dialogType: DialogType.ERROR,
+        animType: AnimType.RIGHSLIDE,
+        headerAnimationLoop: false,
+        title: 'خطاء في الاتصال',
+        desc: 'لا يوجد اتصال بالسيرفر حاول لاحقا',
+        btnOkOnPress: () {},
+        btnOkIcon: Icons.cancel,
+        btnOkColor: Colors.red)
+      ..show();
   }
 
   void _showDialog(String msg) {

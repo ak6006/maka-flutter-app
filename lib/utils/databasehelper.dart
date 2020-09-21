@@ -15,7 +15,6 @@ class DatabaseHelper {
   var stateMsg;
   var codest;
   var connection;
-  var token;
 
   loginData(String name, String password) async {
     try {
@@ -171,6 +170,63 @@ class DatabaseHelper {
     print(codest);
   }
 
+  getQantityData(String bdate, String edate, String product) async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      status = true;
+      connection = true;
+      return;
+    }
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'access_token';
+    final value = prefs.get(key) ?? 0;
+
+    var queryParameters = {
+      'beginDate': '$bdate',
+      'endDate': '${edate}',
+      'ProductName': '${product}'
+    };
+    var uri = Uri.http('$serverip', '/api/Payment/', queryParameters);
+
+    // return;
+//  String myUrl = "$serverUrl/api/Payment/beginDate=" +
+//           DateFormat("M/d/yyyy", 'en').format(date) +
+//           " 12:00:00 AM";
+    String myUrl = "$serverUrl/api/Payment/?beginDate=" +
+        bdate +
+        '&' +
+        'endDate=' +
+        edate +
+        '&' +
+        'ProductName=$product';
+    print(myUrl);
+    // String myUrl = serverUrl; // "$serverUrl/products/";
+
+    var tdata;
+    final response1 = await http.get(
+      myUrl,
+      headers: {'Accept': 'application/json', 'Authorization': 'bearer $value'},
+    ).then((response) {
+      tdata = response.body;
+    }).timeout(
+      Duration(seconds: 10),
+      onTimeout: () {
+        status = true;
+        connection = true;
+
+        return null;
+      },
+    );
+    print(tdata);
+
+    return tdata;
+  }
+
   getData(String qrid) async {
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -207,6 +263,47 @@ class DatabaseHelper {
         return null;
       },
     );
+
+    return tdata;
+  }
+
+  getProductData() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      status = true;
+      connection = true;
+      return;
+    }
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'access_token';
+    final value = prefs.get(key) ?? 0;
+
+    //var queryParameters = {'Key': '$qrid'};
+    //var uri = Uri.http('$serverip', '/api/Values/Data/', queryParameters);
+
+    String myUrl = "$serverUrl/api/values/products";
+
+    var tdata;
+    final response1 = await http.get(
+      myUrl,
+      headers: {'Accept': 'application/json', 'Authorization': 'bearer $value'},
+    ).then((response) {
+      tdata = response.body;
+    }).timeout(
+      Duration(seconds: 10),
+      onTimeout: () {
+        status = true;
+        connection = true;
+
+        return null;
+      },
+    );
+    print(tdata);
 
     return tdata;
   }
@@ -307,6 +404,13 @@ class DatabaseHelper {
     prefs.setString(key, value);
   }
 
+  _saveCustomerName(String customerName) async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'CustomerName';
+    final value = customerName;
+    prefs.setString(key, value);
+  }
+
   read() async {
     final prefs = await SharedPreferences.getInstance();
     final key = 'token';
@@ -370,6 +474,61 @@ class DatabaseHelper {
     );
     return tdata;
   }
+
+  getCustomerName() async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      status = true;
+      connection = true;
+      return;
+    }
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'access_token';
+    final value = prefs.get(key) ?? 0;
+    print(value);
+    String myUrl = "";
+
+    myUrl = "$serverUrl/api/Values/CustomerName";
+
+    print(myUrl);
+    var tdata;
+    final response1 = await http.get(
+      myUrl,
+      headers: {'Accept': 'application/json', 'Authorization': 'bearer $value'},
+    ).then((response) {
+      tdata = response.body;
+    }).timeout(
+      Duration(seconds: 10),
+      onTimeout: () {
+        status = true;
+        connection = true;
+
+        return null;
+      },
+    );
+    status = tdata.contains('error');
+
+    var data = json.decode(tdata);
+
+    if (status) {
+      // print('data : ${data["error_description"]}');
+      // stateMsg = data["error_description"];
+    } else {
+      // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+      await _saveCustomerName(data["CustomerName"]);
+
+      // _firebaseMessaging.getToken().then((value) {
+      //   setFirebaseToken(value);
+      // });
+    }
+    return tdata;
+  }
+
   // _readUserData() async {
   //   final prefs = await SharedPreferences.getInstance();
   //   final key = 'token';

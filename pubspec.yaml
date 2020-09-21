@@ -40,7 +40,8 @@ dependencies:
   shared_preferences: ^0.5.10
   toast: ^0.1.5
   liquid_pull_to_refresh: ^1.1.0
-  
+  awesome_dialog: ^1.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,11 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:maka/models/agentNameModel.dart';
+import 'package:maka/models/orderQuntitySum.dart';
+import 'package:maka/models/productlist.dart';
 import 'package:maka/models/querybarcode.dart';
+import 'package:maka/screen/filterScreen.dart';
+import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'barcodescannr.dart';
+import 'orderQuantityScreen.dart';
 
 class DashBoardPage extends StatefulWidget {
   //الصفحة الرئيسية
@@ -16,15 +24,24 @@ class DashBoardPage extends StatefulWidget {
 class _DashBoardPageState extends State<DashBoardPage> {
   SharedPreferences logindata;
   String username;
-
+  AgentNameModel agentNameModel = new AgentNameModel();
   // static String _email;
   // static String _password;
   bool isValid;
   DatabaseHelper databaseHelper = new DatabaseHelper();
   QueryBarCode queryBarCode;
+  List<OrderQuantitySumQuery> orderquantitysumquery;
+  List<ProductList> productlist;
 
   // static Future init() async {
   //   localStorage = await SharedPreferences.getInstance();
+  // }
+
+  // Future<String> getCustomerName() async {
+  //   dynamic result = await databaseHelper.getCustomerName();
+  //   print(result);
+  //   agentNameModel = agentNameModelFromJson(result);
+  //   print(agentNameModel);
   // }
 
   Future<String> scanBarcodeNormal() async {
@@ -68,6 +85,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
   void initState() {
     //super.initState();
     showSpinner = false;
+    //getCustomerName();
     initial();
   }
 
@@ -178,8 +196,17 @@ class _DashBoardPageState extends State<DashBoardPage> {
                       ],
                     ),
                   ),
+
                   new Padding(
-                    padding: new EdgeInsets.only(top: 90),
+                    padding: new EdgeInsets.only(top: size.height * 0.04),
+                  ),
+                  CustomerNameRow(
+                    lable: '  اهلا',
+                    val: agentCustomerName,
+                  ),
+
+                  new Padding(
+                    padding: new EdgeInsets.only(top: size.height * 0.07),
                   ),
 
                   //------------------------------------------------------------------
@@ -299,6 +326,156 @@ class _DashBoardPageState extends State<DashBoardPage> {
                       borderRadius: BorderRadius.circular(5),
                     ),
                     // color: Color.fromRGBO(254, 88, 0, 1),
+                    //  height: 40, //size.height * 0.07,
+                    // width: 220, //size.width * 0.7,
+                    height: size.height * 0.06,
+                    width: size.width * 0.7,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            // height: size.height * 0.07,
+                            // width: size.width * 0.4,
+                            child: new FlatButton.icon(
+                              icon: Container(
+                                // margin: EdgeInsets.only(left: 30),
+                                // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                child:
+                                    Image.asset('assets/images/recieved.png'),
+                              ),
+                              label: Container(
+                                width: size.width * 0.45,
+                                // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                child: Container(
+                                  margin: EdgeInsets.fromLTRB(size.width * 0.07,
+                                      0, size.width * 0.01, 0),
+                                  child: Text(
+                                    'استعلام مبيعات وكيل',
+                                    style: TextStyle(
+                                        color: Color.fromRGBO(255, 255, 255, 1),
+                                        fontFamily: 'beIN',
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () async {
+                                //print('lkkkjkjhkj');
+                                var plist =
+                                    await databaseHelper.getProductData();
+                                //plist.add('كل المنتجات');
+                                //plist["c"] = 3
+                                productlist = productListFromJson(plist);
+                                // productlist.add('gffhfg');
+                                print(productlist.length);
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => FilterScreenPage(
+                                            plist: productlist,
+                                          )),
+                                );
+
+                                return;
+                                // var brcode = await scanBarcodeNormal();
+
+                                // setState(() {
+                                //   showSpinner = true;
+                                // });
+
+                                //----------------------------
+                                dynamic result = [
+                                  {
+                                    "productName": "asdf",
+                                    "measre_name": "das",
+                                    "sumQuantity": "3"
+                                  },
+                                  {
+                                    "productName": "hgvgg",
+                                    "measre_name": "oouuu",
+                                    "sumQuantity": "77"
+                                  }
+                                ];
+
+                                //  await databaseHelper.getData('brcode');
+                                // .whenComplete(() {
+                                //   if (databaseHelper.codest != 200) {
+                                //     // _showDialog();
+                                //     // msgStatus = 'Check email or password';
+                                //     // print(msgStatus);
+                                //   } else {
+                                //     // _showDialog();
+                                //     Navigator.pushReplacementNamed(
+                                //         context, '/dashboard');
+                                //   }
+                                // });
+
+                                //----------------------------
+
+                                // print('$brcode');
+                                // print('${result}');
+                                // setState(() {
+                                //   showSpinner = false;
+                                // });
+                                if (result == '') {
+                                  return;
+                                } else {
+                                  // setState(() {
+                                  //   showSpinner = false;
+                                  // });
+                                  print('lkkkjkjhkj');
+
+                                  String output =
+                                      _textSelect(result.toString());
+                                  // var bb = json.encode(output.toString());
+                                  print(result.toString());
+                                  //return;
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            FilterScreenPage()),
+                                  );
+
+                                  // orderquantitysumquery =
+                                  //     orderQuantitySumQueryFromJson(bb);
+                                  //  print(databaseEncode);
+                                  //  print(queryBarCode.customerName);
+
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) =>
+                                  //           OrderQuantityScreen(
+                                  //             orderquantitysumquery:
+                                  //                 orderquantitysumquery,
+                                  //           )),
+                                  // );
+                                }
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  //---------------------------------------------
+                  //---------------------------------------------------
+                  new Padding(
+                    padding: new EdgeInsets.only(top: size.height * 0.05),
+                  ),
+
+                  //------------------------------------------------------
+                  //-------------------------------------------------
+                  //----------------------------------------------------
+
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(254, 88, 0, 1),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    // color: Color.fromRGBO(254, 88, 0, 1),
                     //height: 40, //size.height * 0.07,
                     //  width: 220, //size.width * 0.7,
                     height: size.height * 0.06,
@@ -345,59 +522,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   new Padding(
                     padding: new EdgeInsets.only(top: size.height * 0.05),
                   ),
-
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(254, 88, 0, 1),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    // color: Color.fromRGBO(254, 88, 0, 1),
-                    //height: 40, //size.height * 0.07,
-                    //  width: 220, //size.width * 0.7,
-                    height: size.height * 0.06,
-                    width: size.width * 0.7,
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            // height: size.height * 0.07,
-                            width: size.width * 0.35,
-                            child: new FlatButton.icon(
-                              label: Container(
-                                //margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                                width: size.width * 0.45,
-                                child: Container(
-                                  margin: EdgeInsets.fromLTRB(size.width * 0.2,
-                                      0, size.width * 0.01, 0),
-                                  child: Text(
-                                    'اجمالي الناتج',
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(255, 255, 255, 1),
-                                        fontFamily: 'beIN',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
-                                  ),
-                                ),
-                              ),
-                              icon: Container(
-                                //  margin: EdgeInsets.only(left: 30),
-                                // margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                                child: Image.asset('assets/images/van.png'),
-                              ),
-                              onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, '/total');
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  new Padding(
-                    padding: new EdgeInsets.only(top: size.height * 0.05),
-                  ),
                 ],
               ),
             ),
@@ -410,5 +534,39 @@ class _DashBoardPageState extends State<DashBoardPage> {
   clearfun() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.clear();
+  }
+}
+
+class CustomerNameRow extends StatefulWidget {
+  String lable;
+  String val;
+  CustomerNameRow({this.lable, this.val});
+  @override
+  _CustomerNameRowState createState() => _CustomerNameRowState();
+}
+
+class _CustomerNameRowState extends State<CustomerNameRow> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text('${widget.val}',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 17,
+              fontFamily: 'beIN',
+            ),
+            textAlign: TextAlign.right),
+        Text(
+          '${widget.lable}',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 17,
+            fontFamily: 'beIN',
+          ),
+        ),
+      ],
+    );
   }
 }
