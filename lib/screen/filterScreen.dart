@@ -4,6 +4,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/models/productlist.dart';
+import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/data_picker_style.dart';
 import 'package:maka/utils/databasehelper.dart';
 
@@ -48,6 +49,7 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
   }
 
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Scaffold(
       //backgroundColor: Color.fromRGBO(0, 51, 94, 1),
       body: Container(
@@ -84,19 +86,28 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                 SizedBox(
                   width: 10,
                 ),
-                Container(
-                  // padding: const EdgeInsets.only(left: 30),
-                  width: 190,
-                  alignment: Alignment.center,
-                  color: Color.fromRGBO(254, 88, 0, 1),
-                  child: new Text(
-                    'استعلام عن مشتريات وكيل',
-                    style: new TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'beIN',
-                      fontSize: 16,
+                Column(
+                  children: [
+                    Container(
+                      // padding: const EdgeInsets.only(left: 30),
+                      margin: new EdgeInsets.only(top: size.height * 0.04),
+                      width: 190,
+                      alignment: Alignment.center,
+                      color: Color.fromRGBO(254, 88, 0, 1),
+                      child: new Text(
+                        'استعلام عن مشتريات وكيل',
+                        style: new TextStyle(
+                          color: Colors.white,
+                          fontFamily: 'beIN',
+                          fontSize: 16,
+                        ),
+                      ),
                     ),
-                  ),
+                    CustomerNameRow(
+                      lable: '  اهلا',
+                      val: agentCustomerName,
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -196,9 +207,7 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                               orderquantitysumquery: orderquantitysumquery,
                             )),
                   );
-
                   return;
-
                   //  Navigator.pushReplacementNamed(context, '/totalFilterResult');
                 },
                 color: Color.fromRGBO(254, 88, 0, 1),
@@ -262,7 +271,7 @@ class _CustomerNameRowState extends State<CustomerNameRow> {
         Text('${widget.val}',
             style: TextStyle(
               color: Colors.white,
-              fontSize: 14,
+              fontSize: 17,
               fontFamily: 'beIN',
             ),
             textAlign: TextAlign.right),
@@ -270,7 +279,7 @@ class _CustomerNameRowState extends State<CustomerNameRow> {
           '${widget.lable}',
           style: TextStyle(
             color: Colors.white,
-            fontSize: 14,
+            fontSize: 17,
             fontFamily: 'beIN',
           ),
         ),

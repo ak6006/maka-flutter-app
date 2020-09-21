@@ -364,7 +364,8 @@ class _WrowState extends State<Wrow> {
           //color: const Color.fromRGBO(0, 51, 94, 1),
           child: Text(
             '${widget.val}',
-            style: TextStyle(color: Colors.white, fontSize: 14),
+            style: TextStyle(
+                color: Colors.white, fontSize: 14, fontFamily: 'beIN'),
             textAlign: TextAlign.right,
           ),
         )),
