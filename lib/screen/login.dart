@@ -237,54 +237,29 @@ class _LogInState extends State<LogIn> {
                             height: 40,
                             width: 140,
                             child: new FlatButton(
-                              onPressed: () {
-                                /// THIS FLATBUTTON IS FOR LOGINNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-                                //print('vxxxxx${_passwordController.text}');
-                                //print('544444${_usernameController.text}');
-                                databaseHelper.saveUserData(
-                                    _usernameController.text,
-                                    _passwordController.text);
-
+                              onPressed: () async {
                                 SystemChannels.textInput
                                     .invokeMethod('TextInput.hide');
-                                //  setState(() {
-                                // If the form is valid,
-                                print('gag${_passwordController.text}');
 
                                 if (_formKey.currentState.validate()) {
                                   setState(() {
                                     showSpinner = true;
                                   });
-                                } else {
-                                  // setState(() {
-                                  //   _passwordController.value = null;
-                                  //   _password = '';
-                                  // });
-
-                                  // return;
                                 }
-                                print('gag${_passwordController.text}');
-
-                                //});
                                 databaseHelper
                                     .loginData(_usernameController.text,
                                         _passwordController.text)
                                     .whenComplete(() async {
                                   _name = _usernameController.text;
                                   _password = _passwordController.text;
-                                  if (_name != '' && _password != '') {
-                                    print('Sucessful');
-                                    //     logindata.setBool('login', false);
-                                    //     logindata.setString('_name', _name);
-                                  }
-                                  // print('kkkkkkkk${databaseHelper.status}');
-                                  // return;
+                                  // if (_name != '' && _password != '') {
+                                  //   print('Sucessful');
+                                  // }
+
                                   if (databaseHelper.status) {
-                                    // _showDialog();
-                                    //  msgStatus = 'Check email or password';
                                     if (databaseHelper.connection) {
                                       _alertDialog('لا يوجد اتصال بالسيرفر');
-                                      //_alertDialog('ssss');
+
                                       setState(() {
                                         showSpinner = false;
                                       });
@@ -295,23 +270,17 @@ class _LogInState extends State<LogIn> {
                                         _formKey.currentState.validate();
                                       });
                                     }
-
-                                    //_showDialog(databaseHelper.stateMsg
                                   } else {
-                                    // Navigator.pushReplacement(
-                                    //     context,
-                                    //     MaterialPageRoute(
-                                    //         builder: (BuildContext ctx) =>
-                                    //             MyHomePage()));
-                                    // _showDialog();
-
-                                    // print(result);
                                     final prefs =
                                         await SharedPreferences.getInstance();
                                     final key = 'CustomerName';
                                     final value = prefs.get(key) ?? 0;
-                                    print('valueeeeeeeeeeeeeee${value}');
-                                    if (value == 0) {
+
+                                    final keyUser = 'user';
+                                    final valueUser = prefs.get(keyUser) ?? '';
+
+                                    if (value == 0 ||
+                                        valueUser != _usernameController.text) {
                                       dynamic result = await databaseHelper
                                           .getCustomerName();
                                       final prefs =
@@ -322,11 +291,11 @@ class _LogInState extends State<LogIn> {
                                       agentCustomerName = value1;
                                     } else {
                                       agentCustomerName = value;
+                                      print(value);
                                     }
-                                    // agentNameModel =
-                                    //     agentNameModelFromJson(result);
-                                    // print(agentNameModel);
-                                    print('logged in successfully');
+                                    await databaseHelper.saveUserData(
+                                        _usernameController.text,
+                                        _passwordController.text);
 
                                     Navigator.pushReplacementNamed(
                                         context, '/dashboard');

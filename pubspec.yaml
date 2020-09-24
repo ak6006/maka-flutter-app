@@ -41,6 +41,8 @@ dependencies:
   toast: ^0.1.5
   liquid_pull_to_refresh: ^1.1.0
   awesome_dialog: ^1.2.0
+  carousel_slider: ^2.2.1
+  cached_network_image: ^2.3.2+1
 
 dev_dependencies:
   flutter_test:

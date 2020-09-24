@@ -8,6 +8,7 @@ import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/models/productlist.dart';
 import 'package:maka/models/querybarcode.dart';
 import 'package:maka/screen/filterScreen.dart';
+import 'package:maka/screen/newOrder.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
@@ -197,16 +198,16 @@ class _DashBoardPageState extends State<DashBoardPage> {
                     ),
                   ),
 
-                  new Padding(
-                    padding: new EdgeInsets.only(top: size.height * 0.04),
-                  ),
+                  // new Padding(
+                  //   padding: new EdgeInsets.only(top: size.height * 0.02),
+                  // ),
                   CustomerNameRow(
                     lable: '  اهلا',
                     val: agentCustomerName,
                   ),
 
                   new Padding(
-                    padding: new EdgeInsets.only(top: size.height * 0.07),
+                    padding: new EdgeInsets.only(top: size.height * 0.05),
                   ),
 
                   //------------------------------------------------------------------
@@ -311,7 +312,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   //---------------------------------------------
                   //---------------------------------------------------
                   new Padding(
-                    padding: new EdgeInsets.only(top: size.height * 0.05),
+                    padding: new EdgeInsets.only(top: size.height * 0.03),
                   ),
 
                   //-------------------------------
@@ -463,9 +464,70 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   //---------------------------------------------
                   //---------------------------------------------------
                   new Padding(
-                    padding: new EdgeInsets.only(top: size.height * 0.05),
+                    padding: new EdgeInsets.only(top: size.height * 0.03),
                   ),
 
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(254, 88, 0, 1),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    // color: Color.fromRGBO(254, 88, 0, 1),
+                    //  height: 40, //size.height * 0.07,
+                    // width: 220, //size.width * 0.7,
+                    height: size.height * 0.06,
+                    width: size.width * 0.7,
+                    child: Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Container(
+                            // height: size.height * 0.07,
+                            // width: size.width * 0.4,
+                            child: new FlatButton.icon(
+                                icon: Container(
+                                  // margin: EdgeInsets.only(left: 30),
+                                  // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                  child:
+                                      Image.asset('assets/images/recieved.png'),
+                                ),
+                                label: Container(
+                                  width: size.width * 0.45,
+                                  // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                  child: Container(
+                                    margin: EdgeInsets.fromLTRB(
+                                        size.width * 0.1,
+                                        0,
+                                        size.width * 0.01,
+                                        0),
+                                    child: Text(
+                                      'اضافة طلبية جديدة',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(255, 255, 255, 1),
+                                          fontFamily: 'beIN',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () async {
+                                  //print('lkkkjkjhkj');
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => NewOrderPage()),
+                                  );
+                                }),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  new Padding(
+                    padding: new EdgeInsets.only(top: size.height * 0.03),
+                  ),
                   //------------------------------------------------------
                   //-------------------------------------------------
                   //----------------------------------------------------
