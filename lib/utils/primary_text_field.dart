@@ -34,16 +34,16 @@ class PrimaryTextField extends StatelessWidget {
         labelText: label,
         fillColor: Colors.white,
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: BorderSide(
             color: Colors.amber,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: BorderSide(
             color: Colors.orange[900],
-            width: 1.0,
+            width: 1.5,
           ),
         ),
       ),

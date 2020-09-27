@@ -5,7 +5,6 @@ import 'package:maka/models/customertransquery.dart';
 import 'package:maka/models/transquery.dart';
 import 'package:maka/screen/customertransquery.dart';
 import 'package:maka/screen/transQueryscanner.dart';
-import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
 
 class VinPage extends StatefulWidget {
@@ -109,18 +108,8 @@ class _VinPageState extends State<VinPage> {
                     ],
                   ),
                 ),
-
                 new Padding(
-                  padding: new EdgeInsets.only(top: size.height * 0.04),
-                ),
-
-                CustomerNameRow(
-                  lable: '  اهلا',
-                  val: agentCustomerName,
-                ),
-
-                new Padding(
-                  padding: new EdgeInsets.only(top: size.height * 0.07),
+                  padding: new EdgeInsets.only(top: 80.0),
                 ),
 
                 Container(
@@ -294,40 +283,6 @@ class _VinPageState extends State<VinPage> {
           ),
         ),
       ),
-    );
-  }
-}
-
-class CustomerNameRow extends StatefulWidget {
-  String lable;
-  String val;
-  CustomerNameRow({this.lable, this.val});
-  @override
-  _CustomerNameRowState createState() => _CustomerNameRowState();
-}
-
-class _CustomerNameRowState extends State<CustomerNameRow> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('${widget.val}',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 17,
-              fontFamily: 'beIN',
-            ),
-            textAlign: TextAlign.right),
-        Text(
-          '${widget.lable}',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 17,
-            fontFamily: 'beIN',
-          ),
-        ),
-      ],
     );
   }
 }

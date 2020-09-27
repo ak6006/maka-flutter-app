@@ -15,6 +15,7 @@ class DatabaseHelper {
   var stateMsg;
   var codest;
   var connection;
+  var token;
 
   loginData(String name, String password) async {
     try {
@@ -404,13 +405,6 @@ class DatabaseHelper {
     prefs.setString(key, value);
   }
 
-  _saveCustomerName(String customerName) async {
-    final prefs = await SharedPreferences.getInstance();
-    final key = 'CustomerName';
-    final value = customerName;
-    prefs.setString(key, value);
-  }
-
   read() async {
     final prefs = await SharedPreferences.getInstance();
     final key = 'token';
@@ -529,11 +523,11 @@ class DatabaseHelper {
     return tdata;
   }
 
-  // _readUserData() async {
-  //   final prefs = await SharedPreferences.getInstance();
-  //   final key = 'token';
-  //   final value = token;
-  //   prefs.setString(key, value);
-  // }
-
+  //-----------------------------
+  _saveCustomerName(String customerName) async {
+    final prefs = await SharedPreferences.getInstance();
+    final key = 'CustomerName';
+    final value = customerName;
+    prefs.setString(key, value);
+  }
 }

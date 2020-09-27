@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 //import 'package:maka/models/customertransquery.dart';
 import 'package:maka/models/orderQuntitySum.dart';
-import 'package:maka/utils/constant.dart';
 
 // ignore: must_be_immutable
 class OrderQuantityScreen extends StatefulWidget {
@@ -16,7 +15,6 @@ class OrderQuantityScreen extends StatefulWidget {
 
 class _OrderQuantityScreenState extends State<OrderQuantityScreen> {
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       //backgroundColor: Color.fromRGBO(0, 51, 94, 1),
       body: Container(
@@ -53,28 +51,19 @@ class _OrderQuantityScreenState extends State<OrderQuantityScreen> {
                 SizedBox(
                   width: 10,
                 ),
-                Column(
-                  children: [
-                    Container(
-                      // padding: const EdgeInsets.only(left: 30),
-                      margin: new EdgeInsets.only(top: size.height * 0.04),
-                      width: 190,
-                      alignment: Alignment.center,
-                      color: Color.fromRGBO(254, 88, 0, 1),
-                      child: new Text(
-                        'بيانات مشتريات وكيل',
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'beIN',
-                          fontSize: 18,
-                        ),
-                      ),
+                Container(
+                  // padding: const EdgeInsets.only(left: 30),
+                  width: 190,
+                  alignment: Alignment.center,
+                  color: Color.fromRGBO(254, 88, 0, 1),
+                  child: new Text(
+                    'بيانات مشتريات وكيل',
+                    style: new TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'beIN',
+                      fontSize: 18,
                     ),
-                    CustomerNameRow(
-                      lable: '  اهلا',
-                      val: agentCustomerName,
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
@@ -209,8 +198,7 @@ class _WrowState extends State<Wrow> {
           //color: const Color.fromRGBO(0, 51, 94, 1),
           child: Text(
             '${widget.val}',
-            style: TextStyle(
-                color: Colors.white, fontSize: 14, fontFamily: 'beIN'),
+            style: TextStyle(color: Colors.white, fontSize: 14),
             textAlign: TextAlign.right,
           ),
         ),
@@ -312,40 +300,6 @@ class _LightsState extends State<Lights> {
         ),
         SizedBox(
           width: 0,
-        ),
-      ],
-    );
-  }
-}
-
-class CustomerNameRow extends StatefulWidget {
-  String lable;
-  String val;
-  CustomerNameRow({this.lable, this.val});
-  @override
-  _CustomerNameRowState createState() => _CustomerNameRowState();
-}
-
-class _CustomerNameRowState extends State<CustomerNameRow> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('${widget.val}',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 17,
-              fontFamily: 'beIN',
-            ),
-            textAlign: TextAlign.right),
-        Text(
-          '${widget.lable}',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 17,
-            fontFamily: 'beIN',
-          ),
         ),
       ],
     );

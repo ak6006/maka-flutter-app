@@ -11,8 +11,8 @@ import 'package:maka/utils/databasehelper.dart';
 import 'orderQuantityScreen.dart';
 
 class FilterScreenPage extends StatefulWidget {
-  List<ProductList> plist;
-  FilterScreenPage({this.plist});
+  // List<ProductList> plist;
+  //FilterScreenPage({this.plist});
   @override
   _FilterScreenPageState createState() => _FilterScreenPageState();
 }
@@ -27,6 +27,7 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
 
   String title = 'DropDownButton';
   String _productsVal;
+  int _prodId;
   String productval = '';
   List _products = [];
   @override
@@ -42,14 +43,17 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
       lable: 'الى تاريخ',
     );
     //List fixedList = widget.plist.asMap();
-    for (var h in widget.plist) {
+    productItems.clear();
+    for (var h in dropDownList.prodNames) {
       _products.add(h.productName);
+      productItems.add(DropDownItem(
+          id: h.productId == 0 ? 0 : h.productId, name: h.productName));
+      //print(productItems[1].name);
     }
     // print('fggggg${fixedList[1]}');
   }
 
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return Scaffold(
       //backgroundColor: Color.fromRGBO(0, 51, 94, 1),
       body: Container(
@@ -86,28 +90,19 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                 SizedBox(
                   width: 10,
                 ),
-                Column(
-                  children: [
-                    Container(
-                      // padding: const EdgeInsets.only(left: 30),
-                      margin: new EdgeInsets.only(top: size.height * 0.04),
-                      width: 190,
-                      alignment: Alignment.center,
-                      color: Color.fromRGBO(254, 88, 0, 1),
-                      child: new Text(
-                        'استعلام عن مشتريات وكيل',
-                        style: new TextStyle(
-                          color: Colors.white,
-                          fontFamily: 'beIN',
-                          fontSize: 16,
-                        ),
-                      ),
+                Container(
+                  // padding: const EdgeInsets.only(left: 30),
+                  width: 190,
+                  alignment: Alignment.center,
+                  color: Color.fromRGBO(254, 88, 0, 1),
+                  child: new Text(
+                    'استعلام عن مشريات وكيل',
+                    style: new TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'beIN',
+                      fontSize: 16,
                     ),
-                    CustomerNameRow(
-                      lable: '  اهلا',
-                      val: agentCustomerName,
-                    ),
-                  ],
+                  ),
                 ),
               ],
             ),
@@ -149,7 +144,10 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                       value: _productsVal,
                       //style: TextStyle(color: Colors.black),
                       onChanged: (value) {
+                        print(value);
                         setState(() {
+                          // _prodId = value;
+
                           _productsVal = value;
                           productval = value;
                           if (_productsVal == 'كل المنتجات') {
@@ -157,7 +155,23 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                           }
                         });
                       },
-                      items: _products.map((value) {
+                      items:
+                          // productItems
+                          //     .map(
+                          //       (e) => DropdownMenuItem(
+                          //         value: e.id.toInt(),
+                          //         child: Text(
+                          //           e.name.toString(),
+                          //           style: TextStyle(
+                          //             color: Colors.white,
+                          //             fontFamily: 'beIN',
+                          //             fontWeight: FontWeight.bold,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     )
+                          //     .toList(),
+                          _products.map((value) {
                         return DropdownMenuItem(
                           value: value,
                           child: Text(
@@ -207,7 +221,9 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                               orderquantitysumquery: orderquantitysumquery,
                             )),
                   );
+
                   return;
+
                   //  Navigator.pushReplacementNamed(context, '/totalFilterResult');
                 },
                 color: Color.fromRGBO(254, 88, 0, 1),
@@ -232,6 +248,7 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
               width: 160,
               child: new FlatButton(
                 onPressed: () {
+                  // print('vbn${productItems[2].name}');
                   print(begin.dateTime);
                   print(end.dateTime);
                   print(productval);
@@ -250,40 +267,6 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class CustomerNameRow extends StatefulWidget {
-  String lable;
-  String val;
-  CustomerNameRow({this.lable, this.val});
-  @override
-  _CustomerNameRowState createState() => _CustomerNameRowState();
-}
-
-class _CustomerNameRowState extends State<CustomerNameRow> {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Text('${widget.val}',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 17,
-              fontFamily: 'beIN',
-            ),
-            textAlign: TextAlign.right),
-        Text(
-          '${widget.lable}',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 17,
-            fontFamily: 'beIN',
-          ),
-        ),
-      ],
     );
   }
 }

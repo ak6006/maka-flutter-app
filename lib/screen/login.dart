@@ -249,67 +249,63 @@ class _LogInState extends State<LogIn> {
                                 databaseHelper
                                     .loginData(_usernameController.text,
                                         _passwordController.text)
-                                    .whenComplete(() async {
-                                  _name = _usernameController.text;
-                                  _password = _passwordController.text;
-                                  // if (_name != '' && _password != '') {
-                                  //   print('Sucessful');
-                                  // }
-
-                                  if (databaseHelper.status) {
-                                    if (databaseHelper.connection) {
-                                      _alertDialog('لا يوجد اتصال بالسيرفر');
-
-                                      setState(() {
-                                        showSpinner = false;
-                                      });
-                                    } else {
-                                      setState(() {
-                                        showSpinner = false;
-                                        _passwordController.text = '';
-                                        _formKey.currentState.validate();
-                                      });
-                                    }
-                                  } else {
-                                    final prefs =
-                                        await SharedPreferences.getInstance();
-                                    final key = 'CustomerName';
-                                    final value = prefs.get(key) ?? 0;
-
-                                    final keyUser = 'user';
-                                    final valueUser = prefs.get(keyUser) ?? '';
-
-                                    if (value == 0 ||
-                                        valueUser != _usernameController.text) {
-                                      dynamic result = await databaseHelper
-                                          .getCustomerName();
-                                      final prefs =
-                                          await SharedPreferences.getInstance();
-                                      final key = 'CustomerName';
-                                      final value1 = prefs.get(key) ?? 0;
-                                      print('new valueeeewww');
-                                      agentCustomerName = value1;
-                                    } else {
-                                      agentCustomerName = value;
-                                      print(value);
-                                    }
-                                    await databaseHelper.saveUserData(
-                                        _usernameController.text,
-                                        _passwordController.text);
-
-                                    Navigator.pushReplacementNamed(
-                                        context, '/dashboard');
-                                    // Navigator.of(context).push(
-                                    //     MaterialPageRoute(
-                                    //         builder: (context) =>
-                                    //             DashBoardPage()));
+                                    .whenComplete(
+                                  () async {
+                                    _name = _usernameController.text;
+                                    _password = _passwordController.text;
+                                    // if (_name != '' && _password != '') {
+                                    //   print('Sucessful');
                                     // }
-                                  }
-                                }
 
-                                        //-------
-                                        //}
-                                        );
+                                    if (databaseHelper.status) {
+                                      if (databaseHelper.connection) {
+                                        _alertDialog('لا يوجد اتصال بالسيرفر');
+
+                                        setState(() {
+                                          showSpinner = false;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          showSpinner = false;
+                                          _passwordController.text = '';
+                                          _formKey.currentState.validate();
+                                        });
+                                      }
+                                    } else {
+                                      // final prefs =
+                                      //     await SharedPreferences.getInstance();
+                                      // final key = 'CustomerName';
+                                      // final value = prefs.get(key) ?? 0;
+
+                                      // final keyUser = 'user';
+                                      // final valueUser =
+                                      //     prefs.get(keyUser) ?? '';
+
+                                      // if (value == 0 ||
+                                      //     valueUser !=
+                                      //         _usernameController.text) {
+                                      //   dynamic result = await databaseHelper
+                                      //       .getCustomerName();
+                                      //   final prefs = await SharedPreferences
+                                      //       .getInstance();
+                                      //   final key = 'CustomerName';
+                                      //   final value1 = prefs.get(key) ?? 0;
+                                      //   print('new valueeeewww');
+                                      //   agentCustomerName = value1;
+                                      // } else {
+                                      //   agentCustomerName = value;
+                                      //   print(value);
+                                      // }
+                                      await inislizedata();
+                                      await databaseHelper.saveUserData(
+                                          _usernameController.text,
+                                          _passwordController.text);
+
+                                      Navigator.pushReplacementNamed(
+                                          context, '/dashboard');
+                                    }
+                                  },
+                                );
                               },
                               color: Color.fromRGBO(254, 88, 0, 1),
                               child: Container(
