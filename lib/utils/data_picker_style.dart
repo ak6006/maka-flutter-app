@@ -30,11 +30,9 @@ class _DataPickerState extends State<DataPicker> {
         });
       },
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.08,
+        height: 50.0,
         decoration: BoxDecoration(
-            border: Border.all(
-                width: MediaQuery.of(context).size.width * 0.01,
-                color: Colors.orange[800]),
+            border: Border.all(width: 1.0, color: Colors.orange[800]),
             borderRadius: BorderRadius.circular(
               15.0,
             )),

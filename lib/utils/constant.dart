@@ -1,14 +1,14 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/utils/databasehelper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 String agentCustomerName;
 const kPrimaryColor = Color(0xFF1B1448);
 
 const kColumnLabelStyle = TextStyle(
-  color: Colors.white,
-  fontFamily: 'beIN',
-);
+    color: Colors.white, fontFamily: 'beIN', fontWeight: FontWeight.bold);
 // TextStyle(fontWeight: FontWeight.bold, color: kPrimaryColor);
 DropDownList dropDownList;
 
@@ -19,8 +19,10 @@ List<DropDownItem> measureItems = [];
 List<DropDownItem> vanDriver = [];
 List<CustomerOrder> orders = new List<CustomerOrder>();
 DatabaseHelper databaseHelper = new DatabaseHelper();
+//final prefs = SharedPreferences.getInstance();
 
 Future inislizedata() async {
+  //prefs = await SharedPreferences.getInstance();
   var res = await databaseHelper.getProductData();
   dropDownList = dropDownListFromJson(res);
   for (var h in dropDownList.prodNames) {
@@ -83,6 +85,21 @@ class DropDownItem {
   String name;
   bool state;
   DropDownItem({this.id, this.name, this.state});
+}
+
+alertDialog(DialogType type, context, String titel, String desc, IconData icon,
+    Color color) {
+  return AwesomeDialog(
+      context: context,
+      dialogType: type,
+      animType: AnimType.RIGHSLIDE,
+      headerAnimationLoop: false,
+      title: titel,
+      desc: desc,
+      btnOkOnPress: () {},
+      btnOkIcon: icon,
+      btnOkColor: color)
+    ..show();
 }
 
 // class Orders {

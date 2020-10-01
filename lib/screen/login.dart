@@ -259,7 +259,13 @@ class _LogInState extends State<LogIn> {
 
                                     if (databaseHelper.status) {
                                       if (databaseHelper.connection) {
-                                        _alertDialog('لا يوجد اتصال بالسيرفر');
+                                        alertDialog(
+                                            DialogType.ERROR,
+                                            context,
+                                            'خطاء في الاتصال',
+                                            'لا يوجد اتصال بالسرفر',
+                                            Icons.cancel,
+                                            Colors.red);
 
                                         setState(() {
                                           showSpinner = false;
@@ -339,20 +345,6 @@ class _LogInState extends State<LogIn> {
         ),
       ),
     );
-  }
-
-  _alertDialog(String msg) {
-    return AwesomeDialog(
-        context: context,
-        dialogType: DialogType.ERROR,
-        animType: AnimType.RIGHSLIDE,
-        headerAnimationLoop: false,
-        title: 'خطاء في الاتصال',
-        desc: 'لا يوجد اتصال بالسيرفر حاول لاحقا',
-        btnOkOnPress: () {},
-        btnOkIcon: Icons.cancel,
-        btnOkColor: Colors.red)
-      ..show();
   }
 
   void _showDialog(String msg) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:maka/screen/updateOrder.dart';
 import 'package:maka/utils/constant.dart';
 
 class TableData extends DataTableSource {
@@ -31,6 +32,13 @@ class TableData extends DataTableSource {
             splashColor: Colors.transparent,
             icon: const Icon(Icons.edit),
             onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => UpdateOrderItemsScreen(
+                          updateorders: orders[index],
+                        )),
+              );
               print(orders[index].orderDate);
             },
           ),

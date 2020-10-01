@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:maka/screen/FeedPrices.dart';
 
 import 'package:maka/screen/dashboard.dart';
 import 'package:maka/screen/homepage.dart';
@@ -88,6 +89,7 @@ class _MyAppState extends State<MyApp> {
         '/MyHomePage': (BuildContext context) => new MyHomePage(),
         '/register': (BuildContext context) => new RegisterPage(),
         '/login': (BuildContext context) => new LogIn(),
+        '/FeedPrices': (BuildContext context) => new FeedPrices(),
       },
     );
   }

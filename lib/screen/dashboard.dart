@@ -25,7 +25,6 @@ class DashBoardPage extends StatefulWidget {
 class _DashBoardPageState extends State<DashBoardPage> {
   SharedPreferences logindata;
   String username;
-
   // static String _email;
   // static String _password;
   bool isValid;
@@ -111,27 +110,71 @@ class _DashBoardPageState extends State<DashBoardPage> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   new Padding(
-                    padding: new EdgeInsets.only(top: size.height * 0.05),
+                    padding: new EdgeInsets.only(top: size.height * 0.12),
                   ),
+                  // Container(
+                  //   child: Flexible(
+                  //     child: Hero(
+                  //       tag: 'logo',
+                  //       child: Container(
+                  //         height: 190, // size.height * 0.2,
+                  //         child: Center(
+                  //           child: Image(
+                  //             height: 190, // size.height * 0.2,
+                  //             image: AssetImage('assets/images/lg2.jpg'),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
+
+                  // SizedBox(
+                  //   width: size.width * 0.04,
+                  // ),
+
+                  //---------------------------------
+                  //-----------------------------
                   Row(
-                    children: <Widget>[
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                       Container(
-                        child: Flexible(
-                          child: Hero(
-                            tag: 'logo',
-                            child: Container(
-                              height: 190, // size.height * 0.2,
-                              child: Center(
-                                child: Image(
-                                  height: 190, // size.height * 0.2,
-                                  image: AssetImage('assets/images/lg2.jpg'),
-                                ),
+                        decoration: BoxDecoration(
+                          color: Color.fromRGBO(255, 255, 255, 1),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        // color: Color.fromRGBO(254, 88, 0, 1),
+                        height: 50, //size.height * 0.07,
+                        width: 220, //size.width * 0.7,
+                        child: Row(
+                          children: <Widget>[
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Image(
+                              height: size.height * 0.07,
+                              image: AssetImage('assets/images/home.png'),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.05,
+                            ),
+                            Container(
+                              // height: size.height * 0.07,
+                              // width: size.width * 0.4,
+                              child: new Text(
+                                'الصفحة الرئيسية',
+                                style: new TextStyle(
+                                    color: Color.fromRGBO(254, 88, 0, 1),
+                                    fontFamily: 'beIN',
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
                               ),
                             ),
-                          ),
+                          ],
                         ),
                       ),
                       Container(
+                        margin: EdgeInsets.only(left: size.width * 0.05),
                         height: size.height * 0.05,
                         width: size.width * 0.08,
                         child: new IconButton(
@@ -146,88 +189,168 @@ class _DashBoardPageState extends State<DashBoardPage> {
                           icon: Icon(Icons.logout),
                         ),
                       ),
-                      SizedBox(
-                        width: size.width * 0.04,
-                      ),
                     ],
                   ),
-
-                  //---------------------------------
-                  //-----------------------------
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    // color: Color.fromRGBO(254, 88, 0, 1),
-                    height: 50, //size.height * 0.07,
-                    width: 220, //size.width * 0.7,
-                    child: Row(
-                      children: <Widget>[
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Image(
-                          height: size.height * 0.07,
-                          image: AssetImage('assets/images/home.png'),
-                        ),
-                        SizedBox(
-                          width: MediaQuery.of(context).size.width * 0.05,
-                        ),
-                        Container(
-                          // height: size.height * 0.07,
-                          // width: size.width * 0.4,
-                          child: new Text(
-                            'الصفحة الرئيسية',
-                            style: new TextStyle(
-                                color: Color.fromRGBO(254, 88, 0, 1),
-                                fontFamily: 'beIN',
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                   new Padding(
-                    padding: new EdgeInsets.only(top: 90),
+                    padding: new EdgeInsets.only(top: size.height * 0.06),
                   ),
 
                   //------------------------------------------------------------------
                   //--------------------------------------------
 
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(254, 88, 0, 1),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    // color: Color.fromRGBO(254, 88, 0, 1),
-                    //  height: 40, //size.height * 0.07,
-                    // width: 220, //size.width * 0.7,
-                    height: size.height * 0.06,
-                    width: size.width * 0.7,
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            // height: size.height * 0.07,
-                            // width: size.width * 0.4,
-                            child: new FlatButton.icon(
-                              icon: Container(
-                                // margin: EdgeInsets.only(left: 30),
-                                // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                child: Image.asset(
-                                  'assets/images/arrow.png',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          var brcode = await scanBarcodeNormal();
+                          dynamic result = await databaseHelper.getData(brcode);
+                          if (result == '') {
+                            return;
+                          } else {
+                            String output = _textSelect(result);
+                            queryBarCode = queryBarCodeFromJson(output);
+                            print(queryBarCode.customerName);
+
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => BarCodePage(
+                                        queryBarCode: queryBarCode,
+                                      )),
+                            );
+                          }
+                        },
+                        child: Container(
+                          height: size.height * 0.2,
+                          width: size.width * 0.42,
+                          child: Card(
+                            elevation: 20,
+                            color: Colors.deepOrange,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 100,
+                                  height: 70,
+                                  child: Image.asset('assets/images/arrow.png'),
                                 ),
-                              ),
-                              label: Container(
-                                width: size.width * 0.45,
-                                // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                child: Container(
-                                  margin: EdgeInsets.fromLTRB(size.width * 0.07,
-                                      0, size.width * 0.01, 0),
+                                Expanded(
+                                  child: Container(
+                                    // margin: EdgeInsets.only(
+                                    //     left: size.width * 0.05),
+                                    child: Text(
+                                      'فحص شكارة بالسريال',
+                                      style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(255, 255, 255, 1),
+                                          fontFamily: 'beIN',
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 16),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          // var res = await databaseHelper.getProductData();
+                          // dropDownList = dropDownListFromJson(res);
+                          // for (var h in dropDownList.prodNames) {
+                          //   print(h.productName);
+                          // }
+                          // await inislizedata();
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    AddOrderScreen()), //FilterScreenPage()),
+                          );
+                          return;
+                          // var brcode = await scanBarcodeNormal();
+                          // setState(() {
+                          //   showSpinner = true;
+                          // });
+                          //----------------------------
+                          dynamic result = [
+                            {
+                              "productName": "asdf",
+                              "measre_name": "das",
+                              "sumQuantity": "3"
+                            },
+                            {
+                              "productName": "hgvgg",
+                              "measre_name": "oouuu",
+                              "sumQuantity": "77"
+                            }
+                          ];
+
+                          //  await databaseHelper.getData('brcode');
+                          // .whenComplete(() {
+                          //   if (databaseHelper.codest != 200) {
+                          //     // _showDialog();
+                          //     // msgStatus = 'Check email or password';
+                          //     // print(msgStatus);
+                          //   } else {
+                          //     // _showDialog();
+                          //     Navigator.pushReplacementNamed(
+                          //         context, '/dashboard');
+                          //   }
+                          // });
+
+                          //----------------------------
+
+                          // print('$brcode');
+                          // print('${result}');
+                          // setState(() {
+                          //   showSpinner = false;
+                          // });
+                          if (result == '') {
+                            return;
+                          } else {
+                            // setState(() {
+                            //   showSpinner = false;
+                            // });
+                            print('lkkkjkjhkj');
+
+                            String output = _textSelect(result.toString());
+                            // var bb = json.encode(output.toString());
+                            print(result.toString());
+                            //return;
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => FilterScreenPage()),
+                            );
+                          }
+                        },
+                        child: Container(
+                          height: size.height * 0.2,
+                          width: size.width * 0.42,
+                          child: Card(
+                            elevation: 20,
+                            color: Colors.deepOrange,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 100,
+                                  height: 70,
+                                  child:
+                                      Image.asset('assets/images/recieved.png'),
+                                ),
+                                Container(
+                                  margin:
+                                      EdgeInsets.only(right: size.width * 0.04),
                                   child: Text(
-                                    'فحص شكارة بالسريال',
+                                    'اضافة طلبية جديدة',
                                     style: TextStyle(
                                         color: Color.fromRGBO(255, 255, 255, 1),
                                         fontFamily: 'beIN',
@@ -235,105 +358,98 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                         fontSize: 16),
                                   ),
                                 ),
-                              ),
-                              onPressed: () async {
-                                var brcode = await scanBarcodeNormal();
-
-                                // setState(() {
-                                //   showSpinner = true;
-                                // });
-
-                                //----------------------------
-                                dynamic result =
-                                    await databaseHelper.getData(brcode);
-                                // .whenComplete(() {
-                                //   if (databaseHelper.codest != 200) {
-                                //     // _showDialog();
-                                //     // msgStatus = 'Check email or password';
-                                //     // print(msgStatus);
-                                //   } else {
-                                //     // _showDialog();
-                                //     Navigator.pushReplacementNamed(
-                                //         context, '/dashboard');
-                                //   }
-                                // });
-
-                                //----------------------------
-
-                                // print('$brcode');
-                                // print('${result}');
-                                // setState(() {
-                                //   showSpinner = false;
-                                // });
-                                if (result == '') {
-                                  return;
-                                } else {
-                                  // setState(() {
-                                  //   showSpinner = false;
-                                  // });
-
-                                  String output = _textSelect(result);
-
-                                  queryBarCode = queryBarCodeFromJson(output);
-                                  //  print(databaseEncode);
-                                  print(queryBarCode.customerName);
-
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => BarCodePage(
-                                              queryBarCode: queryBarCode,
-                                            )),
-                                  );
-                                }
-                              },
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
 
+                  //--------------------------
                   //---------------------------------------------
                   //---------------------------------------------------
                   new Padding(
-                    padding: new EdgeInsets.only(top: size.height * 0.05),
+                    padding: new EdgeInsets.only(top: size.height * 0.01),
                   ),
 
-                  //-------------------------------
-                  //---------------------------------------
+                  //------------------------------------------------------
+                  //-------------------------------------------------
+                  //----------------------------------------------------
 
-                  //-----------------------------
-                  //--------------------------
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          Navigator.pushReplacementNamed(context, '/vinpage');
+                        },
+                        child: Container(
+                          height: size.height * 0.2,
+                          width: size.width * 0.42,
+                          child: Card(
+                            elevation: 20,
+                            color: Colors.deepOrange,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 100,
+                                  height: 70,
+                                  child: Image.asset('assets/images/van.png'),
+                                ),
+                                Text(
+                                  //'عربات النقل'
+                                  agentCustomerName,
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(255, 255, 255, 1),
+                                      fontFamily: 'beIN',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          // var brcode = await scanBarcodeNormal();
+                          // dynamic result = await databaseHelper.getData(brcode);
+                          // if (result == '') {
+                          //   return;
+                          // } else {
+                          //   String output = _textSelect(result);
+                          //   queryBarCode = queryBarCodeFromJson(output);
+                          //   print(queryBarCode.customerName);
 
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(254, 88, 0, 1),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    // color: Color.fromRGBO(254, 88, 0, 1),
-                    //  height: 40, //size.height * 0.07,
-                    // width: 220, //size.width * 0.7,
-                    height: size.height * 0.06,
-                    width: size.width * 0.7,
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            // height: size.height * 0.07,
-                            // width: size.width * 0.4,
-                            child: new FlatButton.icon(
-                              icon: Container(
-                                // margin: EdgeInsets.only(left: 30),
-                                // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                child: Image.asset('assets/images/arrow.png'),
-                              ),
-                              label: Container(
-                                width: size.width * 0.45,
-                                // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                                child: Container(
-                                  margin: EdgeInsets.fromLTRB(size.width * 0.07,
-                                      0, size.width * 0.01, 0),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FilterScreenPage()),
+                          );
+                        },
+                        child: Container(
+                          height: size.height * 0.2,
+                          width: size.width * 0.42,
+                          child: Card(
+                            elevation: 20,
+                            color: Colors.deepOrange,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 100,
+                                  height: 70,
+                                  child: Image.asset('assets/images/arrow.png'),
+                                ),
+                                Container(
+                                  margin:
+                                      EdgeInsets.only(right: size.width * 0.04),
                                   child: Text(
                                     'استعلام مشتريات وكيل',
                                     style: TextStyle(
@@ -343,143 +459,87 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                         fontSize: 16),
                                   ),
                                 ),
-                              ),
-                              onPressed: () async {
-                                // var res = await databaseHelper.getProductData();
-                                // dropDownList = dropDownListFromJson(res);
-                                // for (var h in dropDownList.prodNames) {
-                                //   print(h.productName);
-                                // }
-
-                                // await inislizedata();
-
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          AddOrderScreen()), //FilterScreenPage()),
-                                );
-
-                                return;
-                                // var brcode = await scanBarcodeNormal();
-
-                                // setState(() {
-                                //   showSpinner = true;
-                                // });
-
-                                //----------------------------
-                                dynamic result = [
-                                  {
-                                    "productName": "asdf",
-                                    "measre_name": "das",
-                                    "sumQuantity": "3"
-                                  },
-                                  {
-                                    "productName": "hgvgg",
-                                    "measre_name": "oouuu",
-                                    "sumQuantity": "77"
-                                  }
-                                ];
-
-                                //  await databaseHelper.getData('brcode');
-                                // .whenComplete(() {
-                                //   if (databaseHelper.codest != 200) {
-                                //     // _showDialog();
-                                //     // msgStatus = 'Check email or password';
-                                //     // print(msgStatus);
-                                //   } else {
-                                //     // _showDialog();
-                                //     Navigator.pushReplacementNamed(
-                                //         context, '/dashboard');
-                                //   }
-                                // });
-
-                                //----------------------------
-
-                                // print('$brcode');
-                                // print('${result}');
-                                // setState(() {
-                                //   showSpinner = false;
-                                // });
-                                if (result == '') {
-                                  return;
-                                } else {
-                                  // setState(() {
-                                  //   showSpinner = false;
-                                  // });
-                                  print('lkkkjkjhkj');
-
-                                  String output =
-                                      _textSelect(result.toString());
-                                  // var bb = json.encode(output.toString());
-                                  print(result.toString());
-                                  //return;
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            FilterScreenPage()),
-                                  );
-
-                                  // orderquantitysumquery =
-                                  //     orderQuantitySumQueryFromJson(bb);
-                                  //  print(databaseEncode);
-                                  //  print(queryBarCode.customerName);
-
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //           OrderQuantityScreen(
-                                  //             orderquantitysumquery:
-                                  //                 orderquantitysumquery,
-                                  //           )),
-                                  // );
-                                }
-                              },
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
 
-                  //---------------------------------------------
-                  //---------------------------------------------------
                   new Padding(
-                    padding: new EdgeInsets.only(top: size.height * 0.05),
+                    padding: new EdgeInsets.only(top: size.height * 0.01),
                   ),
 
-                  //------------------------------------------------------
-                  //-------------------------------------------------
-                  //----------------------------------------------------
+                  Row(
+                    /// اسعار الاعلاف اليوم
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        onTap: () async {
+                          Navigator.pushReplacementNamed(
+                              context, '/FeedPrices');
 
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color.fromRGBO(254, 88, 0, 1),
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    // color: Color.fromRGBO(254, 88, 0, 1),
-                    //height: 40, //size.height * 0.07,
-                    //  width: 220, //size.width * 0.7,
-                    height: size.height * 0.06,
-                    width: size.width * 0.7,
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Container(
-                            // height: size.height * 0.07,
-                            width: size.width * 0.35,
-                            child: new FlatButton.icon(
-                              label: Container(
-                                //margin: EdgeInsets.fromLTRB(0, 0, 20, 0),
-                                width: size.width * 0.45,
-                                child: Container(
-                                  margin: EdgeInsets.fromLTRB(size.width * 0.2,
-                                      0, size.width * 0.01, 0),
+                          /// اسعار الاعلاف اليوم
+                        },
+                        child: Container(
+                          height: size.height * 0.2,
+                          width: size.width * 0.42,
+                          child: Card(
+                            elevation: 20,
+                            color: Colors.deepOrange,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 100,
+                                  height: 70,
+                                  child: Image.asset('assets/images/van.png'),
+                                ),
+                                Text(
+                                  'اسعار الاعلاف اليوم',
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(255, 255, 255, 1),
+                                      fontFamily: 'beIN',
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => FilterScreenPage()),
+                          );
+                        },
+                        child: Container(
+                          height: size.height * 0.2,
+                          width: size.width * 0.42,
+                          child: Card(
+                            elevation: 20,
+                            color: Colors.deepOrange,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
+                            ),
+                            child: Column(
+                              children: [
+                                Container(
+                                  width: 100,
+                                  height: 70,
+                                  child: Image.asset('assets/images/arrow.png'),
+                                ),
+                                Container(
+                                  // margin:
+                                  //     EdgeInsets.only(right: size.width * 0.04),
                                   child: Text(
-                                    agentCustomerName,
-                                    //  'عربات النقل',
+                                    'ddddddd',
                                     style: TextStyle(
                                         color: Color.fromRGBO(255, 255, 255, 1),
                                         fontFamily: 'beIN',
@@ -487,25 +547,12 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                         fontSize: 16),
                                   ),
                                 ),
-                              ),
-                              icon: Container(
-                                //  margin: EdgeInsets.only(left: 30),
-                                // margin: EdgeInsets.fromLTRB(0, 0, 50, 0),
-                                child: Image.asset('assets/images/van.png'),
-                              ),
-                              onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, '/vinpage');
-                              },
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-
-                  new Padding(
-                    padding: new EdgeInsets.only(top: size.height * 0.05),
+                      ),
+                    ],
                   ),
                 ],
               ),

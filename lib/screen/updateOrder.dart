@@ -11,16 +11,19 @@ import 'package:maka/utils/data_picker_style.dart';
 import 'package:maka/utils/primary_text_field.dart';
 
 // ignore: must_be_immutable
-class AddOrderItemsScreen extends StatefulWidget {
+class UpdateOrderItemsScreen extends StatefulWidget {
   //List<CustomerTransQuery> customertransquery;
-  DropDownItem orderproductItems;
-  AddOrderItemsScreen({this.orderproductItems});
+  // DropDownItem orderproductItems;
+  CustomerOrder updateorders;
+  UpdateOrderItemsScreen({this.updateorders});
 
   @override
-  _AddOrderItemsScreenState createState() => _AddOrderItemsScreenState();
+  _UpdateOrderItemsScreenState createState() => _UpdateOrderItemsScreenState();
 }
 
-class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
+class _UpdateOrderItemsScreenState extends State<UpdateOrderItemsScreen> {
+  final TextEditingController _quantity = new TextEditingController();
+
   DateTime timeEndSelected;
   DataPicker orderdate;
   int _weghtId;
@@ -32,12 +35,29 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
   void initState() {
     for (var h in vanDriver) {
       h.state = false;
+      for (var s in widget.updateorders.orderCars) {
+        if (h.id == s.vId) {
+          h.state = true;
+        }
+      }
     }
+    selectedweghtItems = DropDownItem(
+        id: widget.updateorders.wieghtId,
+        name: (widget.updateorders.wieghtName.toString()));
+    quantity = widget.updateorders.quantity;
+    selectedvanDriver.clear();
+    for (var g in widget.updateorders.orderCars) {
+      selectedvanDriver.add(OrderCar(vId: g.vId, driverName: g.driverName));
+      //  e.state = value;
+    }
+    _vanId = vanDriver.first.id;
+
     orderdate = new DataPicker(
-      dateTime: DateTime.now().add(Duration(days: 1)),
+      dateTime: widget.updateorders.orderDate,
       lable: 'تاريخ الطلبية',
     );
-    selectedvanDriver.clear();
+
+    _quantity.text = widget.updateorders.quantity;
   }
 
   Widget build(BuildContext context) {
@@ -83,7 +103,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                   alignment: Alignment.center,
                   color: Color.fromRGBO(254, 88, 0, 1),
                   child: new Text(
-                    'اضافة طلبية جديده',
+                    'تعديل طلبية ',
                     style: new TextStyle(
                       color: Colors.white,
                       fontFamily: 'beIN',
@@ -103,7 +123,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                     Container(
                       child: Image(
                         image: AssetImage(
-                          'assets/images/${widget.orderproductItems.id}.png',
+                          'assets/images/${widget.updateorders.productId}.png',
                         ),
                         height: 110,
                       ),
@@ -115,7 +135,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                         alignment: Alignment.center,
                         // margin: EdgeInsets.fromLTRB(110, 0, 0, 0),
                         child: Text(
-                          widget.orderproductItems.name,
+                          widget.updateorders.productName,
                           style: TextStyle(
                               color: Color.fromRGBO(255, 255, 255, 1),
                               fontFamily: 'beIN',
@@ -148,7 +168,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                         //     return null;
                         //   }
                         // },
-                        // controller: _usernameController,
+                        controller: _quantity,
                       ),
                     ),
                     new Padding(
@@ -207,19 +227,43 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                               //       .toString());
                               //   return;
 // var ff=weghtItems.indexOf(widget.orderproductItems);
-                              orders.add(CustomerOrder(
-                                  orderId: 0,
-                                  orderHasProductId: 0,
-                                  orderDate: orderdate.dateTime,
-                                  productId: widget.orderproductItems.id,
-                                  productName: widget.orderproductItems.name,
-                                  wieghtId: selectedweghtItems.id,
-                                  wieghtName:
-                                      int.parse(selectedweghtItems.name),
-                                  measureId: measureItems[0].id,
-                                  measureName: measureItems[0].name,
-                                  quantity: quantity,
-                                  orderCars: selectedvanDriver));
+                              // final hh = orders.where((i) {
+                              //   i = widget.updateorders;
+                              //   //
+                              //   return;
+                              // });
+                              print(widget.updateorders.quantity);
+                              print(orders.length);
+                              int index = orders
+                                  .indexWhere((t) => t == widget.updateorders);
+                              // print(m);
+                              orders[index].orderDate = orderdate.dateTime;
+                              orders[index].wieghtId = selectedweghtItems.id;
+                              orders[index].wieghtId = selectedweghtItems.id;
+
+                              orders[index].wieghtName =
+                                  int.parse(selectedweghtItems.name);
+
+                              orders[index].quantity = quantity;
+                              orders[index].orderCars = selectedvanDriver;
+                              print(jsonEncode(
+                                  orders.map((e) => e.toJson()).toList()));
+
+                              //  return;
+                              // orders.add(CustomerOrder(
+                              //     orderId: 0,
+                              //     orderHasProductId: 0,
+                              //     orderDate: orderdate.dateTime,
+                              //     productId: widget.orderproductItems.id,
+                              //     productName: widget.orderproductItems.name,
+                              //     wieghtId: selectedweghtItems.id,
+                              //     wieghtName:
+                              //         int.parse(selectedweghtItems.name),
+                              //     measureId: measureItems[0].id,
+                              //     measureName: measureItems[0].name,
+                              //     quantity: quantity,
+                              //     orderCars: selectedvanDriver));
+
                               // String jsonUser = jsonEncode(
                               //     orders[orders.length - 1].toJson());
 
@@ -233,7 +277,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                             },
                             color: Color.fromRGBO(254, 88, 0, 1),
                             child: new Text(
-                              'تاكيد الطلب',
+                              'تعديل الطلب',
                               style: new TextStyle(
                                 color: Colors.white,
                                 fontFamily: 'beIN',
@@ -280,7 +324,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
               iconEnabledColor: Colors.deepOrange,
               underline: SizedBox(),
               isExpanded: true,
-              value: selectedweghtItems.id,
+              value: selectedweghtItems.id, //widget.updateorders.wieghtId,
               //style: TextStyle(color: Colors.black),
               onChanged: (value) {
                 // setState(() {
@@ -354,6 +398,8 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
               underline: SizedBox(),
               isExpanded: true,
               value: _vanId,
+              // selectedvanDriver
+              //     .first.vId, //widget.updateorders.orderCars[0].vId,
               //style: TextStyle(color: Colors.black),
               onChanged: (value) {
                 print(value);
@@ -379,6 +425,9 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                               hoverColor: Colors.indigo,
                               onChanged: (bool value) {
                                 setState(() {
+                                  // print(jsonEncode(selectedvanDriver
+                                  //     .map((e) => e.toJson())
+                                  //     .toList()));
                                   // sel.add()
                                   if (value) {
                                     selectedvanDriver.add(OrderCar(
@@ -389,12 +438,11 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                                       e.state = false;
                                       selectedvanDriver.removeWhere(
                                           (item) => item.vId == e.id);
-                                      // selectedvanDriver.removeWhere((item) {
-                                      //   item.vId = e.id;
-                                      //   return;
-                                      // });
                                     });
                                   }
+                                  // print(jsonEncode(selectedvanDriver
+                                  //     .map((e) => e.toJson())
+                                  //     .toList()));
                                 });
                               },
                               value: e.state, // sel[e.id - 3],

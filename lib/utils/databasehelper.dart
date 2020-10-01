@@ -5,6 +5,9 @@ import 'package:intl/intl.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:maka/utils/constant.dart';
+
+// final prefs = SharedPreferences.getInstance();
 /// DATABASE HELPER CLASS
 class DatabaseHelper {
   //String serverUrl = "http://192.168.100.65:92";
@@ -124,6 +127,60 @@ class DatabaseHelper {
     }
   }
 
+  //==================================================================
+  addproductData(dynamic data) async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      status = true;
+      connection = true;
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+
+    final key = 'access_token';
+    final value = prefs.get(key) ?? 0;
+
+    String myUrl = "$serverUrl/api/Order";
+    codest = 0;
+    final response1 = await http
+        .post(myUrl,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'bearer $value'
+            },
+            body: jsonEncode(orders.map((e) => e.toJson()).toList()))
+        .then((response) {
+      codest = response.body;
+      print(response.body);
+    }).timeout(
+      Duration(seconds: 10),
+      onTimeout: () {
+        connection = true;
+        status = true;
+
+        return null;
+      },
+    );
+    // if (codest != 201) {
+    //   status = true;
+    //   connection = true;
+
+    //   return;
+    // } else {
+    //   connection = false;
+    //   status = false;
+    // }
+    return codest;
+  }
+
+  //=================================================================
   registerData(String name, String mobile,
       String password /*,String confirmPass*/) async {
     try {
@@ -171,6 +228,7 @@ class DatabaseHelper {
     print(codest);
   }
 
+//==========================================================
   getQantityData(String bdate, String edate, String product) async {
     try {
       final result = await InternetAddress.lookup('google.com');

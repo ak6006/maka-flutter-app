@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -5,15 +8,16 @@ import 'package:intl/intl.dart';
 import 'package:maka/models/datatable.dart';
 import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/screen/addOrderItems.dart';
+import 'package:maka/screen/dashboard.dart';
 //import 'package:maka/models/productlist.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/custom_paginated_data_table.dart';
 import 'package:maka/utils/data_picker_style.dart';
 //import 'package:maka/utils/data_picker_style.dart';
 import 'package:maka/utils/databasehelper.dart';
-import 'package:maka/utils/primary_text_field.dart';
+//import 'package:maka/utils/primary_text_field.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'dart:io' as io;
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 //import 'orderQuantityScreen.dart';
 
@@ -42,13 +46,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   int _measureId;
   int _weghtId;
   String productval = '';
-  var product = {
-    'p1.png': 'علف ناهي',
-    'p2.png': 'علف بادي',
-    'p3.png': 'علف نامي بادي',
-    'p3.png': 'علف نامي'
-  };
-//  int conter = 0;
+  bool showSpinner = false;
   @override
   void initState() {
     initializeDateFormatting('ar');
@@ -85,147 +83,174 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       //backgroundColor: Color.fromRGBO(0, 51, 94, 1),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/back.jpg"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          //mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            new Padding(
-              padding: new EdgeInsets.only(top: 20.0),
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/back.jpg"),
+              fit: BoxFit.cover,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.only(left: 19),
-                  child: Hero(
-                    tag: 'logo',
-                    child: Container(
-                      height: 140.0,
-                      child: Center(
-                        child: Image(
-                          height: 250,
-                          image: AssetImage('assets/images/lg2.jpg'),
+          ),
+          child: Column(
+            //mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              new Padding(
+                padding: new EdgeInsets.only(top: 20.0),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    padding: const EdgeInsets.only(left: 19),
+                    child: Hero(
+                      tag: 'logo',
+                      child: Container(
+                        height: 140.0,
+                        child: Center(
+                          child: Image(
+                            height: 250,
+                            image: AssetImage('assets/images/lg2.jpg'),
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Container(
-                  // padding: const EdgeInsets.only(left: 30),
-                  width: 190,
-                  alignment: Alignment.center,
-                  color: Color.fromRGBO(254, 88, 0, 1),
-                  child: new Text(
-                    'اهلا  $agentCustomerName',
-                    style: new TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'beIN',
-                      fontSize: 16,
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Container(
+                    // padding: const EdgeInsets.only(left: 30),
+                    width: 190,
+                    alignment: Alignment.center,
+                    color: Color.fromRGBO(254, 88, 0, 1),
+                    child: new Text(
+                      'اهلا  $agentCustomerName',
+                      style: new TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'beIN',
+                        fontSize: 16,
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Expanded(
-              child: Container(
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  children: <Widget>[
-                    productSlideImage(context),
-                    //   orderdate,
-                    datatableScrollview(context),
-                    // buildStoreContainer(context),
-                    SizedBox(
-                      height: 18.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            // color: Color.fromRGBO(254, 88, 0, 1),
-                            borderRadius: BorderRadius.circular(60),
-                          ),
-                          height: 40,
-                          width: 120,
-                          child: new FlatButton(
-                            onPressed: () {
-                              // print('vbn${productItems[2].name}');
+                ],
+              ),
+              Expanded(
+                child: Container(
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: <Widget>[
+                      productSlideImage(context),
+                      //   orderdate,
+                      datatableScrollview(context),
+                      // buildStoreContainer(context),
+                      SizedBox(
+                        height: 18.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              // color: Color.fromRGBO(254, 88, 0, 1),
+                              borderRadius: BorderRadius.circular(60),
+                            ),
+                            height: 40,
+                            width: 120,
+                            child: new FlatButton(
+                              onPressed: () {
+                                // print('vbn${productItems[2].name}');
 
-                              Navigator.pop(context);
-                            },
-                            color: Color.fromRGBO(254, 88, 0, 1),
-                            child: new Text(
-                              'الغاء الطلب',
-                              style: new TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'beIN',
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DashBoardPage()),
+                                );
+                              },
+                              color: Color.fromRGBO(254, 88, 0, 1),
+                              child: new Text(
+                                'الغاء الطلب',
+                                style: new TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'beIN',
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 18.0,
-                        ),
-                        Container(
-                          // margin: EdgeInsets.only(
-                          //     top: MediaQuery.of(context).size.height * 0.05),
-                          decoration: BoxDecoration(
-                            // color: Color.fromRGBO(254, 88, 0, 1),
-                            borderRadius: BorderRadius.circular(60),
+                          SizedBox(
+                            width: 18.0,
                           ),
-                          height: 40,
-                          width: 120,
-                          child: new FlatButton(
-                            onPressed: () async {
-                              // var result = await databaseHelper.getQantityData(
+                          Container(
+                            // margin: EdgeInsets.only(
+                            //     top: MediaQuery.of(context).size.height * 0.05),
+                            decoration: BoxDecoration(
+                              // color: Color.fromRGBO(254, 88, 0, 1),
+                              borderRadius: BorderRadius.circular(60),
+                            ),
+                            height: 40,
+                            width: 120,
+                            child: new FlatButton(
+                              onPressed: () async {
+                                // var json = jsonEncode(
+                                //     orders.map((e) => e.toJson()).toList());
+                                // dropDownList.customerOrders.
+                                setState(() {
+                                  showSpinner = true;
+                                });
 
-                              //     begin.dateTime.toString(),
-                              //     end.dateTime.toString(),
-                              //     productval.toString());
+                                // print(json);
+                                var res =
+                                    await databaseHelper.addproductData(json);
+                                print('gbddddd$res');
+                                if (res == '"Done"') {
+                                  alertDialog(
+                                      DialogType.SUCCES,
+                                      context,
+                                      'تمت العملية بنجاح',
+                                      '',
+                                      Icons.add,
+                                      Colors.green);
+                                } else {}
+                                setState(() {
+                                  showSpinner = false;
+                                });
 
-                              // orderquantitysumquery = orderQuantitySumQueryFromJson(result);
+                                // var result = await databaseHelper.getQantityData(
 
-                              // Navigator.push(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //       builder: (context) => OrderQuantityScreen(
-                              //             orderquantitysumquery: orderquantitysumquery,
-                              //           )),
-                              // );
+                                //     begin.dateTime.toString(),
+                                //     end.dateTime.toString(),
+                                //     productval.toString());
 
-                              // return;
+                                // orderquantitysumquery = orderQuantitySumQueryFromJson(result);
 
-                              var j = await io.File('assets/images/lock.png')
-                                  .exists();
-                              print(j.toString());
-                            },
-                            color: Color.fromRGBO(254, 88, 0, 1),
-                            child: new Text(
-                              'تاكيد الطلب',
-                              style: new TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'beIN',
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => OrderQuantityScreen(
+                                //             orderquantitysumquery: orderquantitysumquery,
+                                //           )),
+                                // );
+
+                                // return;
+                              },
+                              color: Color.fromRGBO(254, 88, 0, 1),
+                              child: new Text(
+                                'تاكيد الطلب',
+                                style: new TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'beIN',
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -238,7 +263,6 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
         rowsPerPage: (3),
         actions: <IconButton>[
           IconButton(
-            color: Colors.white,
             splashColor: Colors.transparent,
             icon: const Icon(Icons.refresh),
             onPressed: () {},
@@ -250,11 +274,9 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
           style: new TextStyle(
             color: Colors.black,
             fontFamily: 'beIN',
-            //backgroundColor: Colors.deepOrange,
           ),
         ),
         source: TableData(
-
             // userInHome: widget.userInHome,
             // list_payment: widget.payment_queu,
             // pr: pr,
@@ -316,14 +338,9 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
           autoPlayInterval: Duration(seconds: 2),
         ),
         items: productItems.map((i) {
-          // var j = io.File('assets/images/log.png').existsSync();
-          // var j = io.Directory('assets/images').exists();
-          // print(j.toString());
-          // io.File('assets/images/log.png').exists();
-          // if (j != true) {
-          //   // return Image.asset('assets/images/log.png');
-
-          // }
+          if (i.id == 0) {
+            return null;
+          }
           return Builder(
             builder: (BuildContext context) {
               return Container(
@@ -342,7 +359,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                     FlatButton.icon(
                       icon: Expanded(
                         child: Container(
-                          height: size.height * 0.11,
+                          height: 90,
                           // margin: EdgeInsets.only(left: 30),
                           //  margin: EdgeInsets.fromLTRB(0, 0, 10, 30),
                           child: Image.asset(
