@@ -394,6 +394,9 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                         ),
                       ),
                     ),
+                    Container(
+                      child: Text('السعر 50'),
+                    ),
                   ],
                 ),
 

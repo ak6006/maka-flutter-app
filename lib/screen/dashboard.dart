@@ -7,6 +7,7 @@ import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/models/productlist.dart';
 import 'package:maka/models/querybarcode.dart';
+import 'package:maka/screen/FeedPrices.dart';
 import 'package:maka/screen/addOrder.dart';
 import 'package:maka/screen/filterScreen.dart';
 import 'package:maka/utils/constant.dart';
@@ -31,7 +32,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
   DatabaseHelper databaseHelper = new DatabaseHelper();
   QueryBarCode queryBarCode;
   List<OrderQuantitySumQuery> orderquantitysumquery;
-  List<ProductList> productlist;
+  //List<ProductList> productlist;
+  ProdName prodInfoList;
 
   // static Future init() async {
   //   localStorage = await SharedPreferences.getInstance();
@@ -477,8 +479,14 @@ class _DashBoardPageState extends State<DashBoardPage> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          Navigator.pushReplacementNamed(
-                              context, '/FeedPrices');
+                          // Navigator.pushReplacementNamed(
+                          //     context, '/FeedPrices');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    FeedPrices(productsInfo: prodInfoList)),
+                          );
 
                           /// اسعار الاعلاف اليوم
                         },

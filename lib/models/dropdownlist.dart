@@ -204,27 +204,27 @@ class ProdName {
     this.productId,
     this.productName,
     this.price,
-    this.priceUpdateTime,
+    // this.priceUpdateTime,
   });
 
   int productId;
   String productName;
-  int price;
-  String priceUpdateTime;
+  double price;
+  //DateTime priceUpdateTime;
 
   factory ProdName.fromJson(Map<String, dynamic> json) => ProdName(
         productId: json["ProductId"] == null ? null : json["ProductId"],
         productName: json["productName"] == null ? null : json["productName"],
         price: json["Price"] == null ? null : json["Price"],
-        priceUpdateTime:
-            json["PriceUpdateTime"] == null ? null : json["PriceUpdateTime"],
+        // priceUpdateTime:
+        //     json["PriceUpdateTime"] == null ? null : json["PriceUpdateTime"],
       );
 
   Map<String, dynamic> toJson() => {
         "ProductId": productId == null ? null : productId,
         "productName": productName == null ? null : productName,
         "Price": price == null ? null : price,
-        "PriceUpdateTime": priceUpdateTime == null ? null : priceUpdateTime,
+        // "PriceUpdateTime": priceUpdateTime == null ? null : priceUpdateTime,
       };
 }
 
