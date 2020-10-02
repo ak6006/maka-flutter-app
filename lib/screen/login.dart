@@ -4,6 +4,7 @@ import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'package:maka/utils/password_text_field.dart';
 import 'package:maka/utils/primary_text_field.dart';
+import 'package:maka/utils/speech.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -303,6 +304,7 @@ class _LogInState extends State<LogIn> {
                                       //   print(value);
                                       // }
                                       await inislizedata();
+                                      await initSpeechState();
                                       await databaseHelper.saveUserData(
                                           _usernameController.text,
                                           _passwordController.text);

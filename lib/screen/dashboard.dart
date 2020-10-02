@@ -12,6 +12,7 @@ import 'package:maka/screen/addOrder.dart';
 import 'package:maka/screen/filterScreen.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
+import 'package:maka/utils/speech.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'barcodescannr.dart';
@@ -22,6 +23,7 @@ class DashBoardPage extends StatefulWidget {
   @override
   _DashBoardPageState createState() => _DashBoardPageState();
 }
+
 //Test Merge
 class _DashBoardPageState extends State<DashBoardPage> {
   SharedPreferences logindata;
@@ -196,7 +198,33 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   new Padding(
                     padding: new EdgeInsets.only(top: size.height * 0.06),
                   ),
+                  Container(
+                    width: 40,
+                    height: 40,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: .26,
+                            spreadRadius: level * 1.5,
+                            color: Colors.black.withOpacity(.05))
+                      ],
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(50)),
+                    ),
+                    child: IconButton(
+                        icon: Icon(Icons.mic),
+                        onPressed: () {
+                          speechcontext = context;
 
+                          !hasSpeech || speech.isListening
+                              ? null
+                              : startListening();
+                        }),
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
                   //------------------------------------------------------------------
                   //--------------------------------------------
 
@@ -230,7 +258,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             elevation: 20,
                             color: Colors.deepOrange,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
                             child: Column(
                               children: [
@@ -338,7 +366,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             elevation: 20,
                             color: Colors.deepOrange,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
                             child: Column(
                               children: [
@@ -393,7 +421,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             elevation: 20,
                             color: Colors.deepOrange,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
                             child: Column(
                               children: [
@@ -440,7 +468,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             elevation: 20,
                             color: Colors.deepOrange,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
                             child: Column(
                               children: [
@@ -450,8 +478,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   child: Image.asset('assets/images/arrow.png'),
                                 ),
                                 Container(
-                                  margin:
-                                      EdgeInsets.only(right: size.width * 0.04),
+                                  margin: EdgeInsets.fromLTRB(
+                                      0, 0, size.width * 0.04, 0),
+                                  // padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
                                   child: Text(
                                     'استعلام مشتريات وكيل',
                                     style: TextStyle(
@@ -479,14 +508,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          // Navigator.pushReplacementNamed(
-                          //     context, '/FeedPrices');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    FeedPrices(productsInfo: prodInfoList)),
-                          );
+                          Navigator.pushReplacementNamed(
+                              context, '/FeedPrices');
 
                           /// اسعار الاعلاف اليوم
                         },
@@ -497,7 +520,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             elevation: 20,
                             color: Colors.deepOrange,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
                             child: Column(
                               children: [
@@ -534,7 +557,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             elevation: 20,
                             color: Colors.deepOrange,
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                              borderRadius: BorderRadius.circular(20.0),
                             ),
                             child: Column(
                               children: [

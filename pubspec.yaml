@@ -41,6 +41,7 @@ dependencies:
   toast: ^0.1.5
   awesome_dialog: ^1.2.0
   carousel_slider: ^2.2.1
+  speech_to_text: ^2.7.0
 
 dev_dependencies:
   flutter_test:

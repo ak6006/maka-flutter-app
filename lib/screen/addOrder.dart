@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:maka/details/products.dart';
+import 'package:maka/details/rightImageProductImageWidget.dart';
 import 'package:maka/models/datatable.dart';
 import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/screen/addOrderItems.dart';
@@ -201,6 +203,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                                 // print(json);
                                 var res =
                                     await databaseHelper.addproductData(json);
+                                await inislizedata();
                                 print('gbddddd$res');
                                 if (res == '"Done"') {
                                   alertDialog(
@@ -210,7 +213,15 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                                       '',
                                       Icons.add,
                                       Colors.green);
-                                } else {}
+                                } else {
+                                  alertDialog(
+                                      DialogType.ERROR,
+                                      context,
+                                      'يوجد مشكله في الاتصال',
+                                      '',
+                                      Icons.delete_forever,
+                                      Colors.red);
+                                }
                                 setState(() {
                                   showSpinner = false;
                                 });
@@ -286,6 +297,12 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
         columns: <DataColumn>[
           DataColumn(
             label: Text(
+              'حذف',
+              style: kColumnLabelStyle,
+            ),
+          ),
+          DataColumn(
+            label: Text(
               'تعديل',
               style: kColumnLabelStyle,
             ),
@@ -353,80 +370,58 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                     //  color: Colors.amber
                     //--
                     ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FlatButton.icon(
-                      icon: Expanded(
-                        child: Container(
-                          height: 90,
-                          // margin: EdgeInsets.only(left: 30),
-                          //  margin: EdgeInsets.fromLTRB(0, 0, 10, 30),
-                          child: Image.asset(
-                            'assets/images/${i.id}.png',
-                          ),
-                        ),
-                      ),
-                      label: Text('hhh'),
-                      onPressed: () async {
-                        print(i.name);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddOrderItemsScreen(
-                                    orderproductItems: i,
-                                  )), //FilterScreenPage()),
-                        );
-                      },
-                    ),
-                    Container(
-                      //width: size.width * 0.45,
-                      // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 30, 0),
-                        child: Text(
-                          i.name,
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                              fontFamily: 'beIN',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: Text('السعر 50'),
-                    ),
-                  ],
+                child: RightImageProductImageWidget(
+                  screenHeight: 70.0,
+                  product: new Product(
+                    backgroundColor: Color(0xFFF5F5F5),
+                    imagePath: 'assets/images/${i.id}.png',
+                    name: i.name,
+                    description: 'جنيه مصري  ${i.price}',
+                    buttonText: 'اطلبه الان',
+                  ),
                 ),
-
-                // GestureDetector(
-                //   onTap: () {
-                //     print(i.name);
-                //     setState(() {
-                //       widget.autoplay = false;
-                //     });
-                //   },
-                //   child: Column(
-                //     children: [
-                //       Expanded(
-                //         child: Image(
-                //           // height: 170,
-                //           // width: 160,
-                //           image: AssetImage('assets/images/${i.id}.png'),
+                // Column(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     FlatButton.icon(
+                //       icon: Expanded(
+                //         child: Container(
+                //           height: 90,
+                //           // margin: EdgeInsets.only(left: 30),
+                //           //  margin: EdgeInsets.fromLTRB(0, 0, 10, 30),
+                //           child: Image.asset(
+                //             'assets/images/${i.id}.png',
+                //           ),
                 //         ),
                 //       ),
-                //       Text(
-                //         i.name,
-                //         //product['$i'].length.toString(),
-                //         style: TextStyle(
-                //             color: Color.fromRGBO(255, 255, 255, 1),
-                //             fontFamily: 'beIN',
-                //             fontWeight: FontWeight.bold,
-                //             fontSize: 16),
+                //       label: Text('hhh'),
+                //       onPressed: () async {
+                //         print(i.name);
+                //         Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //               builder: (context) => AddOrderItemsScreen(
+                //                     orderproductItems: i,
+                //                   )), //FilterScreenPage()),
+                //         );
+                //       },
+                //     ),
+                //     Container(
+                //       //width: size.width * 0.45,
+                //       // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                //       child: Container(
+                //         margin: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                //         child: Text(
+                //           i.name,
+                //           style: TextStyle(
+                //               color: Color.fromRGBO(255, 255, 255, 1),
+                //               fontFamily: 'beIN',
+                //               fontWeight: FontWeight.bold,
+                //               fontSize: 16),
+                //         ),
                 //       ),
-                //     ],
-                //   ),
+                //     ),
+                //   ],
                 // ),
               );
             },
