@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "559984364031",
+    "firebase_url": "https://maka-flutter-app.firebaseio.com",
+    "project_id": "maka-flutter-app",
+    "storage_bucket": "maka-flutter-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:559984364031:android:d1b6ce31c5fa341b1d7fca",
+        "android_client_info": {
+          "package_name": "com.example.maka"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "559984364031-rc5n2ph706e17um0i0ul3dha09hp4u34.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB-wZ8UfPbvVrs8En7Tu4_9YJWZdO9M3ec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "559984364031-rc5n2ph706e17um0i0ul3dha09hp4u34.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
