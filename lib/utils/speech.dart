@@ -8,7 +8,7 @@ import 'package:maka/screen/filterScreen.dart';
 import 'package:speech_to_text/speech_recognition_error.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
-
+//-----------------
 bool hasSpeech = false;
 BuildContext speechcontext;
 double level = 0.0;
