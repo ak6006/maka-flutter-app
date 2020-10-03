@@ -3,7 +3,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/screen/dashboard.dart';
 import 'package:maka/utils/databasehelper.dart';
-
+import 'package:maka/models/productlist.dart';
 class FeedPrices extends StatefulWidget {
   FeedPrices({productsInfo});
   @override
@@ -11,11 +11,25 @@ class FeedPrices extends StatefulWidget {
 }
 
 class _FeedPricesState extends State<FeedPrices> {
-  List<ProdName> productsInfo;
+  ProdName productsInfo;
   DatabaseHelper databaseHelper = new DatabaseHelper();
   bool isLoading = true;
   var list;
-  getPrices() async {}
+  getPrices() async {
+    dynamic result = await databaseHelper.getProductData();
+    print(result);
+    productsInfo = ProdName.fromJson(result);
+    print(productsInfo);
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    getPrices();
+    print('aaaaaaaaaaaaaaaammmmmmmmmmmmmmmmmm');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,6 +84,14 @@ class _FeedPricesState extends State<FeedPrices> {
                   ),
                 ],
               ),
+              if (isLoading)
+                Expanded(
+                  child: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                )
+              else
+                buildExpanded(productsInfo.productId),
               Padding(
                 padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.6),
@@ -110,47 +132,19 @@ class _FeedPricesState extends State<FeedPrices> {
         return Column(
           //scrollDirection: Axis.vertical,
           children: <Widget>[
-            Wrow(
-              lable: "علف بادي",
-              val: '',
-            ),
-            // Container(
-            //   // margin: EdgeInsets.only(
-            //   //     right: MediaQuery.of(context).size.width / 300),
-            //   child: Wrow(
-            //     lable: "تاريخ الطلبية",
-            //     val: '',
-            //   ),
-            // ),
-            Wrow(
-              lable: "علف ناهي",
-              val: '',
-            ),
-            Wrow(
-              lable: "علف سوبر نامي",
-              val: '',
-            ),
-            Wrow(
-              lable: "سوبر بادي",
-              val: '',
-            ),
-            Wrow(
-              lable: "بادي نامي",
-              val: '',
-            ),
-            Wrow(
-              lable: "وحدة القياس",
-              val: '',
-            ),
-            Wrow(
-              lable: "بدء التحميل",
-              val: '',
-            ),
-            Wrow(
-              lable: "انتهاء التحميل",
-              val: '',
-            ),
-            Text(
+        Wrow(
+           lable: "رقم المنتج",
+           integerVals: productsInfo.productId,
+        ),
+        Wrow(
+        lable: "اسم المنتج",
+        val: productsInfo.productName),
+        // Wrow(
+        //   lable: "التاريخ",
+        //   val: '',
+        // ),
+
+        Text(
               '__________________',
               style: TextStyle(
                   color: Colors.orange[900],
@@ -167,9 +161,15 @@ class _FeedPricesState extends State<FeedPrices> {
 class Wrow extends StatefulWidget {
   String lable;
   String val;
+  int integerVals;
+  double doubleVals;
   material.TextDirection direction;
-  Wrow({this.lable, this.val, this.direction = material.TextDirection.ltr});
-
+  Wrow(
+      {this.lable,
+        this.val,
+        this.integerVals,
+        this.doubleVals,
+        this.direction = material.TextDirection.ltr});
   @override
   _WrowState createState() => _WrowState();
 }
@@ -192,6 +192,26 @@ class _WrowState extends State<Wrow> {
             textAlign: TextAlign.right,
           ),
         )),
+        Expanded(
+            child: Container(
+              // padding: EdgeInsets.only(left: 0),
+              //color: const Color.fromRGBO(0, 51, 94, 1),
+              child: Text(
+                '${widget.integerVals}',
+                style: TextStyle(color: Colors.white, fontSize: 14),
+                textAlign: TextAlign.right,
+              ),
+            )),
+        Expanded(
+            child: Container(
+              // padding: EdgeInsets.only(left: 0),
+              //color: const Color.fromRGBO(0, 51, 94, 1),
+              child: Text(
+                '${widget.doubleVals}',
+                style: TextStyle(color: Colors.white, fontSize: 14),
+                textAlign: TextAlign.right,
+              ),
+            )),
         Container(
           width: 120,
           // padding: EdgeInsets.only(left: 30),

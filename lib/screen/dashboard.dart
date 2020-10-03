@@ -16,6 +16,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'barcodescannr.dart';
 import 'orderQuantityScreen.dart';
+import 'package:maka/screen/FeedPrices.dart';
 
 class DashBoardPage extends StatefulWidget {
   //الصفحة الرئيسية
@@ -26,6 +27,7 @@ class DashBoardPage extends StatefulWidget {
 class _DashBoardPageState extends State<DashBoardPage> {
   SharedPreferences logindata;
   String username;
+
   // static String _email;
   // static String _password;
   bool isValid;
@@ -33,6 +35,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
   QueryBarCode queryBarCode;
   List<OrderQuantitySumQuery> orderquantitysumquery;
   List<ProductList> productlist;
+  ProdName prodInfoList;
 
   // static Future init() async {
   //   localStorage = await SharedPreferences.getInstance();
@@ -506,9 +509,15 @@ class _DashBoardPageState extends State<DashBoardPage> {
                       GestureDetector(
                         onTap: () async {
                           Navigator.pushReplacementNamed(
-                              context, '/FeedPrices');
-
-                          /// اسعار الاعلاف اليوم
+                              // Navigator.pushReplacementNamed(
+                              context,
+                              '/FeedPrices'); //     context, '/FeedPrices');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    FeedPrices(productsInfo: prodInfoList)),
+                          );
                         },
                         child: Container(
                           height: size.height * 0.2,
