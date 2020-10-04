@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:maka/details/products.dart';
+import 'package:maka/details/rightImageProductImageWidget.dart';
 import 'package:maka/models/datatable.dart';
 import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/screen/addOrderItems.dart';
@@ -39,7 +41,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   DateTime timeEndSelected;
   DataPicker orderdate;
   String title = 'DropDownButton';
-
+  var refreshkey = GlobalKey<RefreshIndicatorState>();
   String prodval;
   int _prodId;
   int _storId;
@@ -78,7 +80,22 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
     //   weghtItems
     //       .add(DropDownItem(id: h.weightId, name: h.weightName.toString()));
     // }
+
+    //refreshList();
+    //print('refresheddd');
   }
+
+  // Future<Null> refreshList() async {
+  //   refreshkey.currentState?.show(atTop: false);
+  //   await Future.delayed(Duration(seconds: 1));
+  //   dynamic result = await databaseHelper.addproductData(json);
+  //   print(result);
+  //   orderquantitysumquery =
+  //       OrderQuantitySumQuery.fromJson(result) as List<OrderQuantitySumQuery>;
+  //   print(orderquantitysumquery.length);
+
+  //   return null;
+  // }
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,115 +154,136 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
               ),
               Expanded(
                 child: Container(
-                  child: ListView(
-                    scrollDirection: Axis.vertical,
-                    children: <Widget>[
-                      productSlideImage(context),
-                      //   orderdate,
-                      datatableScrollview(context),
-                      // buildStoreContainer(context),
-                      SizedBox(
-                        height: 18.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              // color: Color.fromRGBO(254, 88, 0, 1),
-                              borderRadius: BorderRadius.circular(60),
-                            ),
-                            height: 40,
-                            width: 120,
-                            child: new FlatButton(
-                              onPressed: () {
-                                // print('vbn${productItems[2].name}');
+                  child: RefreshIndicator(
+                    key: refreshkey,
+                    // height: 50,
+                    color: Colors.deepOrange,
+                    backgroundColor: Colors.white,
+                    onRefresh: () async {
+                      //await refreshList();
+                      await inislizedata();
+                      setState(() {});
+                      print('refressssssssssssssssssssssssh');
+                    },
+                    child: ListView(
+                      scrollDirection: Axis.vertical,
+                      children: <Widget>[
+                        productSlideImage(context),
+                        //   orderdate,
+                        datatableScrollview(context),
+                        // buildStoreContainer(context),
+                        SizedBox(
+                          height: 18.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                // color: Color.fromRGBO(254, 88, 0, 1),
+                                borderRadius: BorderRadius.circular(60),
+                              ),
+                              height: 40,
+                              width: 120,
+                              child: new FlatButton(
+                                onPressed: () {
+                                  // print('vbn${productItems[2].name}');
 
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => DashBoardPage()),
-                                );
-                              },
-                              color: Color.fromRGBO(254, 88, 0, 1),
-                              child: new Text(
-                                'الغاء الطلب',
-                                style: new TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'beIN',
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => DashBoardPage()),
+                                  );
+                                },
+                                color: Color.fromRGBO(254, 88, 0, 1),
+                                child: new Text(
+                                  'الغاء الطلب',
+                                  style: new TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'beIN',
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          SizedBox(
-                            width: 18.0,
-                          ),
-                          Container(
-                            // margin: EdgeInsets.only(
-                            //     top: MediaQuery.of(context).size.height * 0.05),
-                            decoration: BoxDecoration(
-                              // color: Color.fromRGBO(254, 88, 0, 1),
-                              borderRadius: BorderRadius.circular(60),
+                            SizedBox(
+                              width: 18.0,
                             ),
-                            height: 40,
-                            width: 120,
-                            child: new FlatButton(
-                              onPressed: () async {
-                                // var json = jsonEncode(
-                                //     orders.map((e) => e.toJson()).toList());
-                                // dropDownList.customerOrders.
-                                setState(() {
-                                  showSpinner = true;
-                                });
+                            Container(
+                              // margin: EdgeInsets.only(
+                              //     top: MediaQuery.of(context).size.height * 0.05),
+                              decoration: BoxDecoration(
+                                // color: Color.fromRGBO(254, 88, 0, 1),
+                                borderRadius: BorderRadius.circular(60),
+                              ),
+                              height: 40,
+                              width: 120,
+                              child: new FlatButton(
+                                onPressed: () async {
+                                  // var json = jsonEncode(
+                                  //     orders.map((e) => e.toJson()).toList());
+                                  // dropDownList.customerOrders.
+                                  setState(() {
+                                    showSpinner = true;
+                                  });
 
-                                // print(json);
-                                var res =
-                                    await databaseHelper.addproductData(json);
-                                print('gbddddd$res');
-                                if (res == '"Done"') {
-                                  alertDialog(
-                                      DialogType.SUCCES,
-                                      context,
-                                      'تمت العملية بنجاح',
-                                      '',
-                                      Icons.add,
-                                      Colors.green);
-                                } else {}
-                                setState(() {
-                                  showSpinner = false;
-                                });
+                                  // print(json);
+                                  var res =
+                                      await databaseHelper.addproductData(json);
+                                  await inislizedata();
+                                  print('gbddddd$res');
+                                  if (res == '"Done"') {
+                                    alertDialog(
+                                        DialogType.SUCCES,
+                                        context,
+                                        'تمت العملية بنجاح',
+                                        '',
+                                        Icons.add,
+                                        Colors.green);
+                                  } else {
+                                    alertDialog(
+                                        DialogType.ERROR,
+                                        context,
+                                        'يوجد مشكله في الاتصال',
+                                        '',
+                                        Icons.delete_forever,
+                                        Colors.red);
+                                  }
+                                  setState(() {
+                                    showSpinner = false;
+                                  });
 
-                                // var result = await databaseHelper.getQantityData(
+                                  // var result = await databaseHelper.getQantityData(
 
-                                //     begin.dateTime.toString(),
-                                //     end.dateTime.toString(),
-                                //     productval.toString());
+                                  //     begin.dateTime.toString(),
+                                  //     end.dateTime.toString(),
+                                  //     productval.toString());
 
-                                // orderquantitysumquery = orderQuantitySumQueryFromJson(result);
+                                  // orderquantitysumquery = orderQuantitySumQueryFromJson(result);
 
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => OrderQuantityScreen(
-                                //             orderquantitysumquery: orderquantitysumquery,
-                                //           )),
-                                // );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MaterialPageRoute(
+                                  //       builder: (context) => OrderQuantityScreen(
+                                  //             orderquantitysumquery: orderquantitysumquery,
+                                  //           )),
+                                  // );
 
-                                // return;
-                              },
-                              color: Color.fromRGBO(254, 88, 0, 1),
-                              child: new Text(
-                                'تاكيد الطلب',
-                                style: new TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'beIN',
+                                  // return;
+                                },
+                                color: Color.fromRGBO(254, 88, 0, 1),
+                                child: new Text(
+                                  'تاكيد الطلب',
+                                  style: new TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'beIN',
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -284,6 +322,12 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
             // uid: widget.uid,
             context: context),
         columns: <DataColumn>[
+          DataColumn(
+            label: Text(
+              'حذف',
+              style: kColumnLabelStyle,
+            ),
+          ),
           DataColumn(
             label: Text(
               'تعديل',
@@ -353,77 +397,59 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                     //  color: Colors.amber
                     //--
                     ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    FlatButton.icon(
-                      icon: Expanded(
-                        child: Container(
-                          height: 90,
-                          // margin: EdgeInsets.only(left: 30),
-                          //  margin: EdgeInsets.fromLTRB(0, 0, 10, 30),
-                          child: Image.asset(
-                            'assets/images/${i.id}.png',
-                          ),
-                        ),
-                      ),
-                      label: Text('hhh'),
-                      onPressed: () async {
-                        print(i.name);
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddOrderItemsScreen(
-                                    orderproductItems: i,
-                                  )), //FilterScreenPage()),
-                        );
-                      },
-                    ),
-                    Container(
-                      //width: size.width * 0.45,
-                      // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(0, 0, 30, 0),
-                        child: Text(
-                          i.name,
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                              fontFamily: 'beIN',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
-                        ),
-                      ),
-                    ),
-                  ],
+                child: RightImageProductImageWidget(
+                  screenHeight: 70.0,
+                  product: new Product(
+                    backgroundColor: Color(0xFFF5F5F5),
+                    imagePath: 'assets/images/${i.id}.png',
+                    name: i.name,
+                    description: '${i.price} EGP',
+                    buttonText: 'اطلبه الان',
+                  ),
+                  orderproductItems: i,
                 ),
-
-                // GestureDetector(
-                //   onTap: () {
-                //     print(i.name);
-                //     setState(() {
-                //       widget.autoplay = false;
-                //     });
-                //   },
-                //   child: Column(
-                //     children: [
-                //       Expanded(
-                //         child: Image(
-                //           // height: 170,
-                //           // width: 160,
-                //           image: AssetImage('assets/images/${i.id}.png'),
+                // Column(
+                //   mainAxisAlignment: MainAxisAlignment.center,
+                //   children: [
+                //     FlatButton.icon(
+                //       icon: Expanded(
+                //         child: Container(
+                //           height: 90,
+                //           // margin: EdgeInsets.only(left: 30),
+                //           //  margin: EdgeInsets.fromLTRB(0, 0, 10, 30),
+                //           child: Image.asset(
+                //             'assets/images/${i.id}.png',
+                //           ),
                 //         ),
                 //       ),
-                //       Text(
-                //         i.name,
-                //         //product['$i'].length.toString(),
-                //         style: TextStyle(
-                //             color: Color.fromRGBO(255, 255, 255, 1),
-                //             fontFamily: 'beIN',
-                //             fontWeight: FontWeight.bold,
-                //             fontSize: 16),
+                //       label: Text('hhh'),
+                //       onPressed: () async {
+                //         print(i.name);
+                //         Navigator.push(
+                //           context,
+                //           MaterialPageRoute(
+                //               builder: (context) => AddOrderItemsScreen(
+                //                     orderproductItems: i,
+                //                   )), //FilterScreenPage()),
+                //         );
+                //       },
+                //     ),
+                //     Container(
+                //       //width: size.width * 0.45,
+                //       // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                //       child: Container(
+                //         margin: EdgeInsets.fromLTRB(0, 0, 30, 0),
+                //         child: Text(
+                //           i.name,
+                //           style: TextStyle(
+                //               color: Color.fromRGBO(255, 255, 255, 1),
+                //               fontFamily: 'beIN',
+                //               fontWeight: FontWeight.bold,
+                //               fontSize: 16),
+                //         ),
                 //       ),
-                //     ],
-                //   ),
+                //     ),
+                //   ],
                 // ),
               );
             },

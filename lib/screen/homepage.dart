@@ -201,7 +201,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               margin: EdgeInsets.fromLTRB(
                                   size.width * 0.06, 0, size.width * 0.01, 0),
                               child: Text(
-                                'رمز الاستجابة السريعه',
+                                'فحص الكيو ار كود',
                                 style: TextStyle(
                                     color: Color.fromRGBO(255, 255, 255, 1),
                                     fontFamily: 'beIN',

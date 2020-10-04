@@ -179,7 +179,57 @@ class DatabaseHelper {
     // }
     return codest;
   }
+//=================================================================
 
+  deleteproductData(int data) async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      status = true;
+      connection = true;
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+
+    final key = 'access_token';
+    final value = prefs.get(key) ?? 0;
+
+    String myUrl = "$serverUrl/api/Order?Orderid=$data";
+    codest = 0;
+    final response1 = await http.delete(myUrl, headers: {
+      //'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': 'bearer $value'
+    }).then((response) {
+      codest = response.body;
+      print(response.body);
+    }).timeout(
+      Duration(seconds: 10),
+      onTimeout: () {
+        connection = true;
+        status = true;
+
+        return null;
+      },
+    );
+    // if (codest != 201) {
+    //   status = true;
+    //   connection = true;
+
+    //   return;
+    // } else {
+    //   connection = false;
+    //   status = false;
+    // }
+    return codest;
+  }
+
+  //==================================================================
   //=================================================================
   registerData(String name, String mobile,
       String password /*,String confirmPass*/) async {

@@ -265,63 +265,67 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(0.0),
-            child: DropdownButton(
-              hint: Container(
-                child: Text(
-                  'اختار حجم الشكارة',
-                  // textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.orange),
+            child: DropdownButtonHideUnderline(
+              child: DropdownButton(
+                // style: TextStyle(height: 0.5),
+                style: Theme.of(context).textTheme.title,
+                hint: Container(
+                  child: Text(
+                    'اختار حجم الشكارة',
+                    // textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.orange),
+                  ),
                 ),
-              ),
-              dropdownColor: Colors.black87,
-              elevation: 20,
-              icon: Icon(Icons.arrow_drop_down),
-              iconSize: 36,
-              iconEnabledColor: Colors.deepOrange,
-              underline: SizedBox(),
-              isExpanded: true,
-              value: selectedweghtItems.id,
-              //style: TextStyle(color: Colors.black),
-              onChanged: (value) {
-                // setState(() {
-                //   _weghtId = value;
-                // });
-              },
-              items: weghtItems
-                  .map(
-                    (e) => DropdownMenuItem(
-                      value: e.id.toInt(),
-                      onTap: () {
-                        setState(() {
-                          selectedweghtItems = e;
-                        });
+                dropdownColor: Colors.black87,
+                elevation: 20,
+                icon: Icon(Icons.arrow_drop_down),
+                iconSize: 36,
+                iconEnabledColor: Colors.deepOrange,
+                underline: SizedBox(),
+                isExpanded: true,
+                value: selectedweghtItems.id,
+                //style: TextStyle(color: Colors.black),
+                onChanged: (value) {
+                  // setState(() {
+                  //   _weghtId = value;
+                  // });
+                },
+                items: weghtItems
+                    .map(
+                      (e) => DropdownMenuItem(
+                        value: e.id.toInt(),
+                        onTap: () {
+                          setState(() {
+                            selectedweghtItems = e;
+                          });
 
-                        print('hjjhgfjhjhf${e.name}');
-                      },
-                      child: Container(
-                        margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-                        child: Text(
-                          e.name.toString(),
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'beIN',
-                            //    fontWeight: FontWeight.bold,
+                          print('hjjhgfjhjhf${e.name}');
+                        },
+                        child: Container(
+                          margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Text(
+                            e.name.toString(),
+                            textAlign: TextAlign.right,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'beIN',
+                              //    fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  )
-                  .toList(),
-              //     product.map((value) {
-              //   return DropdownMenuItem(
-              //     value: value,
-              //     child: Text(
-              //       value,
-              //       style: TextStyle(color: Colors.white),
-              //     ),
-              //   );
-              // }).toList(),
+                    )
+                    .toList(),
+                //     product.map((value) {
+                //   return DropdownMenuItem(
+                //     value: value,
+                //     child: Text(
+                //       value,
+                //       style: TextStyle(color: Colors.white),
+                //     ),
+                //   );
+                // }).toList(),
+              ),
             ),
           ),
         ),

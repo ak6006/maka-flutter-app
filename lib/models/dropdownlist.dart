@@ -1,3 +1,7 @@
+// To parse this JSON data, do
+//
+//     final dropDownList = dropDownListFromJson(jsonString);
+
 import 'dart:convert';
 
 DropDownList dropDownListFromJson(String str) =>
@@ -209,22 +213,24 @@ class ProdName {
 
   int productId;
   String productName;
-  int price;
-  String priceUpdateTime;
+  double price;
+  DateTime priceUpdateTime;
 
   factory ProdName.fromJson(Map<String, dynamic> json) => ProdName(
         productId: json["ProductId"] == null ? null : json["ProductId"],
         productName: json["productName"] == null ? null : json["productName"],
-        price: json["Price"] == null ? null : json["Price"],
-        priceUpdateTime:
-            json["PriceUpdateTime"] == null ? null : json["PriceUpdateTime"],
+        price: json["Price"] == null ? 0.0 : json["Price"].toDouble(),
+        priceUpdateTime: json["PriceUpdateTime"] == null
+            ? null
+            : DateTime.parse(json["PriceUpdateTime"]),
       );
 
   Map<String, dynamic> toJson() => {
         "ProductId": productId == null ? null : productId,
         "productName": productName == null ? null : productName,
         "Price": price == null ? null : price,
-        "PriceUpdateTime": priceUpdateTime == null ? null : priceUpdateTime,
+        "PriceUpdateTime":
+            priceUpdateTime == null ? null : priceUpdateTime.toIso8601String(),
       };
 }
 
@@ -252,19 +258,35 @@ class VehiclesDatum {
   VehiclesDatum({
     this.vehicleId,
     this.driverName,
+    this.number,
+    this.serial,
+    this.model,
+    this.phone,
   });
 
   int vehicleId;
   String driverName;
+  String number;
+  String serial;
+  String model;
+  String phone;
 
   factory VehiclesDatum.fromJson(Map<String, dynamic> json) => VehiclesDatum(
         vehicleId: json["VehicleId"] == null ? null : json["VehicleId"],
         driverName: json["DriverName"] == null ? null : json["DriverName"],
+        number: json["Number"] == null ? null : json["Number"],
+        serial: json["Serial"] == null ? null : json["Serial"],
+        model: json["Model"] == null ? null : json["Model"],
+        phone: json["Phone"] == null ? null : json["Phone"],
       );
 
   Map<String, dynamic> toJson() => {
         "VehicleId": vehicleId == null ? null : vehicleId,
         "DriverName": driverName == null ? null : driverName,
+        "Number": number == null ? null : number,
+        "Serial": serial == null ? null : serial,
+        "Model": model == null ? null : model,
+        "Phone": phone == null ? null : phone,
       };
 }
 

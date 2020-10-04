@@ -26,19 +26,22 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       style: TextStyle(
         // backgroundColor: Colors.white,
         color: Colors.white,
+        height: 0.5,
       ),
       obscureText: _obscure,
       decoration: InputDecoration(
-        labelText: "كلمة السر",
+        hintText: "كلمة السر",
+        hintStyle: TextStyle(color: Colors.white54),
+        // labelText: "كلمة السر",
         fillColor: Colors.white,
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: BorderSide(
             color: Colors.amber,
           ),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(15.0),
           borderSide: BorderSide(
             color: Colors.orange[900],
             width: 2.0,

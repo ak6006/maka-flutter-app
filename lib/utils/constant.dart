@@ -39,7 +39,10 @@ Future inislizedata() async {
   for (var h in dropDownList.prodNames) {
     if (h.productName != 'كل المنتجات') {
       productItems.add(DropDownItem(
-          id: h.productId == 0 ? 0 : h.productId, name: h.productName));
+          id: h.productId == 0 ? 0 : h.productId,
+          name: h.productName,
+          price: h.price,
+          priceUpdateTime: h.priceUpdateTime));
     }
   }
   for (var h in dropDownList.storeNames) {
@@ -84,7 +87,11 @@ class DropDownItem {
   int id;
   String name;
   bool state;
-  DropDownItem({this.id, this.name, this.state});
+  double price;
+  DateTime priceUpdateTime;
+
+  DropDownItem(
+      {this.id, this.name, this.state, this.price, this.priceUpdateTime});
 }
 
 alertDialog(DialogType type, context, String titel, String desc, IconData icon,

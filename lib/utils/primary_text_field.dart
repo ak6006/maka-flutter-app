@@ -24,6 +24,7 @@ class PrimaryTextField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       style: TextStyle(
+        height: 0.5,
         color: Colors.white,
       ),
       keyboardType: TextInputType,
@@ -31,7 +32,10 @@ class PrimaryTextField extends StatelessWidget {
       maxLines: expandable ? null : 1,
       textAlignVertical: TextAlignVertical.top,
       decoration: InputDecoration(
-        labelText: label,
+        // labelText: label,
+        hintText: label,
+        hintStyle: TextStyle(color: Colors.white54),
+        //labelStyle: TextStyle(fontFamily: "Subtitle"),
         fillColor: Colors.white,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),
@@ -45,6 +49,9 @@ class PrimaryTextField extends StatelessWidget {
             color: Colors.orange[800],
             width: 1.5,
           ),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(16),
         ),
       ),
 

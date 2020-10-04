@@ -8,9 +8,12 @@ import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/models/productlist.dart';
 import 'package:maka/models/querybarcode.dart';
 import 'package:maka/screen/addOrder.dart';
+import 'package:maka/screen/addVan.dart';
 import 'package:maka/screen/filterScreen.dart';
+import 'package:maka/screen/qrcode.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
+import 'package:maka/utils/speech.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'barcodescannr.dart';
@@ -31,7 +34,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
   DatabaseHelper databaseHelper = new DatabaseHelper();
   QueryBarCode queryBarCode;
   List<OrderQuantitySumQuery> orderquantitysumquery;
-  List<ProductList> productlist;
+  //List<ProductList> productlist;
 
   // static Future init() async {
   //   localStorage = await SharedPreferences.getInstance();
@@ -133,8 +136,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   //   width: size.width * 0.04,
                   // ),
 
-                  //---------------------------------
-                  //-----------------------------
+                  //===================================
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -191,368 +193,461 @@ class _DashBoardPageState extends State<DashBoardPage> {
                       ),
                     ],
                   ),
-                  new Padding(
-                    padding: new EdgeInsets.only(top: size.height * 0.06),
-                  ),
-
-                  //------------------------------------------------------------------
-                  //--------------------------------------------
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          var brcode = await scanBarcodeNormal();
-                          dynamic result = await databaseHelper.getData(brcode);
-                          if (result == '') {
-                            return;
-                          } else {
-                            String output = _textSelect(result);
-                            queryBarCode = queryBarCodeFromJson(output);
-                            print(queryBarCode.customerName);
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => BarCodePage(
-                                        queryBarCode: queryBarCode,
-                                      )),
-                            );
-                          }
-                        },
-                        child: Container(
-                          height: size.height * 0.2,
-                          width: size.width * 0.42,
-                          child: Card(
-                            elevation: 20,
-                            color: Colors.deepOrange,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
+                  // new Padding(
+                  //   padding: new EdgeInsets.only(top: size.height * 0.06),
+                  // ),
+                  Expanded(
+                    child: Container(
+                      child: ListView(
+                        scrollDirection: Axis.vertical,
+                        children: <Widget>[
+                          Container(
+                            width: 40,
+                            height: 40,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                    blurRadius: .26,
+                                    spreadRadius: level * 1.5,
+                                    color: Colors.black.withOpacity(.05))
+                              ],
+                              color: Colors.white24,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
                             ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 70,
-                                  child: Image.asset('assets/images/arrow.png'),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    // margin: EdgeInsets.only(
-                                    //     left: size.width * 0.05),
-                                    child: Text(
-                                      'فحص شكارة بالسريال',
-                                      style: TextStyle(
-                                          color:
-                                              Color.fromRGBO(255, 255, 255, 1),
-                                          fontFamily: 'beIN',
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 16),
+                            child: IconButton(
+                                icon: Icon(Icons.mic, color: Colors.white),
+                                onPressed: () {
+                                  speechcontext = context;
+
+                                  !hasSpeech || speech.isListening
+                                      ? null
+                                      : startListening();
+                                }),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          //===================================================================
+
+                          //rowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  var brcode = await scanBarcodeNormal();
+                                  dynamic result =
+                                      await databaseHelper.getData(brcode);
+                                  if (result == '') {
+                                    return;
+                                  } else {
+                                    String output = _textSelect(result);
+                                    queryBarCode = queryBarCodeFromJson(output);
+                                    print(queryBarCode.customerName);
+
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => BarCodePage(
+                                                queryBarCode: queryBarCode,
+                                              )),
+                                    );
+                                  }
+                                },
+                                child: Container(
+                                  height: size.height * 0.2,
+                                  width: size.width * 0.42,
+                                  child: Card(
+                                    elevation: 20,
+                                    color: Colors.deepOrange,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 70,
+                                          child: Image.asset(
+                                              'assets/images/arrow.png'),
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            // margin: EdgeInsets.only(
+                                            //     left: size.width * 0.05),
+                                            child: Text(
+                                              'فحص شكارة بالسريال',
+                                              style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      255, 255, 255, 1),
+                                                  fontFamily: 'beIN',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 16),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          // var res = await databaseHelper.getProductData();
-                          // dropDownList = dropDownListFromJson(res);
-                          // for (var h in dropDownList.prodNames) {
-                          //   print(h.productName);
-                          // }
-                          // await inislizedata();
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    AddOrderScreen()), //FilterScreenPage()),
-                          );
-                          return;
-                          // var brcode = await scanBarcodeNormal();
-                          // setState(() {
-                          //   showSpinner = true;
-                          // });
-                          //----------------------------
-                          dynamic result = [
-                            {
-                              "productName": "asdf",
-                              "measre_name": "das",
-                              "sumQuantity": "3"
-                            },
-                            {
-                              "productName": "hgvgg",
-                              "measre_name": "oouuu",
-                              "sumQuantity": "77"
-                            }
-                          ];
-
-                          //  await databaseHelper.getData('brcode');
-                          // .whenComplete(() {
-                          //   if (databaseHelper.codest != 200) {
-                          //     // _showDialog();
-                          //     // msgStatus = 'Check email or password';
-                          //     // print(msgStatus);
-                          //   } else {
-                          //     // _showDialog();
-                          //     Navigator.pushReplacementNamed(
-                          //         context, '/dashboard');
-                          //   }
-                          // });
-
-                          //----------------------------
-
-                          // print('$brcode');
-                          // print('${result}');
-                          // setState(() {
-                          //   showSpinner = false;
-                          // });
-                          if (result == '') {
-                            return;
-                          } else {
-                            // setState(() {
-                            //   showSpinner = false;
-                            // });
-                            print('lkkkjkjhkj');
-
-                            String output = _textSelect(result.toString());
-                            // var bb = json.encode(output.toString());
-                            print(result.toString());
-                            //return;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => FilterScreenPage()),
-                            );
-                          }
-                        },
-                        child: Container(
-                          height: size.height * 0.2,
-                          width: size.width * 0.42,
-                          child: Card(
-                            elevation: 20,
-                            color: Colors.deepOrange,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 70,
-                                  child:
-                                      Image.asset('assets/images/recieved.png'),
-                                ),
-                                Container(
-                                  margin:
-                                      EdgeInsets.only(right: size.width * 0.04),
-                                  child: Text(
-                                    'اضافة طلبية جديدة',
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(255, 255, 255, 1),
-                                        fontFamily: 'beIN',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AddOrderScreen()), //FilterScreenPage()),
+                                  );
+                                  //return;
+                                },
+                                child: Container(
+                                  height: size.height * 0.2,
+                                  width: size.width * 0.42,
+                                  child: Card(
+                                    elevation: 20,
+                                    color: Colors.deepOrange,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 70,
+                                          child: Image.asset(
+                                              'assets/images/recieved.png'),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.only(
+                                              right: size.width * 0.04),
+                                          child: Text(
+                                            'اضافة طلبية جديدة',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 255, 255, 1),
+                                                fontFamily: 'beIN',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ),
-                    ],
-                  ),
 
-                  //--------------------------
-                  //---------------------------------------------
-                  //---------------------------------------------------
-                  new Padding(
-                    padding: new EdgeInsets.only(top: size.height * 0.01),
-                  ),
+                          //===================================================================
 
-                  //------------------------------------------------------
-                  //-------------------------------------------------
-                  //----------------------------------------------------
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          Navigator.pushReplacementNamed(context, '/vinpage');
-                        },
-                        child: Container(
-                          height: size.height * 0.2,
-                          width: size.width * 0.42,
-                          child: Card(
-                            elevation: 20,
-                            color: Colors.deepOrange,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 70,
-                                  child: Image.asset('assets/images/van.png'),
-                                ),
-                                Text(
-                                  //'عربات النقل'
-                                  agentCustomerName,
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(255, 255, 255, 1),
-                                      fontFamily: 'beIN',
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                              ],
-                            ),
+                          //rowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+                          new Padding(
+                            padding:
+                                new EdgeInsets.only(top: size.height * 0.01),
                           ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          // var brcode = await scanBarcodeNormal();
-                          // dynamic result = await databaseHelper.getData(brcode);
-                          // if (result == '') {
-                          //   return;
-                          // } else {
-                          //   String output = _textSelect(result);
-                          //   queryBarCode = queryBarCodeFromJson(output);
-                          //   print(queryBarCode.customerName);
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FilterScreenPage()),
-                          );
-                        },
-                        child: Container(
-                          height: size.height * 0.2,
-                          width: size.width * 0.42,
-                          child: Card(
-                            elevation: 20,
-                            color: Colors.deepOrange,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 70,
-                                  child: Image.asset('assets/images/arrow.png'),
-                                ),
-                                Container(
-                                  margin:
-                                      EdgeInsets.only(right: size.width * 0.04),
-                                  child: Text(
-                                    'استعلام مشتريات وكيل',
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(255, 255, 255, 1),
-                                        fontFamily: 'beIN',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
+                          //------------------------------------------------------
+                          //===================================================================
+
+                          //rowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/vinpage');
+                                },
+                                child: Container(
+                                  height: size.height * 0.2,
+                                  width: size.width * 0.42,
+                                  child: Card(
+                                    elevation: 20,
+                                    color: Colors.deepOrange,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 70,
+                                          child: Image.asset(
+                                              'assets/images/customer.png'),
+                                        ),
+                                        Text(
+                                          //'عربات النقل'
+                                          agentCustomerName,
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  255, 255, 255, 1),
+                                              fontFamily: 'beIN',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  // var brcode = await scanBarcodeNormal();
+                                  // dynamic result = await databaseHelper.getData(brcode);
+                                  // if (result == '') {
+                                  //   return;
+                                  // } else {
+                                  //   String output = _textSelect(result);
+                                  //   queryBarCode = queryBarCodeFromJson(output);
+                                  //   print(queryBarCode.customerName);
 
-                  new Padding(
-                    padding: new EdgeInsets.only(top: size.height * 0.01),
-                  ),
-
-                  Row(
-                    /// اسعار الاعلاف اليوم
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      GestureDetector(
-                        onTap: () async {
-                          Navigator.pushReplacementNamed(
-                              context, '/FeedPrices');
-
-                          /// اسعار الاعلاف اليوم
-                        },
-                        child: Container(
-                          height: size.height * 0.2,
-                          width: size.width * 0.42,
-                          child: Card(
-                            elevation: 20,
-                            color: Colors.deepOrange,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 70,
-                                  child: Image.asset('assets/images/van.png'),
-                                ),
-                                Text(
-                                  'اسعار الاعلاف اليوم',
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(255, 255, 255, 1),
-                                      fontFamily: 'beIN',
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () async {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => FilterScreenPage()),
-                          );
-                        },
-                        child: Container(
-                          height: size.height * 0.2,
-                          width: size.width * 0.42,
-                          child: Card(
-                            elevation: 20,
-                            color: Colors.deepOrange,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 100,
-                                  height: 70,
-                                  child: Image.asset('assets/images/arrow.png'),
-                                ),
-                                Container(
-                                  // margin:
-                                  //     EdgeInsets.only(right: size.width * 0.04),
-                                  child: Text(
-                                    'ddddddd',
-                                    style: TextStyle(
-                                        color: Color.fromRGBO(255, 255, 255, 1),
-                                        fontFamily: 'beIN',
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16),
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            FilterScreenPage()),
+                                  );
+                                },
+                                child: Container(
+                                  height: size.height * 0.2,
+                                  width: size.width * 0.42,
+                                  child: Card(
+                                    elevation: 20,
+                                    color: Colors.deepOrange,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 70,
+                                          child: Image.asset(
+                                              'assets/images/query.png'),
+                                        ),
+                                        Container(
+                                          margin: EdgeInsets.fromLTRB(
+                                              0, 0, size.width * 0.04, 0),
+                                          // padding: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                          child: Text(
+                                            'استعلام مشتريات وكيل',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 255, 255, 1),
+                                                fontFamily: 'beIN',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ),
+                          //===================================================================
+
+                          //rowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+                          new Padding(
+                            padding:
+                                new EdgeInsets.only(top: size.height * 0.01),
+                          ),
+                          //============================================================
+
+                          Row(
+                            /// اسعار الاعلاف اليوم
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/FeedPrices');
+
+                                  /// اسعار الاعلاف اليوم
+                                },
+                                child: Container(
+                                  height: size.height * 0.2,
+                                  width: size.width * 0.42,
+                                  child: Card(
+                                    elevation: 20,
+                                    color: Colors.deepOrange,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 70,
+                                          child: Image.asset(
+                                              'assets/images/price.png'),
+                                        ),
+                                        Text(
+                                          'اسعار الاعلاف اليوم',
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  255, 255, 255, 1),
+                                              fontFamily: 'beIN',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  var ss = await scanQR();
+                                  // print('ddddddddddddd $ss');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => QrCode(
+                                              qr: ss,
+                                            )),
+                                  );
+                                },
+                                child: Container(
+                                  height: size.height * 0.2,
+                                  width: size.width * 0.42,
+                                  child: Card(
+                                    elevation: 20,
+                                    color: Colors.deepOrange,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 70,
+                                          child: Image.asset(
+                                              'assets/images/qrcode.png'),
+                                        ),
+                                        Container(
+                                          // margin:
+                                          //     EdgeInsets.only(right: size.width * 0.04),
+                                          child: Text(
+                                            'فحص الكيو ار كود',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 255, 255, 1),
+                                                fontFamily: 'beIN',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          //===================================================================
+
+                          //rowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+                          Row(
+                            /// اسعار الاعلاف اليوم
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                onTap: () async {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/FeedPrices');
+
+                                  /// اسعار الاعلاف اليوم
+                                },
+                                child: Container(
+                                  height: size.height * 0.2,
+                                  width: size.width * 0.42,
+                                  child: Card(
+                                    elevation: 20,
+                                    color: Colors.deepOrange,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 70,
+                                          child: Image.asset(
+                                              'assets/images/van.png'),
+                                        ),
+                                        Text(
+                                          'فاضي',
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  255, 255, 255, 1),
+                                              fontFamily: 'beIN',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  // var ss = await scanQR();
+                                  // print('ddddddddddddd $ss');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddVan()),
+                                  );
+                                },
+                                child: Container(
+                                  height: size.height * 0.2,
+                                  width: size.width * 0.42,
+                                  child: Card(
+                                    elevation: 20,
+                                    color: Colors.deepOrange,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 70,
+                                          child: Image.asset(
+                                              'assets/images/van.png'),
+                                        ),
+                                        Container(
+                                          // margin:
+                                          //     EdgeInsets.only(right: size.width * 0.04),
+                                          child: Text(
+                                            'اضافة عربية جديدة',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 255, 255, 1),
+                                                fontFamily: 'beIN',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          //===================================================================
+
+                          //rowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ],
               ),
