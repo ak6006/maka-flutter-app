@@ -275,6 +275,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Container(
                                           width: 100,
@@ -282,19 +284,15 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                           child: Image.asset(
                                               'assets/images/arrow.png'),
                                         ),
-                                        Expanded(
-                                          child: Container(
-                                            // margin: EdgeInsets.only(
-                                            //     left: size.width * 0.05),
-                                            child: Text(
-                                              'فحص شكارة بالسريال',
-                                              style: TextStyle(
-                                                  color: Color.fromRGBO(
-                                                      255, 255, 255, 1),
-                                                  fontFamily: 'beIN',
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 16),
-                                            ),
+                                        Center(
+                                          child: Text(
+                                            'فحص شكارة بالسيريال',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 255, 255, 1),
+                                                fontFamily: 'beIN',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
                                           ),
                                         ),
                                       ],
@@ -321,6 +319,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
                                     child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Container(
                                           width: 100,
@@ -329,8 +329,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                               'assets/images/recieved.png'),
                                         ),
                                         Container(
-                                          margin: EdgeInsets.only(
-                                              right: size.width * 0.04),
+                                          // margin: EdgeInsets.only(
+                                          //     left: size.width * 0.02),
                                           child: Text(
                                             'اضافة طلبية جديدة',
                                             style: TextStyle(

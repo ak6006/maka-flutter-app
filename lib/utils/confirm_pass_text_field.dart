@@ -24,10 +24,12 @@ class _ConfirmPassTextFieldState extends State<ConfirmPassTextField> {
     return TextFormField(
       controller: widget.controller,
       style: TextStyle(
-        // backgroundColor: Colors.white,
-        height: 0.5,
-        color: Colors.white,
-      ),
+          // backgroundColor: Colors.white,
+          height: 0.5,
+          color: Colors.white,
+          fontFamily: 'beIN',
+          fontWeight: FontWeight.bold,
+          fontSize: 16),
       obscureText: _obscure,
       decoration: InputDecoration(
         // labelText: "تأكيد كلمة السر ",

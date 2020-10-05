@@ -144,7 +144,7 @@ class _TransVanPageState extends State<TransVanPage> {
                   val: '${widget.transquery[i].orderHasProductPagesCount}',
                 ),
                 Wrow(
-                  lable: "الشكاير المتبقة",
+                  lable: "الشكاير المتبقية",
                   val: '${widget.transquery[i].orderHasProductDeptCount}',
                 ),
                 Text(

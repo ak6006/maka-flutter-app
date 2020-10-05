@@ -27,9 +27,11 @@ class PrimaryNumberField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       style: TextStyle(
-        height: 0.5,
-        color: Colors.white,
-      ),
+          height: 0.5,
+          color: Colors.white,
+          fontFamily: 'beIN',
+          fontWeight: FontWeight.bold,
+          fontSize: 16),
       keyboardType: TextInputType.number,
       inputFormatters: <TextInputFormatter>[
         FilteringTextInputFormatter.digitsOnly

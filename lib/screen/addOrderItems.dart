@@ -222,7 +222,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                                   //           .name)
                                   //       .toString());
                                   //   return;
-// var ff=weghtItems.indexOf(widget.orderproductItems);
+                                  // var ff=weghtItems.indexOf(widget.orderproductItems);
                                   orders.add(CustomerOrder(
                                       orderId: 0,
                                       orderHasProductId: 0,
@@ -405,29 +405,35 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                         margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
                         child: Row(
                           children: [
-                            Checkbox(
-                              hoverColor: Colors.indigo,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  // sel.add()
-                                  if (value) {
-                                    selectedvanDriver.add(OrderCar(
-                                        vId: e.id, driverName: e.name));
-                                    e.state = value;
-                                  } else {
-                                    setState(() {
-                                      e.state = false;
-                                      selectedvanDriver.removeWhere(
-                                          (item) => item.vId == e.id);
-                                      // selectedvanDriver.removeWhere((item) {
-                                      //   item.vId = e.id;
-                                      //   return;
-                                      // });
-                                    });
-                                  }
-                                });
-                              },
-                              value: e.state, // sel[e.id - 3],
+                            Theme(
+                              data: ThemeData(
+                                primarySwatch: Colors.deepOrange,
+                                unselectedWidgetColor: Colors.deepOrange,
+                              ),
+                              child: Checkbox(
+                                hoverColor: Colors.deepOrange,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    // sel.add()
+                                    if (value) {
+                                      selectedvanDriver.add(OrderCar(
+                                          vId: e.id, driverName: e.name));
+                                      e.state = value;
+                                    } else {
+                                      setState(() {
+                                        e.state = false;
+                                        selectedvanDriver.removeWhere(
+                                            (item) => item.vId == e.id);
+                                        // selectedvanDriver.removeWhere((item) {
+                                        //   item.vId = e.id;
+                                        //   return;
+                                        // });
+                                      });
+                                    }
+                                  });
+                                },
+                                value: e.state, // sel[e.id - 3],
+                              ),
                             ),
                             Text(
                               e.name.toString(),

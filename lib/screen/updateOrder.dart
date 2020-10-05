@@ -23,7 +23,7 @@ class UpdateOrderItemsScreen extends StatefulWidget {
 
 class _UpdateOrderItemsScreenState extends State<UpdateOrderItemsScreen> {
   final TextEditingController _quantity = new TextEditingController();
-
+  final GlobalKey<FormState> _valkey = GlobalKey<FormState>();
   DateTime timeEndSelected;
   DataPicker orderdate;
   int _weghtId;
@@ -115,179 +115,193 @@ class _UpdateOrderItemsScreenState extends State<UpdateOrderItemsScreen> {
             ),
             //  buildExpanded(widget.orderquantitysumquery.length),
 
-            Expanded(
-              child: Container(
-                child: ListView(
-                  scrollDirection: Axis.vertical,
-                  children: <Widget>[
-                    Container(
-                      child: Image(
-                        image: AssetImage(
-                          'assets/images/${widget.updateorders.productId}.png',
-                        ),
-                        height: 110,
-                      ),
-                    ),
-                    Container(
-                      //width: size.width * 0.45,
-                      // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
-                      child: Container(
-                        alignment: Alignment.center,
-                        // margin: EdgeInsets.fromLTRB(110, 0, 0, 0),
-                        child: Text(
-                          widget.updateorders.productName,
-                          style: TextStyle(
-                              color: Color.fromRGBO(255, 255, 255, 1),
-                              fontFamily: 'beIN',
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    orderdate,
-                    new Padding(
-                      padding: new EdgeInsets.only(top: 20.0),
-                    ),
-                    SingleChildScrollView(
-                      child: PrimaryTextField(
-                        label: ' الكمية بالطن',
-                        onChanged: (value) {
-                          quantity = value;
-
-                          // _name = value.trim();
-                          print("First text field: ${value.toInt()}");
-                          //isValid = EmailValidator.validate(_email);
-                        },
-                        // validate: (String value) {
-                        //   if (value.isEmpty) {
-                        //     return 'الرجاء ادخال اسم المستخدم';
-                        //   } //else if (isValid == false) {
-                        //   //return 'Please enter a valid email';
-                        //   //}
-                        //   else {
-                        //     return null;
-                        //   }
-                        // },
-                        controller: _quantity,
-                      ),
-                    ),
-                    new Padding(
-                      padding: new EdgeInsets.only(top: 0.0),
-                    ),
-                    buildWeghtContainer(context),
-                    // SizedBox(
-                    //   height: 20,
-                    // ),
-                    buildVanDriverContainer(context),
-                    new Padding(
-                      padding: new EdgeInsets.only(top: 40.0),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // SizedBox(
-                        //   width: 20,
-                        // ),
-                        Container(
-                          decoration: BoxDecoration(
-                            // color: Color.fromRGBO(254, 88, 0, 1),
-                            borderRadius: BorderRadius.circular(60),
+            Form(
+              key: _valkey,
+              child: Expanded(
+                child: Container(
+                  child: ListView(
+                    scrollDirection: Axis.vertical,
+                    children: <Widget>[
+                      Container(
+                        child: Image(
+                          image: AssetImage(
+                            'assets/images/${widget.updateorders.productId}.png',
                           ),
-                          height: 40,
-                          width: 120,
-                          child: new FlatButton(
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                            color: Color.fromRGBO(254, 88, 0, 1),
-                            child: new Text(
-                              'الغاء',
-                              style: new TextStyle(
-                                color: Colors.white,
+                          height: 110,
+                        ),
+                      ),
+                      Container(
+                        //width: size.width * 0.45,
+                        // margin: EdgeInsets.fromLTRB(0, 0, 10, 0),
+                        child: Container(
+                          alignment: Alignment.center,
+                          // margin: EdgeInsets.fromLTRB(110, 0, 0, 0),
+                          child: Text(
+                            widget.updateorders.productName,
+                            style: TextStyle(
+                                color: Color.fromRGBO(255, 255, 255, 1),
                                 fontFamily: 'beIN',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16),
+                          ),
+                        ),
+                      ),
+                      orderdate,
+                      new Padding(
+                        padding: new EdgeInsets.only(top: 20.0),
+                      ),
+                      SingleChildScrollView(
+                        child: PrimaryTextField(
+                          label: ' الكمية بالطن',
+                          onChanged: (value) {
+                            quantity = value;
+
+                            // _name = value.trim();
+                            print("First text field: ${value.toInt()}");
+                            //isValid = EmailValidator.validate(_email);
+                          },
+                          validate: (String value) {
+                            print(value);
+
+                            if (value.isEmpty) {
+                              return 'الرجاء ادخال الكمية';
+                            } else {}
+                          },
+                          // validate: (String value) {
+                          //   if (value.isEmpty) {
+                          //     return 'الرجاء ادخال اسم المستخدم';
+                          //   } //else if (isValid == false) {
+                          //   //return 'Please enter a valid email';
+                          //   //}
+                          //   else {
+                          //     return null;
+                          //   }
+                          // },
+                          controller: _quantity,
+                        ),
+                      ),
+                      new Padding(
+                        padding: new EdgeInsets.only(top: 0.0),
+                      ),
+                      buildWeghtContainer(context),
+                      // SizedBox(
+                      //   height: 20,
+                      // ),
+                      buildVanDriverContainer(context),
+                      new Padding(
+                        padding: new EdgeInsets.only(top: 40.0),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // SizedBox(
+                          //   width: 20,
+                          // ),
+                          Container(
+                            decoration: BoxDecoration(
+                              // color: Color.fromRGBO(254, 88, 0, 1),
+                              borderRadius: BorderRadius.circular(60),
+                            ),
+                            height: 40,
+                            width: 120,
+                            child: new FlatButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              color: Color.fromRGBO(254, 88, 0, 1),
+                              child: new Text(
+                                'الغاء',
+                                style: new TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'beIN',
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            // color: Color.fromRGBO(254, 88, 0, 1),
-                            borderRadius: BorderRadius.circular(60),
+                          SizedBox(
+                            width: 20,
                           ),
-                          height: 40,
-                          width: 120,
-                          child: new FlatButton(
-                            onPressed: () {
-                              //   print(int.parse(weghtItems[weghtItems
-                              //               .indexOf(widget.orderproductItems)]
-                              //           .name)
-                              //       .toString());
-                              //   return;
+                          Container(
+                            decoration: BoxDecoration(
+                              // color: Color.fromRGBO(254, 88, 0, 1),
+                              borderRadius: BorderRadius.circular(60),
+                            ),
+                            height: 40,
+                            width: 120,
+                            child: new FlatButton(
+                              onPressed: () {
+                                if (_valkey.currentState.validate()) {
+                                  //   print(int.parse(weghtItems[weghtItems
+                                  //               .indexOf(widget.orderproductItems)]
+                                  //           .name)
+                                  //       .toString());
+                                  //   return;
 // var ff=weghtItems.indexOf(widget.orderproductItems);
-                              // final hh = orders.where((i) {
-                              //   i = widget.updateorders;
-                              //   //
-                              //   return;
-                              // });
-                              print(widget.updateorders.quantity);
-                              print(orders.length);
-                              int index = orders
-                                  .indexWhere((t) => t == widget.updateorders);
-                              // print(m);
-                              orders[index].orderDate = orderdate.dateTime;
-                              orders[index].wieghtId = selectedweghtItems.id;
-                              orders[index].wieghtId = selectedweghtItems.id;
+                                  // final hh = orders.where((i) {
+                                  //   i = widget.updateorders;
+                                  //   //
+                                  //   return;
+                                  // });
+                                  print(widget.updateorders.quantity);
+                                  print(orders.length);
+                                  int index = orders.indexWhere(
+                                      (t) => t == widget.updateorders);
+                                  // print(m);
+                                  orders[index].orderDate = orderdate.dateTime;
+                                  orders[index].wieghtId =
+                                      selectedweghtItems.id;
+                                  orders[index].wieghtId =
+                                      selectedweghtItems.id;
 
-                              orders[index].wieghtName =
-                                  int.parse(selectedweghtItems.name);
+                                  orders[index].wieghtName =
+                                      int.parse(selectedweghtItems.name);
 
-                              orders[index].quantity = quantity;
-                              orders[index].orderCars = selectedvanDriver;
-                              print(jsonEncode(
-                                  orders.map((e) => e.toJson()).toList()));
+                                  orders[index].quantity = quantity;
+                                  orders[index].orderCars = selectedvanDriver;
+                                  print(jsonEncode(
+                                      orders.map((e) => e.toJson()).toList()));
 
-                              //  return;
-                              // orders.add(CustomerOrder(
-                              //     orderId: 0,
-                              //     orderHasProductId: 0,
-                              //     orderDate: orderdate.dateTime,
-                              //     productId: widget.orderproductItems.id,
-                              //     productName: widget.orderproductItems.name,
-                              //     wieghtId: selectedweghtItems.id,
-                              //     wieghtName:
-                              //         int.parse(selectedweghtItems.name),
-                              //     measureId: measureItems[0].id,
-                              //     measureName: measureItems[0].name,
-                              //     quantity: quantity,
-                              //     orderCars: selectedvanDriver));
+                                  //  return;
+                                  // orders.add(CustomerOrder(
+                                  //     orderId: 0,
+                                  //     orderHasProductId: 0,
+                                  //     orderDate: orderdate.dateTime,
+                                  //     productId: widget.orderproductItems.id,
+                                  //     productName: widget.orderproductItems.name,
+                                  //     wieghtId: selectedweghtItems.id,
+                                  //     wieghtName:
+                                  //         int.parse(selectedweghtItems.name),
+                                  //     measureId: measureItems[0].id,
+                                  //     measureName: measureItems[0].name,
+                                  //     quantity: quantity,
+                                  //     orderCars: selectedvanDriver));
 
-                              // String jsonUser = jsonEncode(
-                              //     orders[orders.length - 1].toJson());
+                                  // String jsonUser = jsonEncode(
+                                  //     orders[orders.length - 1].toJson());
 
-                              //  return;
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        AddOrderScreen()), //FilterScreenPage()),
-                              );
-                            },
-                            color: Color.fromRGBO(254, 88, 0, 1),
-                            child: new Text(
-                              'تعديل الطلب',
-                              style: new TextStyle(
-                                color: Colors.white,
-                                fontFamily: 'beIN',
+                                  //  return;
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AddOrderScreen()), //FilterScreenPage()),
+                                  );
+                                }
+                              },
+                              color: Color.fromRGBO(254, 88, 0, 1),
+                              child: new Text(
+                                'تعديل الطلب',
+                                style: new TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: 'beIN',
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -421,31 +435,37 @@ class _UpdateOrderItemsScreenState extends State<UpdateOrderItemsScreen> {
                         margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
                         child: Row(
                           children: [
-                            Checkbox(
-                              hoverColor: Colors.indigo,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  // print(jsonEncode(selectedvanDriver
-                                  //     .map((e) => e.toJson())
-                                  //     .toList()));
-                                  // sel.add()
-                                  if (value) {
-                                    selectedvanDriver.add(OrderCar(
-                                        vId: e.id, driverName: e.name));
-                                    e.state = value;
-                                  } else {
-                                    setState(() {
-                                      e.state = false;
-                                      selectedvanDriver.removeWhere(
-                                          (item) => item.vId == e.id);
-                                    });
-                                  }
-                                  // print(jsonEncode(selectedvanDriver
-                                  //     .map((e) => e.toJson())
-                                  //     .toList()));
-                                });
-                              },
-                              value: e.state, // sel[e.id - 3],
+                            Theme(
+                              data: ThemeData(
+                                primarySwatch: Colors.deepOrange,
+                                unselectedWidgetColor: Colors.deepOrange,
+                              ),
+                              child: Checkbox(
+                                hoverColor: Colors.indigo,
+                                onChanged: (bool value) {
+                                  setState(() {
+                                    // print(jsonEncode(selectedvanDriver
+                                    //     .map((e) => e.toJson())
+                                    //     .toList()));
+                                    // sel.add()
+                                    if (value) {
+                                      selectedvanDriver.add(OrderCar(
+                                          vId: e.id, driverName: e.name));
+                                      e.state = value;
+                                    } else {
+                                      setState(() {
+                                        e.state = false;
+                                        selectedvanDriver.removeWhere(
+                                            (item) => item.vId == e.id);
+                                      });
+                                    }
+                                    // print(jsonEncode(selectedvanDriver
+                                    //     .map((e) => e.toJson())
+                                    //     .toList()));
+                                  });
+                                },
+                                value: e.state, // sel[e.id - 3],
+                              ),
                             ),
                             Text(
                               e.name.toString(),

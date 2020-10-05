@@ -96,6 +96,7 @@ class _AddVanScreenState extends State<AddVanScreen> {
                       scrollDirection: Axis.vertical,
                       children: <Widget>[
                         SingleChildScrollView(
+                          physics: ScrollPhysics(),
                           child: PrimaryTextField(
                             label: 'رقم العربية',
                             controller: _carNumber,
@@ -164,7 +165,7 @@ class _AddVanScreenState extends State<AddVanScreen> {
                         //===============================
                         SingleChildScrollView(
                           child: PrimaryNumberField(
-                            label: 'رقم التلفون',
+                            label: 'رقم التليفون',
                             controller: _phoneNumber,
                             onChanged: (value) {
                               //  vanphone = value;

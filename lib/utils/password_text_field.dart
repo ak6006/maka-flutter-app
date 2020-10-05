@@ -24,10 +24,12 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
     return TextFormField(
       controller: widget.controller,
       style: TextStyle(
-        // backgroundColor: Colors.white,
-        color: Colors.white,
-        height: 0.5,
-      ),
+          // backgroundColor: Colors.white,
+          color: Colors.white,
+          height: 0.5,
+          fontFamily: 'beIN',
+          fontWeight: FontWeight.bold,
+          fontSize: 16),
       obscureText: _obscure,
       decoration: InputDecoration(
         hintText: "كلمة السر",
