@@ -6,6 +6,7 @@ import 'package:maka/models/dropdownlist.dart';
 //import 'package:maka/models/customertransquery.dart';
 //import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/screen/addOrder.dart';
+import 'package:maka/utils/animation.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/data_picker_style.dart';
 import 'package:maka/utils/primary_number_field.dart';
@@ -241,7 +242,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
 
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
+                                    MyCustomRoute(
                                         builder: (context) =>
                                             AddOrderScreen()), //FilterScreenPage()),
                                   );
@@ -274,7 +275,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
 
   Container buildWeghtContainer(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.07,
+      height: MediaQuery.of(context).size.height * 0.09,
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
       child: Center(
         child: Container(
@@ -357,7 +358,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
 
   Container buildVanDriverContainer(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.07,
+      height: MediaQuery.of(context).size.height * 0.09,
       margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.03),
       child: Center(
         child: Container(

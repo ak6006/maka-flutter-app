@@ -4,7 +4,9 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:maka/models/customertransquery.dart';
 import 'package:maka/models/transquery.dart';
 import 'package:maka/screen/customertransquery.dart';
+import 'package:maka/screen/dashboard.dart';
 import 'package:maka/screen/transQueryscanner.dart';
+import 'package:maka/utils/animation.dart';
 import 'package:maka/utils/databasehelper.dart';
 
 class VinPage extends StatefulWidget {
@@ -233,7 +235,7 @@ class _VinPageState extends State<VinPage> {
                               // return;
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
+                                MyCustomRoute(
                                     builder: (context) => CustomerTransPage(
                                         customertransquery:
                                             customertransquery)),
@@ -261,6 +263,10 @@ class _VinPageState extends State<VinPage> {
                   child: new FlatButton(
                     onPressed: () {
                       Navigator.pushReplacementNamed(context, '/dashboard');
+                      // Navigator.push(
+                      //   context,
+                      //   MyCustomRoute(builder: (context) => DashBoardPage()),
+                      // );
                     },
                     color: Color.fromRGBO(254, 88, 0, 1),
                     child: Container(

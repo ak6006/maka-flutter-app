@@ -7,10 +7,14 @@ import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/models/productlist.dart';
 import 'package:maka/models/querybarcode.dart';
+import 'package:maka/screen/FeedPrices.dart';
 import 'package:maka/screen/addOrder.dart';
 import 'package:maka/screen/addvan.dart';
 import 'package:maka/screen/filterScreen.dart';
+import 'package:maka/screen/homepage.dart';
 import 'package:maka/screen/qrcode.dart';
+import 'package:maka/screen/vinpage.dart';
+import 'package:maka/utils/animation.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'package:maka/utils/speech.dart';
@@ -184,8 +188,12 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             // clearfun();
 
                             /// LOGOUT BUTTONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
-                            Navigator.pushReplacementNamed(
-                                context, '/MyHomePage');
+                            // Navigator.pushReplacementNamed(
+                            //     context, '/MyHomePage');
+                            Navigator.push(
+                              context,
+                              MyCustomRoute(builder: (context) => MyHomePage()),
+                            );
                           },
                           color: Color.fromRGBO(0, 157, 68, 1),
                           icon: Icon(Icons.logout),
@@ -250,7 +258,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
                                     Navigator.push(
                                       context,
-                                      MaterialPageRoute(
+                                      MyCustomRoute(
                                           builder: (context) => BarCodePage(
                                                 queryBarCode: queryBarCode,
                                               )),
@@ -298,9 +306,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                 onTap: () async {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            AddOrderScreen()), //FilterScreenPage()),
+                                    MyCustomRoute(
+                                        builder: (context) => AddOrderScreen()),
                                   );
                                   //return;
                                 },
@@ -360,8 +367,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  Navigator.pushReplacementNamed(
-                                      context, '/vinpage');
+                                  // Navigator.pushReplacementNamed(
+                                  //     context, '/vinpage');
+                                  Navigator.push(
+                                    context,
+                                    MyCustomRoute(
+                                        builder: (context) => VinPage()),
+                                  );
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -408,7 +420,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
+                                    MyCustomRoute(
                                         builder: (context) =>
                                             FilterScreenPage()),
                                   );
@@ -466,8 +478,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  Navigator.pushReplacementNamed(
-                                      context, '/FeedPrices');
+                                  // Navigator.pushReplacementNamed(
+                                  //     context, '/FeedPrices');
+                                  Navigator.push(
+                                    context,
+                                    MyCustomRoute(
+                                        builder: (context) => FeedPrices()),
+                                  );
 
                                   /// اسعار الاعلاف اليوم
                                 },
@@ -508,7 +525,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   // print('ddddddddddddd $ss');
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
+                                    MyCustomRoute(
                                         builder: (context) => QrCode(
                                               qr: ss,
                                             )),
@@ -562,7 +579,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                 onTap: () async {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
+                                    MyCustomRoute(
                                         builder: (context) =>
                                             AddVanScreen()), //FilterScreenPage()),
                                   );
@@ -604,7 +621,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   // print('ddddddddddddd $ss');
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
+                                    MyCustomRoute(
                                         builder: (context) => QrCode(
                                               qr: ss,
                                             )),

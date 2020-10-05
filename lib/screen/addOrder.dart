@@ -11,6 +11,7 @@ import 'package:maka/models/datatable.dart';
 import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/screen/addOrderItems.dart';
 import 'package:maka/screen/dashboard.dart';
+import 'package:maka/utils/animation.dart';
 //import 'package:maka/models/productlist.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/custom_paginated_data_table.dart';
@@ -204,7 +205,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
 
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(
+                                    MyCustomRoute(
                                         builder: (context) => DashBoardPage()),
                                   );
                                 },
@@ -385,7 +386,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   Container productSlideImage(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      height: size.height * 0.2,
+      height: size.height * 0.22,
       width: MediaQuery.of(context).size.width,
       child: CarouselSlider(
         options: CarouselOptions(

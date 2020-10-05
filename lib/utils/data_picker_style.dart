@@ -18,9 +18,9 @@ class _DataPickerState extends State<DataPicker> {
       onTap: () {
         showDatePicker(
           context: context,
-          initialDate: DateTime.now().add(Duration(days: 1)),
-          firstDate: DateTime.now().add(Duration(days: 1)),
-          lastDate: DateTime.now().add(Duration(days: 90)),
+          initialDate: DateTime.now(), //add(Duration(days: 1)),
+          firstDate: DateTime(2000), //add(Duration(days: 1)),
+          lastDate: DateTime(2025), //.add(Duration(days: 90)),
           //  initialDate: widget.dateTime,
           // firstDate: DateTime(2020),
           // lastDate: widget.dateTime,
@@ -31,7 +31,7 @@ class _DataPickerState extends State<DataPicker> {
         });
       },
       child: Container(
-        height: size.height * 0.07,
+        height: size.height * 0.09,
         decoration: BoxDecoration(
             border: Border.all(width: 1.0, color: Colors.orange[800]),
             borderRadius: BorderRadius.circular(

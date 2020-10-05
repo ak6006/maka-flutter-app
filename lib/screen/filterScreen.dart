@@ -4,6 +4,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/models/productlist.dart';
+import 'package:maka/utils/animation.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/data_picker_style.dart';
 import 'package:maka/utils/databasehelper.dart';
@@ -216,7 +217,7 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                   //  print(orderquantitysumquery.length);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
+                    MyCustomRoute(
                         builder: (context) => OrderQuantityScreen(
                               orderquantitysumquery: orderquantitysumquery,
                             )),
