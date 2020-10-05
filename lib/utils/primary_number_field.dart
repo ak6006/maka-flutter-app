@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-class PrimaryTextField extends StatelessWidget {
+class PrimaryNumberField extends StatelessWidget {
   final Function onChanged;
   final String label;
   final Function validate;
@@ -8,31 +9,36 @@ class PrimaryTextField extends StatelessWidget {
   //final String onSaved;
   FormFieldSetter<String> onSaved;
   final bool expandable;
-  final TextInputType;
+  //final TextInputType;
 
-  PrimaryTextField(
-      {@required this.label,
-      this.onChanged,
-      this.validate,
-      this.onSaved,
-      this.expandable = false,
-      this.controller,
-      this.TextInputType});
+  PrimaryNumberField({
+    @required this.label,
+    this.onChanged,
+    this.validate,
+    this.onSaved,
+    this.expandable = false,
+    this.controller,
+    //this.TextInputType.number
+  });
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return TextFormField(
       controller: controller,
       style: TextStyle(
         height: 0.5,
         color: Colors.white,
       ),
-      keyboardType: TextInputType,
+      keyboardType: TextInputType.number,
+      inputFormatters: <TextInputFormatter>[
+        FilteringTextInputFormatter.digitsOnly
+      ], // Only numbers can be entered
       expands: expandable,
       maxLines: expandable ? null : 1,
       textAlignVertical: TextAlignVertical.top,
       decoration: InputDecoration(
-        //  labelText: label,
+        // labelText: label,
         hintText: label,
         hintStyle: TextStyle(color: Colors.white54),
         //labelStyle: TextStyle(fontFamily: "Subtitle"),

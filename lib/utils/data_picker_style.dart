@@ -13,6 +13,7 @@ class DataPicker extends StatefulWidget {
 class _DataPickerState extends State<DataPicker> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
         showDatePicker(
@@ -30,7 +31,7 @@ class _DataPickerState extends State<DataPicker> {
         });
       },
       child: Container(
-        height: 50.0,
+        height: size.height * 0.07,
         decoration: BoxDecoration(
             border: Border.all(width: 1.0, color: Colors.orange[800]),
             borderRadius: BorderRadius.circular(

@@ -112,8 +112,17 @@ class _BarCodePageState extends State<BarCodePage> {
                       val: '${widget.queryBarCode.transVehcileDriverName}',
                     ),
                     Wrow(
-                      lable: "مدير الوردية",
+                      lable: "الوردية",
                       val: '${widget.queryBarCode.shiftName}',
+                    ),
+                    Wrow(
+                      lable: "مدير الوردية",
+                      val: '${widget.queryBarCode.shiftAdminName}',
+                    ),
+                    Wrow(
+                      lable: "كمية الطلبية",
+                      val:
+                          '${widget.queryBarCode.quantity} : ${widget.queryBarCode.measreName}',
                     ),
                   ],
                 ),

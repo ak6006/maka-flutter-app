@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:maka/models/vanmodel.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -146,7 +147,7 @@ class DatabaseHelper {
     final key = 'access_token';
     final value = prefs.get(key) ?? 0;
 
-    String myUrl = "$serverUrl/api/Order";
+    String myUrl = "$serverUrl/api/Order/";
     codest = 0;
     final response1 = await http
         .post(myUrl,
@@ -168,15 +169,53 @@ class DatabaseHelper {
         return null;
       },
     );
-    // if (codest != 201) {
-    //   status = true;
-    //   connection = true;
 
-    //   return;
-    // } else {
-    //   connection = false;
-    //   status = false;
-    // }
+    return codest;
+  }
+
+//=================================================================
+  //==================================================================
+  addvanData(VanModel data) async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      status = true;
+      connection = true;
+      return;
+    }
+
+    final prefs = await SharedPreferences.getInstance();
+
+    final key = 'access_token';
+    final value = prefs.get(key) ?? 0;
+
+    String myUrl = "$serverUrl/api/cars";
+    codest = 0;
+    final response1 = await http
+        .post(myUrl,
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+              'Authorization': 'bearer $value'
+            },
+            body: jsonEncode(data.toJson()))
+        .then((response) {
+      codest = response.body;
+      print(response.body);
+    }).timeout(
+      Duration(seconds: 10),
+      onTimeout: () {
+        connection = true;
+        status = true;
+
+        return null;
+      },
+    );
+
     return codest;
   }
 //=================================================================

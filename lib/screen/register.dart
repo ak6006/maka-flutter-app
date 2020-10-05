@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:maka/utils/confirm_pass_text_field.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'package:maka/utils/password_text_field.dart';
+import 'package:maka/utils/primary_number_field.dart';
 import 'package:maka/utils/primary_text_field.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -138,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         AssetImage('assets/images/mobile.png'),
                                   ),
                                 ),
-                                PrimaryTextField(
+                                PrimaryNumberField(
                                   label: 'موبايل',
                                   onChanged: (value) {
                                     _mobile = value.trim();

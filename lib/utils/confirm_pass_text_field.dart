@@ -30,7 +30,7 @@ class _ConfirmPassTextFieldState extends State<ConfirmPassTextField> {
       ),
       obscureText: _obscure,
       decoration: InputDecoration(
-        //   labelText: "تأكيد كلمة السر ",
+        // labelText: "تأكيد كلمة السر ",
         hintText: "تأكيد كلمة السر",
         hintStyle: TextStyle(color: Colors.white54),
         fillColor: Colors.white,

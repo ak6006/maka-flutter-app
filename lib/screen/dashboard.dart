@@ -8,7 +8,7 @@ import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/models/productlist.dart';
 import 'package:maka/models/querybarcode.dart';
 import 'package:maka/screen/addOrder.dart';
-import 'package:maka/screen/addVan.dart';
+import 'package:maka/screen/addvan.dart';
 import 'package:maka/screen/filterScreen.dart';
 import 'package:maka/screen/qrcode.dart';
 import 'package:maka/utils/constant.dart';
@@ -199,6 +199,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                   Expanded(
                     child: Container(
                       child: ListView(
+                        physics: ScrollPhysics(),
                         scrollDirection: Axis.vertical,
                         children: <Widget>[
                           Container(
@@ -237,9 +238,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  var brcode = await scanBarcodeNormal();
+                                  // var brcode = await scanBarcodeNormal();
                                   dynamic result =
-                                      await databaseHelper.getData(brcode);
+                                      await databaseHelper.getData('88');
                                   if (result == '') {
                                     return;
                                   } else {
@@ -559,50 +560,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  Navigator.pushReplacementNamed(
-                                      context, '/FeedPrices');
-
-                                  /// اسعار الاعلاف اليوم
-                                },
-                                child: Container(
-                                  height: size.height * 0.2,
-                                  width: size.width * 0.42,
-                                  child: Card(
-                                    elevation: 20,
-                                    color: Colors.deepOrange,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: 100,
-                                          height: 70,
-                                          child: Image.asset(
-                                              'assets/images/van.png'),
-                                        ),
-                                        Text(
-                                          'فاضي',
-                                          style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                  255, 255, 255, 1),
-                                              fontFamily: 'beIN',
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () async {
-                                  // var ss = await scanQR();
-                                  // print('ddddddddddddd $ss');
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => AddVan()),
+                                        builder: (context) =>
+                                            AddVanScreen()), //FilterScreenPage()),
                                   );
                                 },
                                 child: Container(
@@ -620,13 +582,56 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                           width: 100,
                                           height: 70,
                                           child: Image.asset(
-                                              'assets/images/van.png'),
+                                              'assets/images/truck.png'),
+                                        ),
+                                        Text(
+                                          'اضافة عربية نقل',
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  255, 255, 255, 1),
+                                              fontFamily: 'beIN',
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  var ss = await scanQR();
+                                  // print('ddddddddddddd $ss');
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => QrCode(
+                                              qr: ss,
+                                            )),
+                                  );
+                                },
+                                child: Container(
+                                  height: size.height * 0.2,
+                                  width: size.width * 0.42,
+                                  child: Card(
+                                    elevation: 20,
+                                    color: Colors.deepOrange,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 70,
+                                          child: Image.asset(
+                                              'assets/images/arrow.png'),
                                         ),
                                         Container(
                                           // margin:
                                           //     EdgeInsets.only(right: size.width * 0.04),
                                           child: Text(
-                                            'اضافة عربية جديدة',
+                                            'فحص الكيو ار كود',
                                             style: TextStyle(
                                                 color: Color.fromRGBO(
                                                     255, 255, 255, 1),

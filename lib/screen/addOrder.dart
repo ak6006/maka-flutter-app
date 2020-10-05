@@ -160,10 +160,23 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                     color: Colors.deepOrange,
                     backgroundColor: Colors.white,
                     onRefresh: () async {
+                      AwesomeDialog(
+                        context: context,
+                        width: 280,
+                        headerAnimationLoop: false,
+                        animType: AnimType.BOTTOMSLIDE,
+                        title: 'تحذير',
+                        desc: 'هل انت متاكد من حذف هذه الطلبية',
+                        btnCancelOnPress: () {},
+                        btnOkOnPress: () async {
+                          await inislizedata();
+                          setState(() {});
+                          print('refressssssssssssssssssssssssh');
+                        },
+                        btnOkText: 'نعم',
+                        btnCancelText: 'الغاء',
+                      )..show();
                       //await refreshList();
-                      await inislizedata();
-                      setState(() {});
-                      print('refressssssssssssssssssssssssh');
                     },
                     child: ListView(
                       scrollDirection: Axis.vertical,
@@ -372,7 +385,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   Container productSlideImage(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      height: 130,
+      height: size.height * 0.2,
       width: MediaQuery.of(context).size.width,
       child: CarouselSlider(
         options: CarouselOptions(

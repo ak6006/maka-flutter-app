@@ -9,8 +9,8 @@ class QueryBarCode {
   QueryBarCode({
     this.storeStoreId,
     this.storeHasProductDate,
-    this.queryBarCodeShiftName,
     this.shiftName,
+    this.shiftAdminName,
     this.customerName,
     this.transVehcileNum,
     this.transVehcileDriverName,
@@ -18,12 +18,14 @@ class QueryBarCode {
     this.productName,
     this.weightNet,
     this.barcodeSerialNumber,
+    this.quantity,
+    this.measreName,
   });
 
   int storeStoreId;
   DateTime storeHasProductDate;
-  String queryBarCodeShiftName;
   String shiftName;
+  String shiftAdminName;
   String customerName;
   String transVehcileNum;
   String transVehcileDriverName;
@@ -31,14 +33,18 @@ class QueryBarCode {
   String productName;
   int weightNet;
   String barcodeSerialNumber;
+  String quantity;
+  String measreName;
 
   factory QueryBarCode.fromJson(Map<String, dynamic> json) => QueryBarCode(
         storeStoreId:
             json["store_store_id"] == null ? null : json["store_store_id"],
-        storeHasProductDate: DateTime.parse(json["store_has_productDate"]),
-        queryBarCodeShiftName:
-            json["shiftName"] == null ? null : json["shiftName"],
-        shiftName: json["Shift_Name"] == null ? null : json["Shift_Name"],
+        storeHasProductDate: json["store_has_productDate"] == null
+            ? null
+            : DateTime.parse(json["store_has_productDate"]),
+        shiftName: json["shiftName"] == null ? null : json["shiftName"],
+        shiftAdminName:
+            json["Shift_admin_Name"] == null ? null : json["Shift_admin_Name"],
         customerName:
             json["Customer_Name"] == null ? null : json["Customer_Name"],
         transVehcileNum:
@@ -52,14 +58,17 @@ class QueryBarCode {
         barcodeSerialNumber: json["barcode_serialNumber"] == null
             ? null
             : json["barcode_serialNumber"],
+        quantity: json["Quantity"] == null ? null : json["Quantity"],
+        measreName: json["measre_name"] == null ? null : json["measre_name"],
       );
 
   Map<String, dynamic> toJson() => {
         "store_store_id": storeStoreId == null ? null : storeStoreId,
-        "store_has_productDate": storeHasProductDate.toIso8601String,
-        "shiftName":
-            queryBarCodeShiftName == null ? null : queryBarCodeShiftName,
-        "Shift_Name": shiftName == null ? null : shiftName,
+        "store_has_productDate": storeHasProductDate == null
+            ? null
+            : storeHasProductDate.toIso8601String(),
+        "shiftName": shiftName == null ? null : shiftName,
+        "Shift_admin_Name": shiftAdminName == null ? null : shiftAdminName,
         "Customer_Name": customerName == null ? null : customerName,
         "transVehcile_num": transVehcileNum == null ? null : transVehcileNum,
         "transVehcile_driver_name":
@@ -69,5 +78,7 @@ class QueryBarCode {
         "weight_net": weightNet == null ? null : weightNet,
         "barcode_serialNumber":
             barcodeSerialNumber == null ? null : barcodeSerialNumber,
+        "Quantity": quantity == null ? null : quantity,
+        "measre_name": measreName == null ? null : measreName,
       };
 }
