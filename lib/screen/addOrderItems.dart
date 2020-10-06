@@ -11,6 +11,7 @@ import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/data_picker_style.dart';
 import 'package:maka/utils/primary_number_field.dart';
 import 'package:maka/utils/primary_text_field.dart';
+import 'package:maka/utils/slideAnimations.dart';
 
 // ignore: must_be_immutable
 class AddOrderItemsScreen extends StatefulWidget {
@@ -192,7 +193,9 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                             width: 120,
                             child: new FlatButton(
                               onPressed: () {
-                                Navigator.pop(context);
+                                // Navigator.pop(context);
+                                Navigator.push(context,
+                                    SlideLeftRoute(page: AddOrderScreen()));
                               },
                               color: Color.fromRGBO(254, 88, 0, 1),
                               child: new Text(
@@ -240,12 +243,14 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                                   // String jsonUser = jsonEncode(
                                   //     orders[orders.length - 1].toJson());
 
-                                  Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) =>
-                                            AddOrderScreen()), //FilterScreenPage()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) =>
+                                  //           AddOrderScreen()), //FilterScreenPage()),
+                                  // );
+                                  Navigator.push(context,
+                                      SlideRightRoute(page: AddOrderScreen()));
                                 }
                                 setState(() {});
                                 //  return;

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart' as material;
 import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/screen/dashboard.dart';
 import 'package:maka/utils/databasehelper.dart';
+import 'package:maka/utils/slideAnimations.dart';
 
 class FeedPrices extends StatefulWidget {
   FeedPrices({productsInfo});
@@ -84,9 +85,7 @@ class _FeedPricesState extends State<FeedPrices> {
                 child: new FlatButton(
                   onPressed: () {
                     Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => DashBoardPage()),
-                    );
+                        context, SlideLeftRoute(page: DashBoardPage()));
                   },
                   color: Color.fromRGBO(254, 88, 0, 1),
                   child: new Text(

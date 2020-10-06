@@ -20,6 +20,7 @@ import 'package:maka/utils/data_picker_style.dart';
 import 'package:maka/utils/databasehelper.dart';
 //import 'package:maka/utils/primary_text_field.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:maka/utils/slideAnimations.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 //import 'orderQuantityScreen.dart';
@@ -203,11 +204,13 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                                 onPressed: () {
                                   // print('vbn${productItems[2].name}');
 
-                                  Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) => DashBoardPage()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) => DashBoardPage()),
+                                  // );
+                                  Navigator.push(context,
+                                      SlideLeftRoute(page: DashBoardPage()));
                                 },
                                 color: Color.fromRGBO(254, 88, 0, 1),
                                 child: new Text(

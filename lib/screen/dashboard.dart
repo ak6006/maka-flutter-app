@@ -17,6 +17,7 @@ import 'package:maka/screen/vinpage.dart';
 import 'package:maka/utils/animation.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
+import 'package:maka/utils/slideAnimations.dart';
 import 'package:maka/utils/speech.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -190,10 +191,12 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             /// LOGOUT BUTTONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
                             // Navigator.pushReplacementNamed(
                             //     context, '/MyHomePage');
+                            // Navigator.push(
+                            //   context,
+                            //   MyCustomRoute(builder: (context) => MyHomePage()),
+                            // );
                             Navigator.push(
-                              context,
-                              MyCustomRoute(builder: (context) => MyHomePage()),
-                            );
+                                context, SlideRightRoute(page: MyHomePage()));
                           },
                           color: Color.fromRGBO(0, 157, 68, 1),
                           icon: Icon(Icons.logout),
@@ -263,6 +266,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                                 queryBarCode: queryBarCode,
                                               )),
                                     );
+                                    // Navigator.push(
+                                    //   context,
+                                    //   SlideRightRoute(
+                                    //       page: BarCodePage(
+                                    //     queryBarCode: queryBarCode,
+                                    //   )),
+                                    // );
                                   }
                                 },
                                 child: Container(
@@ -302,11 +312,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               ),
                               GestureDetector(
                                 onTap: () async {
-                                  Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) => AddOrderScreen()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) => AddOrderScreen()),
+                                  // );
+                                  Navigator.push(context,
+                                      SlideRightRoute(page: AddOrderScreen()));
                                   //return;
                                 },
                                 child: Container(
@@ -369,11 +381,15 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                 onTap: () async {
                                   // Navigator.pushReplacementNamed(
                                   //     context, '/vinpage');
-                                  Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) => VinPage()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) => VinPage()),
+                                  // );
+                                  // Navigator.push(context,
+                                  //     SlideRightRoute(page: VinPage()));
+                                  Navigator.push(context,
+                                      SlideRightRoute(page: VinPage()));
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -418,12 +434,16 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   //   queryBarCode = queryBarCodeFromJson(output);
                                   //   print(queryBarCode.customerName);
 
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) =>
+                                  //           FilterScreenPage()),
+                                  // );
                                   Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) =>
-                                            FilterScreenPage()),
-                                  );
+                                      context,
+                                      SlideRightRoute(
+                                          page: FilterScreenPage()));
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -480,11 +500,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                 onTap: () async {
                                   // Navigator.pushReplacementNamed(
                                   //     context, '/FeedPrices');
-                                  Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) => FeedPrices()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) => FeedPrices()),
+                                  // );
+                                  Navigator.push(context,
+                                      SlideRightRoute(page: FeedPrices()));
 
                                   /// اسعار الاعلاف اليوم
                                 },
@@ -523,13 +545,19 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                 onTap: () async {
                                   var ss = await scanQR();
                                   // print('ddddddddddddd $ss');
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) => QrCode(
+                                  //             qr: ss,
+                                  //           )),
+                                  // );
                                   Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) => QrCode(
-                                              qr: ss,
-                                            )),
-                                  );
+                                      context,
+                                      SlideRightRoute(
+                                          page: QrCode(
+                                        qr: ss,
+                                      )));
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -577,12 +605,14 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) =>
-                                            AddVanScreen()), //FilterScreenPage()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) =>
+                                  //           AddVanScreen()), //FilterScreenPage()),
+                                  // );
+                                  Navigator.push(context,
+                                      SlideRightRoute(page: AddVanScreen()));
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -620,12 +650,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   var ss = await scanQR();
                                   // print('ddddddddddddd $ss');
                                   Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) => QrCode(
-                                              qr: ss,
-                                            )),
-                                  );
+                                      context,
+                                      SlideRightRoute(
+                                          page: QrCode(
+                                        qr: ss,
+                                      )));
                                 },
                                 child: Container(
                                   height: size.height * 0.2,

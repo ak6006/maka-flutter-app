@@ -69,6 +69,8 @@ class _QrCodeState extends State<QrCode> {
                 child: new FlatButton(
                   onPressed: () {
                     Navigator.pop(context);
+                    // Navigator.push(context,
+                    //               SlideRightRoute(page: CustomerTransPage()));
                   },
                   color: Color.fromRGBO(254, 88, 0, 1),
                   child: new Text(

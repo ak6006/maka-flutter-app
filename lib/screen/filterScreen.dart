@@ -4,10 +4,12 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/models/productlist.dart';
+import 'package:maka/screen/dashboard.dart';
 import 'package:maka/utils/animation.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/data_picker_style.dart';
 import 'package:maka/utils/databasehelper.dart';
+import 'package:maka/utils/slideAnimations.dart';
 
 import 'orderQuantityScreen.dart';
 
@@ -148,7 +150,6 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                         print(value);
                         setState(() {
                           // _prodId = value;
-
                           _productsVal = value;
                           productval = value;
                           if (_productsVal == 'كل المنتجات') {
@@ -215,13 +216,19 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                   orderquantitysumquery = orderQuantitySumQueryFromJson(result);
                   // productlist.add('gffhfg');
                   //  print(orderquantitysumquery.length);
+                  // Navigator.push(
+                  //   context,
+                  //   MyCustomRoute(
+                  //       builder: (context) => OrderQuantityScreen(
+                  //             orderquantitysumquery: orderquantitysumquery,
+                  //           )),
+                  // );
                   Navigator.push(
-                    context,
-                    MyCustomRoute(
-                        builder: (context) => OrderQuantityScreen(
-                              orderquantitysumquery: orderquantitysumquery,
-                            )),
-                  );
+                      context,
+                      SlideRightRoute(
+                          page: OrderQuantityScreen(
+                        orderquantitysumquery: orderquantitysumquery,
+                      )));
 
                   return;
 
@@ -253,7 +260,9 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                   print(begin.dateTime);
                   print(end.dateTime);
                   print(productval);
-                  Navigator.pop(context);
+                  //Navigator.pop(context);
+                  Navigator.push(
+                      context, SlideLeftRoute(page: DashBoardPage()));
                 },
                 color: Color.fromRGBO(254, 88, 0, 1),
                 child: new Text(

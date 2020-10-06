@@ -8,6 +8,7 @@ import 'package:maka/screen/dashboard.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/primary_number_field.dart';
 import 'package:maka/utils/primary_text_field.dart';
+import 'package:maka/utils/slideAnimations.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
 class AddVanScreen extends StatefulWidget {
@@ -201,7 +202,9 @@ class _AddVanScreenState extends State<AddVanScreen> {
                               width: 120,
                               child: new FlatButton(
                                 onPressed: () {
-                                  Navigator.pop(context);
+                                  //Navigator.pop(context);
+                                  Navigator.push(context,
+                                      SlideLeftRoute(page: DashBoardPage()));
                                 },
                                 color: Color.fromRGBO(254, 88, 0, 1),
                                 child: new Text(

@@ -6,7 +6,11 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import 'package:maka/models/customertransquery.dart';
+import 'package:maka/screen/vinpage.dart';
 import 'package:maka/utils/databasehelper.dart';
+import 'package:maka/utils/slideAnimations.dart';
+
+import 'dashboard.dart';
 
 class CustomerTransPage extends StatefulWidget {
   CustomerTransPage({customertransquery});
@@ -158,7 +162,8 @@ class _CustomerTransPageState extends State<CustomerTransPage> {
               width: 160,
               child: new FlatButton(
                 onPressed: () {
-                  Navigator.pop(context);
+                  //Navigator.pop(context);
+                  Navigator.push(context, SlideLeftRoute(page: VinPage()));
                 },
                 color: Color.fromRGBO(254, 88, 0, 1),
                 child: new Text(

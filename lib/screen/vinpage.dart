@@ -8,6 +8,7 @@ import 'package:maka/screen/dashboard.dart';
 import 'package:maka/screen/transQueryscanner.dart';
 import 'package:maka/utils/animation.dart';
 import 'package:maka/utils/databasehelper.dart';
+import 'package:maka/utils/slideAnimations.dart';
 
 class VinPage extends StatefulWidget {
   //عربات النقل
@@ -233,13 +234,15 @@ class _VinPageState extends State<VinPage> {
                               // print('ddd${f.transVehcileDriverName}');
                               //}
                               // return;
-                              Navigator.push(
-                                context,
-                                MyCustomRoute(
-                                    builder: (context) => CustomerTransPage(
-                                        customertransquery:
-                                            customertransquery)),
-                              );
+                              // Navigator.push(
+                              //   context,
+                              //   MyCustomRoute(
+                              //       builder: (context) => CustomerTransPage(
+                              //           customertransquery:
+                              //               customertransquery)),
+                              // );
+                              Navigator.push(context,
+                                  SlideRightRoute(page: CustomerTransPage()));
                             },
                           ),
                         ),
@@ -262,7 +265,9 @@ class _VinPageState extends State<VinPage> {
                   width: size.width * 0.7,
                   child: new FlatButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/dashboard');
+                      //  Navigator.pushReplacementNamed(context, '/dashboard');
+                      Navigator.push(
+                          context, SlideLeftRoute(page: DashBoardPage()));
                       // Navigator.push(
                       //   context,
                       //   MyCustomRoute(builder: (context) => DashBoardPage()),
