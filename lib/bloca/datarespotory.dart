@@ -1,5 +1,5 @@
 import 'package:maka/bloca/apibaseheiper.dart';
-import 'package:maka/bloca/moveresponse.dart';
+import 'package:maka/bloca/dataresponse.dart';
 import 'package:maka/models/dropdownlist.dart';
 
 class MovieRepository {
