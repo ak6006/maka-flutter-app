@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:maka/bloca/apiresponse.dart';
 import 'package:maka/details/products.dart';
 import 'package:maka/details/rightImageProductImageWidget.dart';
 import 'package:maka/models/datatable.dart';
 import 'package:maka/models/orderQuntitySum.dart';
-import 'package:maka/screen/addOrderItems.dart';
+
 import 'package:maka/screen/dashboard.dart';
 import 'package:maka/utils/animation.dart';
 //import 'package:maka/models/productlist.dart';
@@ -170,7 +171,9 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                         desc: 'هل انت متاكد من حذف هذه الطلبية',
                         btnCancelOnPress: () {},
                         btnOkOnPress: () async {
-                          await inislizedata();
+                          //++++++++++++++++++++++++++++++++++++++
+                          //  await inislizedata();
+                          //++++++++++++++++++++++++++++++++++++++++++
                           setState(() {});
                           print('refressssssssssssssssssssssssh');
                         },
@@ -182,9 +185,26 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                     child: ListView(
                       scrollDirection: Axis.vertical,
                       children: <Widget>[
-                        productSlideImage(context),
+                        snapshotdata.data.status == Status.COMPLETED
+                            ? productSlideImage(context)
+                            : Container(
+                                height: 60,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
+
+                        snapshotdata.data.status == Status.COMPLETED
+                            ? datatableScrollview(context)
+                            : Container(
+                                height: 60,
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              ),
                         //   orderdate,
-                        datatableScrollview(context),
+
+                        //  datatableScrollview(context),
                         // buildStoreContainer(context),
                         SizedBox(
                           height: 18.0,
@@ -243,7 +263,9 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                                   // print(json);
                                   var res =
                                       await databaseHelper.addproductData(json);
-                                  await inislizedata();
+                                  //++++++++++++++++++++++++++++++++++++++
+                                  //  await inislizedata();
+                                  //++++++++++++++++++++++++++++++++++++++++++
                                   print('gbddddd$res');
                                   if (res == '"Done"') {
                                     alertDialog(

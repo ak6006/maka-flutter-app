@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:maka/bloca/movebloc.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'package:maka/utils/password_text_field.dart';
@@ -303,11 +304,19 @@ class _LogInState extends State<LogIn> {
                                       //   agentCustomerName = value;
                                       //   print(value);
                                       // }
-                                      await inislizedata();
+
+                                      //++++++++++++++++++++++++++++++++++++++
+                                      //  await inislizedata();
+                                      //++++++++++++++++++++++++++++++++++++++++++
+                                      // blocData = DataBloc();
+
                                       await initSpeechState();
                                       await databaseHelper.saveUserData(
                                           _usernameController.text,
                                           _passwordController.text);
+                                      if (datastate == false) {
+                                        blocData.fetchdata();
+                                      }
 
                                       Navigator.pushReplacementNamed(
                                           context, '/dashboard');

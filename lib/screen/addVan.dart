@@ -236,7 +236,9 @@ class _AddVanScreenState extends State<AddVanScreen> {
 
                                     print(res);
                                     if (res == '"تمت الاضافه بنجاح"') {
-                                      await inislizedata();
+                                      //++++++++++++++++++++++++++++++++++++++
+                                      //  await inislizedata();
+                                      //++++++++++++++++++++++++++++++++++++++++++
                                       alertDialog(
                                           DialogType.SUCCES,
                                           context,

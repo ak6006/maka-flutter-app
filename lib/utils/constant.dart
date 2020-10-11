@@ -1,12 +1,22 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:maka/bloca/dataprovider.dart';
+import 'package:maka/bloca/movebloc.dart';
 import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'dart:ui';
 
+AsyncSnapshot snapshotdata;
+
+DataBloc blocData;
+bool datastate = false;
+BuildContext currentcontext;
+DataProvider dataProvider = DataProvider();
+//StreamSubscription<ApiResponse<DropDownList>> streamSubscription;
 String agentCustomerName;
 const kPrimaryColor = Color(0xFF1B1448);
 
@@ -24,23 +34,23 @@ List<CustomerOrder> orders = new List<CustomerOrder>();
 DatabaseHelper databaseHelper = new DatabaseHelper();
 //final prefs = SharedPreferences.getInstance();
 
-List<String> gifttitles =
-    []; //= []; //dropDownList.gifts.map((e) => e.giftname);
-List<Widget> giftimages = [];
-List<Uint8List> giftimagesdata = [];
+// List<String> gifttitles =
+//     []; //= []; //dropDownList.gifts.map((e) => e.giftname);
+// List<Widget> giftimages = [];
+// List<Uint8List> giftimagesdata = [];
+List<GiftRoot> giftroot = [];
 
-Future inislizedata() async {
-  //prefs = await SharedPreferences.getInstance();
-  var res = await databaseHelper.getProductData();
+Future inislizedata(DropDownList data) async {
+  // var res = await databaseHelper.getProductData();
   // if (res == null) return;
-  dropDownList = dropDownListFromJson(res);
-  for (var h in dropDownList.prodNames) {
-    print(h.productName);
-  }
+  // dropDownList = dropDownListFromJson(res);
+  dropDownList = data;
+
   productItems.clear();
-  gifttitles.clear();
-  giftimages.clear();
-  giftimagesdata.clear();
+  // gifttitles.clear();
+  // giftimages.clear();
+  // giftimagesdata.clear();
+  giftroot.clear();
   measureItems.clear();
   weghtItems.clear();
   storeItems.clear();
@@ -87,34 +97,46 @@ Future inislizedata() async {
         .add(DropDownItem(id: h.vehicleId, name: h.driverName, state: false));
   }
 
-  for (var h in orders) {
-    print(h.orderId);
-    for (var d in h.orderCars) {
-      print(d.driverName);
-    }
-  }
-
   for (var h in dropDownList.gifts) {
     Uint8List image = Base64Codec().decode(h.giftimg);
-    giftimagesdata.add(image);
-    giftimages.add(
-      Hero(
-        tag: h.giftname,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(20.0),
-          child: new Image.memory(
-            image,
-            fit: BoxFit.cover,
+    giftroot.add(
+      GiftRoot(
+        giftid: h.giftid,
+        giftname: h.giftname,
+        giftBagsCount: h.giftBagsCount,
+        giftimg: image,
+        imageHero: Hero(
+          tag: h.giftname,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: new Image.memory(
+              image,
+              fit: BoxFit.cover,
+            ),
           ),
-          //     Image.asset(
-          //   "images/assets/ps.png",
-          //   fit: BoxFit.cover,
-          // ),
         ),
       ),
     );
-    gifttitles.add(h.giftname);
+
+    //------------------------------------
+    // giftimagesdata.add(image);
+    // giftimages.add(
+    //   Hero(
+    //     tag: h.giftname,
+    //     child: ClipRRect(
+    //       borderRadius: BorderRadius.circular(20.0),
+    //       child: new Image.memory(
+    //         image,
+    //         fit: BoxFit.cover,
+    //       ),
+    //     ),
+    //   ),
+    // );
+    // gifttitles.add(h.giftname);
   }
+
+  // var b = giftroot.map((e) => e.giftname).toList();
+  // print(b);
 }
 
 class DropDownItem {
@@ -182,3 +204,19 @@ const textTheme = TextTheme(
       color: Colors.white,
       letterSpacing: 1.0),
 );
+
+class GiftRoot {
+  GiftRoot({
+    this.giftid,
+    this.giftname,
+    this.giftBagsCount,
+    this.giftimg,
+    this.imageHero,
+  });
+
+  int giftid;
+  String giftname;
+  int giftBagsCount;
+  Uint8List giftimg;
+  Widget imageHero;
+}
