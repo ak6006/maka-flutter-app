@@ -6,8 +6,6 @@ import 'package:maka/bloca/appecepcetion.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiBaseHelper {
-  final String _baseUrl = "http://api.themoviedb.org/3/";
-
   Future<dynamic> get(String url) async {
     var responseJson;
     final prefs = await SharedPreferences.getInstance();
@@ -16,9 +14,8 @@ class ApiBaseHelper {
     try {
       final response = await http.get(url, headers: {
         'Accept': 'application/json',
-        'Authorization':
-            'bearer $value' //j3O7K3Ff2B0ihKxCDj_2xbfIpKn2FPApRWL2rLZYyj3eErsp2ArucmfVkvV4CSez79RWq9LYY2jgXHPM1Bj-1TcLYfkK4KDi4w2Eok2UDt3rAwG0_fG_o-kCxqfgBy_pdYN-U-Yv4aKVrZdjV4-HCXnwo-c1Fex0rHW8HNjwEC4clEzIKJzhDDQv-oMMVaVtkmWk6k9Uv6AE0M429YvCDaiemGFQgvWMTlwZTj4ajOI3QkKiR2JFz2bkKRbT4OqigL_Gs8xkHQnCcXfYjg22aIwdfxFLP5ffCeCL5nuCZhj1L9CVWTX9qeFlbWpzDYzIQseQxEug-956i0lSrzp5ZA'
-      }); //_baseUrl +
+        'Authorization': 'bearer $value'
+      });
       responseJson = _returnResponse(response);
     } on SocketException {
       throw FetchDataException('No Internet connection');

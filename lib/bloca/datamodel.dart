@@ -1,7 +1,7 @@
 import 'package:maka/bloca/apiresponse.dart';
-import 'package:maka/bloca/dataresponse.dart';
+
 import 'package:maka/bloca/datarespotory.dart';
-import 'package:maka/models/datatable.dart';
+
 import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:scoped_model/scoped_model.dart';
