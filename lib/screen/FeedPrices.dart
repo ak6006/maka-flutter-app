@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:maka/bloca/apiresponse.dart';
-import 'package:maka/bloca/dataprovider.dart';
+
 import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/screen/dashboard.dart';
-import 'package:maka/utils/constant.dart';
+
 import 'package:maka/utils/databasehelper.dart';
-import 'package:provider/provider.dart';
 
 class FeedPrices extends StatefulWidget {
   AsyncSnapshot<ApiResponse<DropDownList>> snapshot;
@@ -84,13 +83,6 @@ class _FeedPricesState extends State<FeedPrices> {
               Padding(
                 padding: EdgeInsets.only(
                     top: MediaQuery.of(context).size.height * 0.6),
-              ),
-              Text(
-                // widget.snapshot.data.status == Status.COMPLETED
-                Provider.of<DataProvider>(context).gas,
-                // ? agentCustomerName
-                // : 'agentCustomerName',
-                style: TextStyle(color: Colors.white),
               ),
               Container(
                 decoration: BoxDecoration(

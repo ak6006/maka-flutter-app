@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
-import 'package:maka/bloca/dataprovider.dart';
+
 import 'package:maka/bloca/dataMbloc.dart';
 import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/utils/databasehelper.dart';
@@ -15,7 +15,7 @@ AsyncSnapshot snapshotdata;
 DataBloc blocData;
 bool datastate = false;
 BuildContext currentcontext;
-DataProvider dataProvider = DataProvider();
+
 //StreamSubscription<ApiResponse<DropDownList>> streamSubscription;
 String agentCustomerName;
 const kPrimaryColor = Color(0xFF1B1448);

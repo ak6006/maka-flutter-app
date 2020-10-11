@@ -1,7 +1,5 @@
-import 'package:maka/bloca/dataprovider.dart';
 import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/utils/constant.dart';
-import 'package:provider/provider.dart';
 
 class ApiResponse<T> {
   Status status;
@@ -22,10 +20,9 @@ class ApiResponse<T> {
   }
 
   void setupdata() async {
-    // Provider.of<DataProvider>(currentcontext).setnewstate();
     await inislizedata(this.data);
     status = Status.COMPLETED;
-    dataProvider.setnewstate();
+
     print('hjgggggggggggg');
     print('${this.data.custName.custName}');
     print(dropDownList.gifts[0].giftname);

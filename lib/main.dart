@@ -2,9 +2,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:maka/bloca/apiresponse.dart';
-import 'package:maka/bloca/dataprovider.dart';
+
 import 'package:maka/bloca/dataMbloc.dart';
-import 'package:maka/bloca/datamscreen.dart';
+
 import 'package:maka/gift/giftDashBoard.dart';
 import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/screen/FeedPrices.dart';
@@ -17,7 +17,6 @@ import 'package:maka/screen/register.dart';
 import 'package:maka/screen/splash.dart';
 import 'package:maka/screen/vinpage.dart';
 import 'package:maka/utils/constant.dart';
-import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());

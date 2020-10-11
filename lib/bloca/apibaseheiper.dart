@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:async';
 import 'dart:io';
 import 'package:http/http.dart' as http;
-import 'package:maka/bloca/appecepcetion.dart';
+import 'package:maka/bloca/appexcepcetion.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiBaseHelper {
