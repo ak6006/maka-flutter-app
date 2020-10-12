@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -8,7 +9,6 @@ import 'package:maka/screen/dashboard.dart';
 import 'package:maka/screen/transQueryscanner.dart';
 import 'package:maka/utils/animation.dart';
 import 'package:maka/utils/databasehelper.dart';
-import 'package:maka/utils/slideAnimations.dart';
 
 class VinPage extends StatefulWidget {
   //عربات النقل
@@ -228,21 +228,20 @@ class _VinPageState extends State<VinPage> {
                             //   Navigator.pushReplacementNamed(context, '/login');
                             // },
                             onPressed: () async {
+                              _checkInternetConnectivity();
                               // var brcode = await scanBarcodeNormal();
 
                               //for (CustomerTransQuery f in customertransquery) {
                               // print('ddd${f.transVehcileDriverName}');
                               //}
                               // return;
-                              // Navigator.push(
-                              //   context,
-                              //   MyCustomRoute(
-                              //       builder: (context) => CustomerTransPage(
-                              //           customertransquery:
-                              //               customertransquery)),
-                              // );
-                              Navigator.push(context,
-                                  SlideRightRoute(page: CustomerTransPage()));
+                              Navigator.push(
+                                context,
+                                MyCustomRoute(
+                                    builder: (context) => CustomerTransPage(
+                                        customertransquery:
+                                            customertransquery)),
+                              );
                             },
                           ),
                         ),
@@ -265,9 +264,7 @@ class _VinPageState extends State<VinPage> {
                   width: size.width * 0.7,
                   child: new FlatButton(
                     onPressed: () {
-                      //  Navigator.pushReplacementNamed(context, '/dashboard');
-                      Navigator.push(
-                          context, SlideLeftRoute(page: DashBoardPage()));
+                      Navigator.pushReplacementNamed(context, '/dashboard');
                       // Navigator.push(
                       //   context,
                       //   MyCustomRoute(builder: (context) => DashBoardPage()),
@@ -295,5 +292,35 @@ class _VinPageState extends State<VinPage> {
         ),
       ),
     );
+  }
+
+  _checkInternetConnectivity() async {
+    var result = await Connectivity().checkConnectivity();
+    if (result == ConnectivityResult.none) {
+      _showDialog('No internet', "You're not connected to a network");
+    } // else if (result == ConnectivityResult.mobile) {
+    //   _showDialog('Internet access', "You're connected over mobile data");
+    // } else if (result == ConnectivityResult.wifi) {
+    //   _showDialog('Internet access', "You're connected over wifi");
+    // }
+  }
+
+  _showDialog(title, text) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(text),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 }

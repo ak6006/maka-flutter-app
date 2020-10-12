@@ -3,9 +3,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:maka/models/querybarcode.dart';
 import 'package:flutter/material.dart' as material;
-import 'package:maka/utils/slideAnimations.dart';
-
-import 'dashboard.dart';
 
 class BarCodePage extends StatefulWidget {
   QueryBarCode queryBarCode;
@@ -143,9 +140,7 @@ class _BarCodePageState extends State<BarCodePage> {
               width: 160,
               child: new FlatButton(
                 onPressed: () {
-                  //Navigator.pop(context);
-                  Navigator.push(
-                      context, SlideLeftRoute(page: DashBoardPage()));
+                  Navigator.pop(context);
                 },
                 color: Color.fromRGBO(254, 88, 0, 1),
                 child: new Text(

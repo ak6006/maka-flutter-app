@@ -9,7 +9,6 @@ import 'package:maka/screen/addOrder.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/data_picker_style.dart';
 import 'package:maka/utils/primary_text_field.dart';
-import 'package:maka/utils/slideAnimations.dart';
 
 // ignore: must_be_immutable
 class UpdateOrderItemsScreen extends StatefulWidget {
@@ -207,9 +206,7 @@ class _UpdateOrderItemsScreenState extends State<UpdateOrderItemsScreen> {
                             width: 120,
                             child: new FlatButton(
                               onPressed: () {
-                                // Navigator.pop(context);
-                                Navigator.push(context,
-                                    SlideRightRoute(page: AddOrderScreen()));
+                                Navigator.pop(context);
                               },
                               color: Color.fromRGBO(254, 88, 0, 1),
                               child: new Text(
@@ -239,7 +236,7 @@ class _UpdateOrderItemsScreenState extends State<UpdateOrderItemsScreen> {
                                   //           .name)
                                   //       .toString());
                                   //   return;
-                                  //var ff=weghtItems.indexOf(widget.orderproductItems);
+// var ff=weghtItems.indexOf(widget.orderproductItems);
                                   // final hh = orders.where((i) {
                                   //   i = widget.updateorders;
                                   //   //
@@ -283,14 +280,12 @@ class _UpdateOrderItemsScreenState extends State<UpdateOrderItemsScreen> {
                                   //     orders[orders.length - 1].toJson());
 
                                   //  return;
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //       builder: (context) =>
-                                  //           AddOrderScreen()), //FilterScreenPage()),
-                                  // );
-                                  Navigator.push(context,
-                                      SlideRightRoute(page: AddOrderScreen()));
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            AddOrderScreen()), //FilterScreenPage()),
+                                  );
                                 }
                               },
                               color: Color.fromRGBO(254, 88, 0, 1),

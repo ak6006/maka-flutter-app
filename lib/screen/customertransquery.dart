@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/rendering.dart';
@@ -6,11 +9,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import 'package:maka/models/customertransquery.dart';
-import 'package:maka/screen/vinpage.dart';
+import 'package:maka/utils/connectivity.dart';
 import 'package:maka/utils/databasehelper.dart';
-import 'package:maka/utils/slideAnimations.dart';
-
-import 'dashboard.dart';
 
 class CustomerTransPage extends StatefulWidget {
   CustomerTransPage({customertransquery});
@@ -20,6 +20,13 @@ class CustomerTransPage extends StatefulWidget {
 }
 
 class _CustomerTransPageState extends State<CustomerTransPage> {
+  // StreamSubscription _connectionChangeStream;
+  // bool isOffline = false;
+
+  var _connectionStatus = 'Unknown';
+  Connectivity connectivity;
+  StreamSubscription<ConnectivityResult> subscription;
+
   List<CustomerTransQuery> customertransquery;
   DatabaseHelper databaseHelper = new DatabaseHelper();
   DateTime choosedDate;
@@ -66,8 +73,34 @@ class _CustomerTransPageState extends State<CustomerTransPage> {
     refreshList();
     print('refreshed');
 
+    connectivity = new Connectivity();
+    subscription =
+        connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
+      _connectionStatus = result.toString();
+      print(_connectionStatus);
+      if (result == ConnectivityResult.wifi ||
+          result == ConnectivityResult.mobile) {
+        setState(() {});
+      }
+    });
+    // ConnectionStatusSingleton connectionStatus =
+    //     ConnectionStatusSingleton.getInstance();
+    // _connectionChangeStream =
+    //     connectionStatus.connectionChange.listen(connectionChanged);
+
     super.initState();
   }
+
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
+  // void connectionChanged(dynamic hasConnection) {
+  //   setState(() {
+  //     isOffline = !hasConnection;
+  //   });
+  // }
 
   //بيانات عربيات الوكيل
   Widget build(BuildContext context) {
@@ -162,8 +195,7 @@ class _CustomerTransPageState extends State<CustomerTransPage> {
               width: 160,
               child: new FlatButton(
                 onPressed: () {
-                  //Navigator.pop(context);
-                  Navigator.push(context, SlideLeftRoute(page: VinPage()));
+                  Navigator.pop(context);
                 },
                 color: Color.fromRGBO(254, 88, 0, 1),
                 child: new Text(

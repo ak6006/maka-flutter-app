@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material;
+import 'package:maka/bloca/apiresponse.dart';
+
 import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/screen/dashboard.dart';
+
 import 'package:maka/utils/databasehelper.dart';
-import 'package:maka/utils/slideAnimations.dart';
 
 class FeedPrices extends StatefulWidget {
-  FeedPrices({productsInfo});
+  AsyncSnapshot<ApiResponse<DropDownList>> snapshot;
+  FeedPrices({this.snapshot});
   @override
   _FeedPricesState createState() => _FeedPricesState();
 }
@@ -16,10 +19,16 @@ class _FeedPricesState extends State<FeedPrices> {
   DatabaseHelper databaseHelper = new DatabaseHelper();
   bool isLoading = true;
   var list;
+//  DataProvider dataProvider = DataProvider();
   getPrices() async {}
+  void initState() {
+    // dataProvider.setnewstate();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    // currentcontext = context;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -84,8 +93,11 @@ class _FeedPricesState extends State<FeedPrices> {
                 width: 160,
                 child: new FlatButton(
                   onPressed: () {
+                    return;
                     Navigator.push(
-                        context, SlideLeftRoute(page: DashBoardPage()));
+                      context,
+                      MaterialPageRoute(builder: (context) => DashBoardPage()),
+                    );
                   },
                   color: Color.fromRGBO(254, 88, 0, 1),
                   child: new Text(

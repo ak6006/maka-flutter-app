@@ -443,7 +443,7 @@ class DatabaseHelper {
     ).then((response) {
       tdata = response.body;
     }).timeout(
-      Duration(seconds: 10),
+      Duration(seconds: 15),
       onTimeout: () {
         status = true;
         connection = true;

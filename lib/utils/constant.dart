@@ -1,9 +1,22 @@
+import 'dart:async';
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+
+import 'package:maka/bloca/dataMbloc.dart';
 import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/utils/databasehelper.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:ui';
 
+AsyncSnapshot snapshotdata;
+
+DataBloc blocData;
+bool datastate = false;
+BuildContext currentcontext;
+
+//StreamSubscription<ApiResponse<DropDownList>> streamSubscription;
 String agentCustomerName;
 const kPrimaryColor = Color(0xFF1B1448);
 
@@ -21,14 +34,23 @@ List<CustomerOrder> orders = new List<CustomerOrder>();
 DatabaseHelper databaseHelper = new DatabaseHelper();
 //final prefs = SharedPreferences.getInstance();
 
-Future inislizedata() async {
-  //prefs = await SharedPreferences.getInstance();
-  var res = await databaseHelper.getProductData();
-  dropDownList = dropDownListFromJson(res);
-  for (var h in dropDownList.prodNames) {
-    print(h.productName);
-  }
+// List<String> gifttitles =
+//     []; //= []; //dropDownList.gifts.map((e) => e.giftname);
+// List<Widget> giftimages = [];
+// List<Uint8List> giftimagesdata = [];
+List<GiftRoot> giftroot = [];
+
+Future inislizedata(DropDownList data) async {
+  // var res = await databaseHelper.getProductData();
+  // if (res == null) return;
+  // dropDownList = dropDownListFromJson(res);
+  dropDownList = data;
+
   productItems.clear();
+  // gifttitles.clear();
+  // giftimages.clear();
+  // giftimagesdata.clear();
+  giftroot.clear();
   measureItems.clear();
   weghtItems.clear();
   storeItems.clear();
@@ -75,12 +97,46 @@ Future inislizedata() async {
         .add(DropDownItem(id: h.vehicleId, name: h.driverName, state: false));
   }
 
-  for (var h in orders) {
-    print(h.orderId);
-    for (var d in h.orderCars) {
-      print(d.driverName);
-    }
+  for (var h in dropDownList.gifts) {
+    Uint8List image = Base64Codec().decode(h.giftimg);
+    giftroot.add(
+      GiftRoot(
+        giftid: h.giftid,
+        giftname: h.giftname,
+        giftBagsCount: h.giftBagsCount,
+        giftimg: image,
+        imageHero: Hero(
+          tag: h.giftname,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(20.0),
+            child: new Image.memory(
+              image,
+              fit: BoxFit.cover,
+            ),
+          ),
+        ),
+      ),
+    );
+
+    //------------------------------------
+    // giftimagesdata.add(image);
+    // giftimages.add(
+    //   Hero(
+    //     tag: h.giftname,
+    //     child: ClipRRect(
+    //       borderRadius: BorderRadius.circular(20.0),
+    //       child: new Image.memory(
+    //         image,
+    //         fit: BoxFit.cover,
+    //       ),
+    //     ),
+    //   ),
+    // );
+    // gifttitles.add(h.giftname);
   }
+
+  // var b = giftroot.map((e) => e.giftname).toList();
+  // print(b);
 }
 
 class DropDownItem {
@@ -109,40 +165,58 @@ alertDialog(DialogType type, context, String titel, String desc, IconData icon,
     ..show();
 }
 
-// class Orders {
-//   Orders({
-//     this.orderId,
-//     this.orderHasProductId,
-//     this.orderDate,
-//     this.productId,
-//     this.productName,
-//     this.wieghtId,
-//     this.wieghtName,
-//     this.measureId,
-//     this.measureName,
-//     this.quantity,
-//     this.orderCars,
-//   });
+//========================================
+//======================================
 
-//   int orderId;
-//   int orderHasProductId;
-//   DateTime orderDate;
-//   int productId;
-//   String productName;
-//   int wieghtId;
-//   int wieghtName;
-//   int measureId;
-//   String measureName;
-//   String quantity;
-//   List<OrderCar> orderCars;
-// }
+enum Role { TANKER, FIGHTER, MARKSMAN, MAGE, ASSASIN }
+enum Difficulty {
+  LOW,
+  MODERATE,
+  HIGH,
+}
 
-// class OrderCarList {
-//   OrderCarList({
-//     this.vId,
-//     this.driverName,
-//   });
+final backgoundColor = Color(0xff000913);
+final appbarColor = Color(0xff112120);
 
-//   int vId;
-//   String driverName;
-// }
+final difficultyEnableColor = Color(0xff08d6f6);
+final difficultyDisableColor = Color(0xff023240);
+
+const textTheme = TextTheme(
+  headline1: TextStyle(
+      fontSize: 60.0,
+      fontWeight: FontWeight.bold,
+      color: Colors.white,
+      fontStyle: FontStyle.italic,
+      letterSpacing: 4.0),
+  headline2: TextStyle(
+      fontSize: 17.0,
+      fontWeight: FontWeight.normal,
+      color: Colors.white,
+      letterSpacing: 1.0),
+  headline3: TextStyle(
+      fontSize: 13.0,
+      fontWeight: FontWeight.normal,
+      color: Colors.white,
+      letterSpacing: 1.0),
+  bodyText1: TextStyle(
+      fontSize: 13.0,
+      fontWeight: FontWeight.normal,
+      color: Colors.white,
+      letterSpacing: 1.0),
+);
+
+class GiftRoot {
+  GiftRoot({
+    this.giftid,
+    this.giftname,
+    this.giftBagsCount,
+    this.giftimg,
+    this.imageHero,
+  });
+
+  int giftid;
+  String giftname;
+  int giftBagsCount;
+  Uint8List giftimg;
+  Widget imageHero;
+}

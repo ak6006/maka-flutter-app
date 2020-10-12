@@ -1,17 +1,20 @@
 import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:maka/bloca/apiresponse.dart';
 import 'package:maka/details/products.dart';
 import 'package:maka/details/rightImageProductImageWidget.dart';
 import 'package:maka/models/datatable.dart';
 import 'package:maka/models/orderQuntitySum.dart';
-import 'package:maka/screen/addOrderItems.dart';
+
 import 'package:maka/screen/dashboard.dart';
 import 'package:maka/utils/animation.dart';
+import 'package:maka/utils/connectivity.dart';
 //import 'package:maka/models/productlist.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/custom_paginated_data_table.dart';
@@ -20,9 +23,8 @@ import 'package:maka/utils/data_picker_style.dart';
 import 'package:maka/utils/databasehelper.dart';
 //import 'package:maka/utils/primary_text_field.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:maka/utils/slideAnimations.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-
+import 'dart:async';
 //import 'orderQuantityScreen.dart';
 
 class AddOrderScreen extends StatefulWidget {
@@ -34,6 +36,12 @@ class AddOrderScreen extends StatefulWidget {
 }
 
 class _AddOrderScreenState extends State<AddOrderScreen> {
+  // StreamSubscription _connectionChangeStream;
+  // bool isOffline = false;
+
+  var _connectionStatus = 'Unknown';
+  Connectivity connectivity;
+  StreamSubscription<ConnectivityResult> subscription;
   // DateTime timeBeginSelected;
   //DateTime timeEndSelected;
   // DataPicker begin;
@@ -85,8 +93,33 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
 
     //refreshList();
     //print('refresheddd');
+    // ConnectionStatusSingleton connectionStatus =
+    //     ConnectionStatusSingleton.getInstance();
+    // _connectionChangeStream =
+    //     connectionStatus.connectionChange.listen(connectionChanged);
+    connectivity = new Connectivity();
+    subscription =
+        connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
+      _connectionStatus = result.toString();
+      print(_connectionStatus);
+      if (result == ConnectivityResult.wifi ||
+          result == ConnectivityResult.mobile) {
+        setState(() {});
+      }
+    });
   }
 
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
+  }
+
+  // void connectionChanged(dynamic hasConnection) {
+  //   setState(() {
+  //     isOffline = !hasConnection;
+  //   });
+  // }
   // Future<Null> refreshList() async {
   //   refreshkey.currentState?.show(atTop: false);
   //   await Future.delayed(Duration(seconds: 1));
@@ -143,6 +176,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                     width: 190,
                     alignment: Alignment.center,
                     color: Color.fromRGBO(254, 88, 0, 1),
+
                     child: new Text(
                       'اهلا  $agentCustomerName',
                       style: new TextStyle(
@@ -171,7 +205,9 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                         desc: 'هل انت متاكد من حذف هذه الطلبية',
                         btnCancelOnPress: () {},
                         btnOkOnPress: () async {
-                          await inislizedata();
+                          //++++++++++++++++++++++++++++++++++++++
+                          //  await inislizedata();
+                          //++++++++++++++++++++++++++++++++++++++++++
                           setState(() {});
                           print('refressssssssssssssssssssssssh');
                         },
@@ -183,9 +219,33 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                     child: ListView(
                       scrollDirection: Axis.vertical,
                       children: <Widget>[
-                        productSlideImage(context),
+                        snapshotdata.data.status == Status.COMPLETED
+                            ? productSlideImage(context)
+                            : Container(
+                                height: 60,
+                                child: Center(
+                                  child: Text(
+                                    'خطأ في الاتصال بالشبكة',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                ),
+                              ),
+
+                        snapshotdata.data.status == Status.COMPLETED
+                            ? datatableScrollview(context)
+                            : Container(
+                                height: 60,
+                                child: Center(
+                                  child: Text(
+                                    'حاول الاتصال',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                  //CircularProgressIndicator(),
+                                ),
+                              ),
                         //   orderdate,
-                        datatableScrollview(context),
+
+                        //  datatableScrollview(context),
                         // buildStoreContainer(context),
                         SizedBox(
                           height: 18.0,
@@ -204,13 +264,11 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                                 onPressed: () {
                                   // print('vbn${productItems[2].name}');
 
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MyCustomRoute(
-                                  //       builder: (context) => DashBoardPage()),
-                                  // );
-                                  Navigator.push(context,
-                                      SlideLeftRoute(page: DashBoardPage()));
+                                  Navigator.push(
+                                    context,
+                                    MyCustomRoute(
+                                        builder: (context) => DashBoardPage()),
+                                  );
                                 },
                                 color: Color.fromRGBO(254, 88, 0, 1),
                                 child: new Text(
@@ -246,7 +304,9 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                                   // print(json);
                                   var res =
                                       await databaseHelper.addproductData(json);
-                                  await inislizedata();
+                                  //++++++++++++++++++++++++++++++++++++++
+                                  //  await inislizedata();
+                                  //++++++++++++++++++++++++++++++++++++++++++
                                   print('gbddddd$res');
                                   if (res == '"Done"') {
                                     alertDialog(
@@ -891,4 +951,33 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   //     ),
   //   );
   // }
+  _checkInternetConnectivity() async {
+    var result = await Connectivity().checkConnectivity();
+    if (result == ConnectivityResult.none) {
+      _showDialog('No internet', "You're not connected to a network");
+    } else if (result == ConnectivityResult.mobile) {
+      _showDialog('Internet access', "You're connected over mobile data");
+    } else if (result == ConnectivityResult.wifi) {
+      _showDialog('Internet access', "You're connected over wifi");
+    }
+  }
+
+  _showDialog(title, text) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(text),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
+  }
 }

@@ -16,9 +16,12 @@ class _SplashState extends State<Splash> {
     // WidgetsBinding.instance.addPostFrameCallback((_) async {
     //bool loggedIn = await _dbHelper.isLoggedIn();
     Timer(
-        Duration(seconds: 3),
-        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => MyHomePage())));
+      Duration(seconds: 3),
+      () => Navigator.pushNamed(context, '/MyHomePage'),
+      // Navigator.of(context).pushReplacement(
+      //   MaterialPageRoute(builder: (BuildContext context) => MyHomePage()),
+      // ),
+    );
     //  loggedIn ? DashBoardPage() : MyHomePage())));
     //});
   }

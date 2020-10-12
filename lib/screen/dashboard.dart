@@ -1,11 +1,16 @@
-import 'dart:convert';
+import 'dart:async';
 
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:maka/bloca/apiresponse.dart';
+
+import 'package:maka/bloca/dataMbloc.dart';
+import 'package:maka/gift/giftDashBoard.dart';
 import 'package:maka/models/dropdownlist.dart';
+
 import 'package:maka/models/orderQuntitySum.dart';
-import 'package:maka/models/productlist.dart';
 import 'package:maka/models/querybarcode.dart';
 import 'package:maka/screen/FeedPrices.dart';
 import 'package:maka/screen/addOrder.dart';
@@ -15,14 +20,14 @@ import 'package:maka/screen/homepage.dart';
 import 'package:maka/screen/qrcode.dart';
 import 'package:maka/screen/vinpage.dart';
 import 'package:maka/utils/animation.dart';
+import 'package:maka/utils/connectivity.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
-import 'package:maka/utils/slideAnimations.dart';
 import 'package:maka/utils/speech.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'barcodescannr.dart';
-import 'orderQuantityScreen.dart';
 
 class DashBoardPage extends StatefulWidget {
   //الصفحة الرئيسية
@@ -31,6 +36,12 @@ class DashBoardPage extends StatefulWidget {
 }
 
 class _DashBoardPageState extends State<DashBoardPage> {
+  // StreamSubscription _connectionChangeStream;
+  // bool isOffline = false;
+  var _connectionStatus = 'Unknown';
+  Connectivity connectivity;
+  StreamSubscription<ConnectivityResult> subscription;
+
   SharedPreferences logindata;
   String username;
   // static String _email;
@@ -84,27 +95,68 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
   @override
   void initState() {
-    //super.initState();
+    // blocData = DataBloc();
+    super.initState();
     showSpinner = false;
     //  initial();
+    // ConnectionStatusSingleton connectionStatus =
+    //     ConnectionStatusSingleton.getInstance();
+    // _connectionChangeStream =
+    //     connectionStatus.connectionChange.listen(connectionChanged);
+
+    connectivity = new Connectivity();
+    subscription =
+        connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
+      _connectionStatus = result.toString();
+      print(_connectionStatus);
+      if (result == ConnectivityResult.wifi ||
+          result == ConnectivityResult.mobile) {
+        setState(() {});
+      }
+    });
   }
 
-  void initial() async {
-    // logindata = await SharedPreferences.getInstance();
-    // setState(() {
-    //   username = logindata.getString('_name');
-    // });
+  @override
+  void dispose() {
+    subscription.cancel();
+    super.dispose();
   }
+
+  // void connectionChanged(dynamic hasConnection) {
+  //   setState(() {
+  //     isOffline = !hasConnection;
+  //   });
+  // }
+  // @override
+  // void dispose() {
+  //   blocData.dispose();
+  //   super.dispose();
+  // }
+
+  // void initial() async {
+
+  // }
 
   Widget build(BuildContext context) {
+    // currentcontext = context;
     final size = MediaQuery.of(context).size;
+    // var image = BASE64.decode(blob);
+    //  Uint8List image = Base64Codec().decode(dropDownList.gifts[0].giftimg);
+
     return Scaffold(
       backgroundColor: Color.fromRGBO(0, 51, 94, 1),
 
       //SingleChildScrollView
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
-        child: Padding(
+        child:
+            //  StreamBuilder<ApiResponse<DropDownList>>(
+            //     stream: blocData.datastream,
+            //     builder: (context, snapshot) {
+            //       if (snapshot.hasData) {
+            //         return
+
+            Padding(
           padding: EdgeInsets.all(0.0),
           child: Container(
             decoration: BoxDecoration(
@@ -117,6 +169,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
+                  //  new Container(child: new Image.memory(image)),
                   new Padding(
                     padding: new EdgeInsets.only(top: size.height * 0.12),
                   ),
@@ -191,12 +244,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             /// LOGOUT BUTTONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
                             // Navigator.pushReplacementNamed(
                             //     context, '/MyHomePage');
-                            // Navigator.push(
-                            //   context,
-                            //   MyCustomRoute(builder: (context) => MyHomePage()),
-                            // );
                             Navigator.push(
-                                context, SlideRightRoute(page: MyHomePage()));
+                              context,
+                              MyCustomRoute(builder: (context) => MyHomePage()),
+                            );
                           },
                           color: Color.fromRGBO(0, 157, 68, 1),
                           icon: Icon(Icons.logout),
@@ -249,6 +300,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
+                                  _checkInternetConnectivity();
                                   // var brcode = await scanBarcodeNormal();
                                   dynamic result =
                                       await databaseHelper.getData('88');
@@ -266,13 +318,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                                 queryBarCode: queryBarCode,
                                               )),
                                     );
-                                    // Navigator.push(
-                                    //   context,
-                                    //   SlideRightRoute(
-                                    //       page: BarCodePage(
-                                    //     queryBarCode: queryBarCode,
-                                    //   )),
-                                    // );
                                   }
                                 },
                                 child: Container(
@@ -312,13 +357,12 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               ),
                               GestureDetector(
                                 onTap: () async {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MyCustomRoute(
-                                  //       builder: (context) => AddOrderScreen()),
-                                  // );
-                                  Navigator.push(context,
-                                      SlideRightRoute(page: AddOrderScreen()));
+                                  _checkInternetConnectivity();
+                                  Navigator.push(
+                                    context,
+                                    MyCustomRoute(
+                                        builder: (context) => AddOrderScreen()),
+                                  );
                                   //return;
                                 },
                                 child: Container(
@@ -379,18 +423,24 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  // Navigator.pushReplacementNamed(
-                                  //     context, '/vinpage');
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MyCustomRoute(
-                                  //       builder: (context) => VinPage()),
-                                  // );
-                                  // Navigator.push(context,
-                                  //     SlideRightRoute(page: VinPage()));
-                                  Navigator.push(context,
-                                      SlideRightRoute(page: VinPage()));
+                                  _checkInternetConnectivity();
+                                  Navigator.push(
+                                    context,
+                                    MyCustomRoute(
+                                        builder: (context) => VinPage()),
+                                  );
                                 },
+                                // child:
+                                // ScopedModelDescendant<MovieModel>(
+                                //   builder: (context, child, model) {
+                                //     return Text(
+                                //       model.dataList.data.custName.custName
+                                //           .toString(),
+                                //       style:
+                                //           Theme.of(context).textTheme.display1,
+                                //     );
+                                //   },
+                                // ),
                                 child: Container(
                                   height: size.height * 0.2,
                                   width: size.width * 0.42,
@@ -409,8 +459,16 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                               'assets/images/customer.png'),
                                         ),
                                         Text(
+                                          snapshotdata.data.status ==
+                                                  Status.COMPLETED
+                                              ? agentCustomerName
+                                              : 'تحميل...',
                                           //'عربات النقل'
-                                          agentCustomerName,
+                                          // snapshot.data.status ==
+                                          //         Status.COMPLETED
+                                          //     ? agentCustomerName
+                                          //     : 'asd',
+
                                           style: TextStyle(
                                               color: Color.fromRGBO(
                                                   255, 255, 255, 1),
@@ -423,8 +481,32 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   ),
                                 ),
                               ),
+                              // StreamBuilder<ApiResponse<DropDownList>>(
+                              //   stream: blocData.datastream, //movieListStream
+                              //   builder: (context, snapshot) {
+                              //   if (snapshot.hasData) {
+                              //     switch (snapshot.data.status) {
+                              //       case Status.LOADING:
+                              //         return buildAgentCustomerName(
+                              //             size, 'جلب البيانات');
+                              //         break;
+                              //       case Status.COMPLETED:
+                              //         return buildAgentCustomerName(
+                              //             size, agentCustomerName);
+                              //         break;
+                              //       case Status.ERROR:
+                              //         return buildAgentCustomerName(
+                              //             size, 'لا يوجد اتصال');
+                              //         break;
+                              //     }
+                              //   }
+                              //   return Container();
+                              // },
+                              // ),
+
                               GestureDetector(
                                 onTap: () async {
+                                  _checkInternetConnectivity();
                                   // var brcode = await scanBarcodeNormal();
                                   // dynamic result = await databaseHelper.getData(brcode);
                                   // if (result == '') {
@@ -434,16 +516,12 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   //   queryBarCode = queryBarCodeFromJson(output);
                                   //   print(queryBarCode.customerName);
 
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MyCustomRoute(
-                                  //       builder: (context) =>
-                                  //           FilterScreenPage()),
-                                  // );
                                   Navigator.push(
-                                      context,
-                                      SlideRightRoute(
-                                          page: FilterScreenPage()));
+                                    context,
+                                    MyCustomRoute(
+                                        builder: (context) =>
+                                            FilterScreenPage()),
+                                  );
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -498,15 +576,33 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
+                                  // if (snapshotdata.hasData) {
+                                  //   switch (snapshotdata.data.status) {
+                                  //     case Status.LOADING:
+                                  //       print('nnnnnnnnnn');
+                                  //       break;
+                                  //     case Status.COMPLETED:
+                                  //       print('vvvvvvvvvvvv');
+                                  //       // return MovieList(movieList: snapshotdata.data.data);
+                                  //       break;
+                                  //     case Status.ERROR:
+                                  //       print('bbbbbbbb');
+                                  //       break;
+                                  //   }
+                                  // }
+
+                                  // return;
+                                  Navigator.pushNamed(context, '/FeedPrices');
                                   // Navigator.pushReplacementNamed(
                                   //     context, '/FeedPrices');
                                   // Navigator.push(
                                   //   context,
                                   //   MyCustomRoute(
-                                  //       builder: (context) => FeedPrices()),
+                                  //       builder: (context) =>
+                                  //           FeedPrices(
+                                  //             snapshot: snapshot,
+                                  //           )),
                                   // );
-                                  Navigator.push(context,
-                                      SlideRightRoute(page: FeedPrices()));
 
                                   /// اسعار الاعلاف اليوم
                                 },
@@ -543,21 +639,16 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               ),
                               GestureDetector(
                                 onTap: () async {
+                                  _checkInternetConnectivity();
                                   var ss = await scanQR();
                                   // print('ddddddddddddd $ss');
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MyCustomRoute(
-                                  //       builder: (context) => QrCode(
-                                  //             qr: ss,
-                                  //           )),
-                                  // );
                                   Navigator.push(
-                                      context,
-                                      SlideRightRoute(
-                                          page: QrCode(
-                                        qr: ss,
-                                      )));
+                                    context,
+                                    MyCustomRoute(
+                                        builder: (context) => QrCode(
+                                              qr: ss,
+                                            )),
+                                  );
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -605,14 +696,12 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MyCustomRoute(
-                                  //       builder: (context) =>
-                                  //           AddVanScreen()), //FilterScreenPage()),
-                                  // );
-                                  Navigator.push(context,
-                                      SlideRightRoute(page: AddVanScreen()));
+                                  Navigator.push(
+                                    context,
+                                    MyCustomRoute(
+                                        builder: (context) =>
+                                            AddVanScreen()), //FilterScreenPage()),
+                                  );
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -647,14 +736,12 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               ),
                               GestureDetector(
                                 onTap: () async {
-                                  var ss = await scanQR();
-                                  // print('ddddddddddddd $ss');
                                   Navigator.push(
-                                      context,
-                                      SlideRightRoute(
-                                          page: QrCode(
-                                        qr: ss,
-                                      )));
+                                    context,
+                                    MyCustomRoute(
+                                        builder: (context) =>
+                                            GiftDashBoardScreen()),
+                                  );
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -677,7 +764,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                           // margin:
                                           //     EdgeInsets.only(right: size.width * 0.04),
                                           child: Text(
-                                            'فحص الكيو ار كود',
+                                            'الجوائز المقدمة',
                                             style: TextStyle(
                                                 color: Color.fromRGBO(
                                                     255, 255, 255, 1),
@@ -705,6 +792,41 @@ class _DashBoardPageState extends State<DashBoardPage> {
             ),
           ),
         ),
+        //   }
+        //   return Container();
+        // }),
+      ),
+    );
+  }
+
+  Container buildAgentCustomerName(Size size, String name) {
+    return Container(
+      height: size.height * 0.2,
+      width: size.width * 0.42,
+      child: Card(
+        elevation: 20,
+        color: Colors.deepOrange,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.0),
+        ),
+        child: Column(
+          children: [
+            Container(
+              width: 100,
+              height: 70,
+              child: Image.asset('assets/images/customer.png'),
+            ),
+            Text(
+              //'عربات النقل'
+              name,
+              style: TextStyle(
+                  color: Color.fromRGBO(255, 255, 255, 1),
+                  fontFamily: 'beIN',
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -712,5 +834,35 @@ class _DashBoardPageState extends State<DashBoardPage> {
   clearfun() async {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.clear();
+  }
+
+  _checkInternetConnectivity() async {
+    var result = await Connectivity().checkConnectivity();
+    if (result == ConnectivityResult.none) {
+      _showDialog('No internet', "You're not connected to a network");
+    } // else if (result == ConnectivityResult.mobile) {
+    //   _showDialog('Internet access', "You're connected over mobile data");
+    // } else if (result == ConnectivityResult.wifi) {
+    //   _showDialog('Internet access', "You're connected over wifi");
+    // }
+  }
+
+  _showDialog(title, text) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(text),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              )
+            ],
+          );
+        });
   }
 }

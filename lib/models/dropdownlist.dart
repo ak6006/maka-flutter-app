@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final dropDownList = dropDownListFromJson(jsonString);
-
 import 'dart:convert';
 
 DropDownList dropDownListFromJson(String str) =>
@@ -11,6 +7,7 @@ String dropDownListToJson(DropDownList data) => json.encode(data.toJson());
 
 class DropDownList {
   DropDownList({
+    this.gifts,
     this.customerOrders,
     this.custName,
     this.prodNames,
@@ -20,6 +17,7 @@ class DropDownList {
     this.vehiclesData,
   });
 
+  List<Gift> gifts;
   List<CustomerOrder> customerOrders;
   CustName custName;
   List<ProdName> prodNames;
@@ -29,6 +27,9 @@ class DropDownList {
   List<VehiclesDatum> vehiclesData;
 
   factory DropDownList.fromJson(Map<String, dynamic> json) => DropDownList(
+        gifts: json["gifts"] == null
+            ? null
+            : List<Gift>.from(json["gifts"].map((x) => Gift.fromJson(x))),
         customerOrders: json["customerOrders"] == null
             ? null
             : List<CustomerOrder>.from(
@@ -59,6 +60,9 @@ class DropDownList {
       );
 
   Map<String, dynamic> toJson() => {
+        "gifts": gifts == null
+            ? null
+            : List<dynamic>.from(gifts.map((x) => x.toJson())),
         "customerOrders": customerOrders == null
             ? null
             : List<dynamic>.from(customerOrders.map((x) => x.toJson())),
@@ -183,6 +187,35 @@ class OrderCar {
       };
 }
 
+class Gift {
+  Gift({
+    this.giftid,
+    this.giftname,
+    this.giftBagsCount,
+    this.giftimg,
+  });
+
+  int giftid;
+  String giftname;
+  int giftBagsCount;
+  String giftimg;
+
+  factory Gift.fromJson(Map<String, dynamic> json) => Gift(
+        giftid: json["giftid"] == null ? null : json["giftid"],
+        giftname: json["giftname"] == null ? null : json["giftname"],
+        giftBagsCount:
+            json["giftBagsCount"] == null ? null : json["giftBagsCount"],
+        giftimg: json["giftimg"] == null ? null : json["giftimg"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "giftid": giftid == null ? null : giftid,
+        "giftname": giftname == null ? null : giftname,
+        "giftBagsCount": giftBagsCount == null ? null : giftBagsCount,
+        "giftimg": giftimg == null ? null : giftimg,
+      };
+}
+
 class MeasureName {
   MeasureName({
     this.measureId,
@@ -219,7 +252,7 @@ class ProdName {
   factory ProdName.fromJson(Map<String, dynamic> json) => ProdName(
         productId: json["ProductId"] == null ? null : json["ProductId"],
         productName: json["productName"] == null ? null : json["productName"],
-        price: json["Price"] == null ? 0.0 : json["Price"].toDouble(),
+        price: json["Price"] == null ? 0 : json["Price"].toDouble(),
         priceUpdateTime: json["PriceUpdateTime"] == null
             ? null
             : DateTime.parse(json["PriceUpdateTime"]),

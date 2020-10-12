@@ -1,6 +1,12 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:maka/bloca/apiresponse.dart';
+
+import 'package:maka/bloca/dataMbloc.dart';
+
+import 'package:maka/gift/giftDashBoard.dart';
+import 'package:maka/models/dropdownlist.dart';
 import 'package:maka/screen/FeedPrices.dart';
 
 import 'package:maka/screen/dashboard.dart';
@@ -10,6 +16,8 @@ import 'package:maka/screen/login.dart';
 import 'package:maka/screen/register.dart';
 import 'package:maka/screen/splash.dart';
 import 'package:maka/screen/vinpage.dart';
+import 'package:maka/utils/connectivity.dart';
+import 'package:maka/utils/constant.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,8 +41,15 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
+  void dispose() {
+    blocData.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
+    blocData = DataBloc();
 
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
@@ -66,46 +81,47 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Maka High Feed',
-      theme: ThemeData(
-        primarySwatch: Colors.deepOrange,
-        fontFamily: 'Roboto',
-      ),
-      home: Splash(),
-      // home: QrCode(
-      //   qr: 'السريال' +
-      //       '\n' +
-      //       '127665443243353354' +
-      //       '\n' +
-      //       'تاريخ الانتاج' +
-      //       '\n' +
-      //       '8/7/2020',
-      // ), //MyHomePage(),
-      routes: <String, WidgetBuilder>{
-        '/dashboard': (BuildContext context) => new DashBoardPage(),
-        '/vinpage': (BuildContext context) => new VinPage(),
-        '/MyHomePage': (BuildContext context) => new MyHomePage(),
-        '/register': (BuildContext context) => new RegisterPage(),
-        '/login': (BuildContext context) => new LogIn(),
-        '/FeedPrices': (BuildContext context) => new FeedPrices(),
-      },
-    );
+    currentcontext = context;
+    return
+        // ChangeNotifierProvider<DataProvider>(
+
+        //   //  builder:(context) => DataProvider() ,
+        //   create: (BuildContext context) => DataProvider(),
+
+        //   // value: AuthServices().user,
+        //   child:
+        StreamBuilder<ApiResponse<DropDownList>>(
+            stream: blocData.datastream,
+            builder: (context, snapshot) {
+              snapshotdata = snapshot;
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'Maka High Feed',
+                theme: ThemeData(
+                  primarySwatch: Colors.deepOrange,
+                  fontFamily: 'Roboto',
+                ),
+                home: Splash(),
+                // home: QrCode(
+                //   qr: 'السريال' +
+                //       '\n' +
+                //       '127665443243353354' +
+                //       '\n' +
+                //       'تاريخ الانتاج' +
+                //       '\n' +
+                //       '8/7/2020',
+                // ), //MyHomePage(),
+                routes: <String, WidgetBuilder>{
+                  '/dashboard': (BuildContext context) => new DashBoardPage(),
+                  '/vinpage': (BuildContext context) => new VinPage(),
+                  '/MyHomePage': (BuildContext context) => new MyHomePage(),
+                  '/register': (BuildContext context) => new RegisterPage(),
+                  '/login': (BuildContext context) => new LogIn(),
+                  '/FeedPrices': (BuildContext context) => new FeedPrices(),
+                  '/giftscreen': (BuildContext context) =>
+                      new GiftDashBoardScreen(),
+                },
+              );
+            });
   }
 }
-
-// class MyApp1 extends StatelessWidget {
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       title: 'Flutter Demo',
-//       theme: ThemeData(
-//         primarySwatch: Colors.blue,
-//         visualDensity: VisualDensity.adaptivePlatformDensity,
-//       ),
-//       home: MyHomePage(title: 'Flutter Demo Home Page'),
-//     );
-//   }
-// }
