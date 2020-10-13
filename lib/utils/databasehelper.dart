@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:maka/bloca/appexcepcetion.dart';
 import 'package:maka/models/vanmodel.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -20,6 +21,24 @@ class DatabaseHelper {
   var codest;
   var connection;
   var token;
+
+  dynamic _returnResponse(http.Response response) {
+    switch (response.statusCode) {
+      case 200:
+        var responseJson = json.decode(response.body.toString());
+        // print(responseJson);
+        return responseJson;
+      case 400:
+        throw BadRequestException(response.body.toString());
+      case 401:
+      case 403:
+        throw UnauthorisedException(response.body.toString());
+      case 500:
+      default:
+        throw FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+    }
+  }
 
   loginData(String name, String password) async {
     try {
@@ -661,7 +680,7 @@ class DatabaseHelper {
       // stateMsg = data["error_description"];
     } else {
       // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-      await _saveCustomerName(data["CustomerName"]);
+      //  await _saveCustomerName(data["CustomerName"]);
 
       // _firebaseMessaging.getToken().then((value) {
       //   setFirebaseToken(value);

@@ -21,7 +21,7 @@ class DataBloc {
   }
 
   fetchdata() async {
-    dataSink.add(ApiResponse.loading('Fetching Popular Movies'));
+    dataSink.add(ApiResponse.loading('Fetching Popular data'));
 
     try {
       DropDownList dropDownListv = await _datatRepository.fetchData();

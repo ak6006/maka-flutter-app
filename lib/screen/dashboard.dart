@@ -264,10 +264,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  // var brcode = await scanBarcodeNormal();
+                                  var brcode = await scanBarcodeNormal();
                                   dynamic result =
-                                      await databaseHelper.getData('88');
-                                  if (result == '') {
+                                      await databaseHelper.getData(brcode);
+                                  if (result.contains('error') ||
+                                      result == '') {
                                     return;
                                   } else {
                                     String output = _textSelect(result);
