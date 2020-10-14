@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:maka/bloca/apiresponse.dart';
+import 'package:maka/bloca/dataMbloc.dart';
 import 'package:maka/details/products.dart';
 import 'package:maka/details/rightImageProductImageWidget.dart';
 import 'package:maka/models/datatable.dart';
@@ -174,6 +175,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                           //++++++++++++++++++++++++++++++++++++++
                           //  await inislizedata();
                           //++++++++++++++++++++++++++++++++++++++++++
+                          blocData.fetchdata();
                           setState(() {});
                           print('refressssssssssssssssssssssssh');
                         },
@@ -266,6 +268,8 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                                   //++++++++++++++++++++++++++++++++++++++
                                   //  await inislizedata();
                                   //++++++++++++++++++++++++++++++++++++++++++
+                                  blocData.fetchdata();
+
                                   print('gbddddd$res');
                                   if (res == '"Done"') {
                                     alertDialog(

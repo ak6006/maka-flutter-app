@@ -26,6 +26,7 @@ class DataBloc {
     try {
       DropDownList dropDownListv = await _datatRepository.fetchData();
       dataSink.add(ApiResponse.completed(dropDownListv));
+
       datastate = true;
     } catch (e) {
       dataSink.add(ApiResponse.error(e.toString()));

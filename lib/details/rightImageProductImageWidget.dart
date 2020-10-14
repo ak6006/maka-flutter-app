@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:maka/details/blubutton.dart';
 import 'package:maka/details/products.dart';

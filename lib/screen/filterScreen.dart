@@ -148,6 +148,10 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                   //               await databaseHelper.getProductData();
                   //plist.add('كل المنتجات');
                   //plist["c"] = 3
+                  if (databaseHelper.status == true) {
+                    return;
+                  }
+
                   orderquantitysumquery = orderQuantitySumQueryFromJson(result);
                   // productlist.add('gffhfg');
                   //  print(orderquantitysumquery.length);

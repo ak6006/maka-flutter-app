@@ -15,6 +15,7 @@ AsyncSnapshot snapshotdata;
 DataBloc blocData;
 bool datastate = false;
 BuildContext currentcontext;
+String tokenapi;
 
 //StreamSubscription<ApiResponse<DropDownList>> streamSubscription;
 String agentCustomerName;
@@ -32,24 +33,14 @@ List<DropDownItem> measureItems = [];
 List<DropDownItem> vanDriver = [];
 List<CustomerOrder> orders = new List<CustomerOrder>();
 DatabaseHelper databaseHelper = new DatabaseHelper();
-//final prefs = SharedPreferences.getInstance();
 
-// List<String> gifttitles =
-//     []; //= []; //dropDownList.gifts.map((e) => e.giftname);
-// List<Widget> giftimages = [];
-// List<Uint8List> giftimagesdata = [];
 List<GiftRoot> giftroot = [];
 
 Future inislizedata(DropDownList data) async {
-  // var res = await databaseHelper.getProductData();
-  // if (res == null) return;
-  // dropDownList = dropDownListFromJson(res);
   dropDownList = data;
 
   productItems.clear();
-  // gifttitles.clear();
-  // giftimages.clear();
-  // giftimagesdata.clear();
+
   giftroot.clear();
   measureItems.clear();
   weghtItems.clear();
@@ -117,26 +108,7 @@ Future inislizedata(DropDownList data) async {
         ),
       ),
     );
-
-    //------------------------------------
-    // giftimagesdata.add(image);
-    // giftimages.add(
-    //   Hero(
-    //     tag: h.giftname,
-    //     child: ClipRRect(
-    //       borderRadius: BorderRadius.circular(20.0),
-    //       child: new Image.memory(
-    //         image,
-    //         fit: BoxFit.cover,
-    //       ),
-    //     ),
-    //   ),
-    // );
-    // gifttitles.add(h.giftname);
   }
-
-  // var b = giftroot.map((e) => e.giftname).toList();
-  // print(b);
 }
 
 class DropDownItem {

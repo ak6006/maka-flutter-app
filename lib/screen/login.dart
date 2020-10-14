@@ -248,81 +248,51 @@ class _LogInState extends State<LogIn> {
                                     showSpinner = true;
                                   });
                                 }
-                                databaseHelper
-                                    .loginData(_usernameController.text,
-                                        _passwordController.text)
-                                    .whenComplete(
-                                  () async {
-                                    _name = _usernameController.text;
-                                    _password = _passwordController.text;
-                                    // if (_name != '' && _password != '') {
-                                    //   print('Sucessful');
-                                    // }
+                                var result = await databaseHelper.loginData(
+                                    _usernameController.text,
+                                    _passwordController.text);
+                                // .whenComplete(
+                                //   () async {},
+                                // );
 
-                                    if (databaseHelper.status) {
-                                      if (databaseHelper.connection) {
-                                        alertDialog(
-                                            DialogType.ERROR,
-                                            context,
-                                            'خطاء في الاتصال',
-                                            'لا يوجد اتصال بالسرفر',
-                                            Icons.cancel,
-                                            Colors.red);
+                                if (databaseHelper.status) {
+                                  // if (databaseHelper.connection) {
+                                  alertDialog(
+                                      DialogType.ERROR,
+                                      context,
+                                      'خطاء  ',
+                                      result,
+                                      Icons.cancel,
+                                      Colors.red);
 
-                                        setState(() {
-                                          showSpinner = false;
-                                        });
-                                      } else {
-                                        setState(() {
-                                          showSpinner = false;
-                                          _passwordController.text = '';
-                                          _formKey.currentState.validate();
-                                        });
-                                      }
-                                    } else {
-                                      // final prefs =
-                                      //     await SharedPreferences.getInstance();
-                                      // final key = 'CustomerName';
-                                      // final value = prefs.get(key) ?? 0;
+                                  setState(() {
+                                    showSpinner = false;
+                                  });
+                                  // } else {
 
-                                      // final keyUser = 'user';
-                                      // final valueUser =
-                                      //     prefs.get(keyUser) ?? '';
+                                  // }
+                                } else {
+                                  // setState(() {
+                                  //   showSpinner = false;
+                                  //   _passwordController.text = '';
+                                  //   _formKey.currentState.validate();
+                                  // });
+                                  //++++++++++++++++++++++++++++++++++++++
+                                  //  await inislizedata();
+                                  //++++++++++++++++++++++++++++++++++++++++++
+                                  // blocData = DataBloc();
 
-                                      // if (value == 0 ||
-                                      //     valueUser !=
-                                      //         _usernameController.text) {
-                                      //   dynamic result = await databaseHelper
-                                      //       .getCustomerName();
-                                      //   final prefs = await SharedPreferences
-                                      //       .getInstance();
-                                      //   final key = 'CustomerName';
-                                      //   final value1 = prefs.get(key) ?? 0;
-                                      //   print('new valueeeewww');
-                                      //   agentCustomerName = value1;
-                                      // } else {
-                                      //   agentCustomerName = value;
-                                      //   print(value);
-                                      // }
+                                  await initSpeechState();
+                                  await databaseHelper.saveUserData(
+                                      _usernameController.text,
+                                      _passwordController.text);
+                                  if (datastate == false) {
+                                    blocData.fetchdata();
+                                  }
 
-                                      //++++++++++++++++++++++++++++++++++++++
-                                      //  await inislizedata();
-                                      //++++++++++++++++++++++++++++++++++++++++++
-                                      // blocData = DataBloc();
-
-                                      await initSpeechState();
-                                      await databaseHelper.saveUserData(
-                                          _usernameController.text,
-                                          _passwordController.text);
-                                      if (datastate == false) {
-                                        blocData.fetchdata();
-                                      }
-
-                                      Navigator.pushReplacementNamed(
-                                          context, '/dashboard');
-                                    }
-                                  },
-                                );
+                                  Navigator.pushReplacementNamed(
+                                      context, '/dashboard');
+                                }
                               },
                               color: Color.fromRGBO(254, 88, 0, 1),
                               child: Container(

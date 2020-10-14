@@ -93,7 +93,6 @@ class _FeedPricesState extends State<FeedPrices> {
                 width: 160,
                 child: new FlatButton(
                   onPressed: () {
-                    return;
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => DashBoardPage()),
