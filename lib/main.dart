@@ -16,7 +16,6 @@ import 'package:maka/screen/login.dart';
 import 'package:maka/screen/register.dart';
 import 'package:maka/screen/splash.dart';
 import 'package:maka/screen/vinpage.dart';
-import 'package:maka/utils/connectivity.dart';
 import 'package:maka/utils/constant.dart';
 
 void main() {

@@ -17,11 +17,11 @@ class DataBloc {
   DataBloc() {
     _dataController = StreamController<ApiResponse<DropDownList>>();
     _datatRepository = DatatRepository();
-    fetchdata();
+    // fetchdata();
   }
 
   fetchdata() async {
-    dataSink.add(ApiResponse.loading('Fetching Popular Movies'));
+    dataSink.add(ApiResponse.loading('Fetching Popular data'));
 
     try {
       DropDownList dropDownListv = await _datatRepository.fetchData();

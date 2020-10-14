@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,12 +34,6 @@ class DashBoardPage extends StatefulWidget {
 }
 
 class _DashBoardPageState extends State<DashBoardPage> {
-  // StreamSubscription _connectionChangeStream;
-  // bool isOffline = false;
-  var _connectionStatus = 'Unknown';
-  Connectivity connectivity;
-  StreamSubscription<ConnectivityResult> subscription;
-
   SharedPreferences logindata;
   String username;
   // static String _email;
@@ -99,34 +91,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
     super.initState();
     showSpinner = false;
     //  initial();
-    // ConnectionStatusSingleton connectionStatus =
-    //     ConnectionStatusSingleton.getInstance();
-    // _connectionChangeStream =
-    //     connectionStatus.connectionChange.listen(connectionChanged);
-
-    connectivity = new Connectivity();
-    subscription =
-        connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-      _connectionStatus = result.toString();
-      print(_connectionStatus);
-      if (result == ConnectivityResult.wifi ||
-          result == ConnectivityResult.mobile) {
-        setState(() {});
-      }
-    });
   }
 
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
-  }
-
-  // void connectionChanged(dynamic hasConnection) {
-  //   setState(() {
-  //     isOffline = !hasConnection;
-  //   });
-  // }
   // @override
   // void dispose() {
   //   blocData.dispose();
@@ -239,6 +205,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                         width: size.width * 0.08,
                         child: new IconButton(
                           onPressed: () {
+                            _checkInternetConnectivity();
                             // clearfun();
 
                             /// LOGOUT BUTTONNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
@@ -301,10 +268,12 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               GestureDetector(
                                 onTap: () async {
                                   _checkInternetConnectivity();
-                                  // var brcode = await scanBarcodeNormal();
+                                  //var brcode = await scanBarcodeNormal();
                                   dynamic result =
                                       await databaseHelper.getData('88');
-                                  if (result == '') {
+                                  if (result.contains('error') ||
+                                      result == '' ||
+                                      result == null) {
                                     return;
                                   } else {
                                     String output = _textSelect(result);
@@ -576,6 +545,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
+                                  _checkInternetConnectivity();
                                   // if (snapshotdata.hasData) {
                                   //   switch (snapshotdata.data.status) {
                                   //     case Status.LOADING:
@@ -696,6 +666,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
+                                  _checkInternetConnectivity();
                                   Navigator.push(
                                     context,
                                     MyCustomRoute(
@@ -736,6 +707,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               ),
                               GestureDetector(
                                 onTap: () async {
+                                  _checkInternetConnectivity();
                                   Navigator.push(
                                     context,
                                     MyCustomRoute(
@@ -839,8 +811,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
   _checkInternetConnectivity() async {
     var result = await Connectivity().checkConnectivity();
     if (result == ConnectivityResult.none) {
-      _showDialog('No internet', "You're not connected to a network");
-    } // else if (result == ConnectivityResult.mobile) {
+      _showDialog('لا يوجد انترنت', "انت غير متصل بالشبكة");
+    }
+    // else if (result == ConnectivityResult.mobile) {
     //   _showDialog('Internet access', "You're connected over mobile data");
     // } else if (result == ConnectivityResult.wifi) {
     //   _showDialog('Internet access', "You're connected over wifi");

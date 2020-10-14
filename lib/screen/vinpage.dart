@@ -2,6 +2,7 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:maka/models/customertransquery.dart';
 import 'package:maka/models/transquery.dart';
 import 'package:maka/screen/customertransquery.dart';
@@ -235,6 +236,11 @@ class _VinPageState extends State<VinPage> {
                               // print('ddd${f.transVehcileDriverName}');
                               //}
                               // return;
+                              var result;
+                              if (result.contains('error') ||
+                                  result == '' ||
+                                  result == null) return;
+
                               Navigator.push(
                                 context,
                                 MyCustomRoute(
@@ -297,8 +303,9 @@ class _VinPageState extends State<VinPage> {
   _checkInternetConnectivity() async {
     var result = await Connectivity().checkConnectivity();
     if (result == ConnectivityResult.none) {
-      _showDialog('No internet', "You're not connected to a network");
-    } // else if (result == ConnectivityResult.mobile) {
+      _showDialog('لا يوجد انترنت', "انت غير متصل بالشبكة");
+    }
+    // else if (result == ConnectivityResult.mobile) {
     //   _showDialog('Internet access', "You're connected over mobile data");
     // } else if (result == ConnectivityResult.wifi) {
     //   _showDialog('Internet access', "You're connected over wifi");
