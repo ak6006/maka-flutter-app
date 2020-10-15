@@ -109,17 +109,6 @@ class _GiftDashBoardScreenState extends State<GiftDashBoardScreen> {
       }
     }
     return Container();
-<<<<<<< HEAD
-    return Scaffold(
-      body: snapshotdata.data.status != Status.COMPLETED
-          ? Container(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
-            )
-          : buildGiftWidget(size, context),
-    );
-=======
     // return Scaffold(
     //   body: snapshotdata.data.status != Status.COMPLETED
     //       ? Container(
@@ -129,7 +118,6 @@ class _GiftDashBoardScreenState extends State<GiftDashBoardScreen> {
     //         )
     //       : buildGiftWidget(size, context),
     // );
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   }
 
   SafeArea buildGiftWidget(Size size, BuildContext context) {

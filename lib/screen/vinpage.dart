@@ -1,7 +1,5 @@
-<<<<<<< HEAD
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:connectivity/connectivity.dart';
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -11,7 +9,9 @@ import 'package:maka/screen/customertransquery.dart';
 import 'package:maka/screen/dashboard.dart';
 import 'package:maka/screen/transQueryscanner.dart';
 import 'package:maka/utils/animation.dart';
+import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
+import 'package:maka/utils/slideAnimations.dart';
 
 class VinPage extends StatefulWidget {
   //عربات النقل
@@ -161,21 +161,47 @@ class _VinPageState extends State<VinPage> {
                             //   Navigator.pushReplacementNamed(context, '/login');
                             // },
                             onPressed: () async {
-                              var brcode = await scanBarcodeNormal();
-                              dynamic result =
-                                  await databaseHelper.getQueryData(brcode);
-
-                              transquery = transQueryFromJson(result);
-                              //  print(transquery.length);
-                              // for (TransQuery f in transquery) {
-                              //   print(f.date);
+                              var result1 =
+                                  await Connectivity().checkConnectivity();
+                              if (result1 == ConnectivityResult.none) {
+                                alertDialog(
+                                    DialogType.ERROR,
+                                    context,
+                                    'خطاء في الاتصال',
+                                    'لا يوجد اتصال بالسرفر',
+                                    Icons.cancel,
+                                    Colors.red);
+                              }
+                              // else if (result1 == ConnectivityResult.none) {
+                              //   alertDialog(
+                              //       DialogType.ERROR,
+                              //       context,
+                              //       'خطاء في الاتصال',
+                              //       'لا يوجد اتصال بالسرفر',
+                              //       Icons.cancel,
+                              //       Colors.red);
                               // }
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        TransVanPage(transquery: transquery)),
-                              );
+                              // else if (result == ConnectivityResult.wifi) {
+                              //   _showDialog(
+                              //       'Internet access', "You're connected over wifi");
+                              // }
+
+                              else {
+                                var brcode = await scanBarcodeNormal();
+                                dynamic result =
+                                    await databaseHelper.getQueryData(brcode);
+                                transquery = transQueryFromJson(result);
+                                //  print(transquery.length);
+                                // for (TransQuery f in transquery) {
+                                //   print(f.date);
+                                // }
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          TransVanPage(transquery: transquery)),
+                                );
+                              }
                             },
                           ),
                         ),
@@ -231,23 +257,51 @@ class _VinPageState extends State<VinPage> {
                             //   Navigator.pushReplacementNamed(context, '/login');
                             // },
                             onPressed: () async {
-<<<<<<< HEAD
-                              _checkInternetConnectivity();
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                               // var brcode = await scanBarcodeNormal();
+                              var result1 =
+                                  await Connectivity().checkConnectivity();
+                              if (result1 == ConnectivityResult.none) {
+                                alertDialog(
+                                    DialogType.ERROR,
+                                    context,
+                                    'خطأ في الاتصال',
+                                    'لا يوجد اتصال بالسرفر',
+                                    Icons.cancel,
+                                    Colors.red);
+                              }
+                              //else if (result1 == ConnectivityResult.mobile) {
+                              //   alertDialog(
+                              //       DialogType.ERROR,
+                              //       context,
+                              //       'احذر',
+                              //       'انت متصل علي شبكة الموبايل',
+                              //       Icons.cancel,
+                              //       Colors.red);
+                              // }
+                              // else if (result == ConnectivityResult.wifi) {
+                              //   _showDialog(
+                              //       'Internet access', "You're connected over wifi");
+                              // }
 
-                              //for (CustomerTransQuery f in customertransquery) {
-                              // print('ddd${f.transVehcileDriverName}');
-                              //}
-                              // return;
-                              Navigator.push(
-                                context,
-                                MyCustomRoute(
-                                    builder: (context) => CustomerTransPage(
-                                        customertransquery:
-                                            customertransquery)),
-                              );
+                              else {
+                                //for (CustomerTransQuery f in customertransquery) {
+                                // print('ddd${f.transVehcileDriverName}');
+                                //}
+                                // return;
+                                // Navigator.push(
+                                //   context,
+                                //   MyCustomRoute(
+                                //       builder: (context) => CustomerTransPage(
+                                //           customertransquery:
+                                //               customertransquery)),
+                                // );
+                                Navigator.push(
+                                    context,
+                                    SlideLeftRoute(
+                                        page: CustomerTransPage(
+                                            customertransquery:
+                                                customertransquery)));
+                              }
                             },
                           ),
                         ),
@@ -270,7 +324,9 @@ class _VinPageState extends State<VinPage> {
                   width: size.width * 0.7,
                   child: new FlatButton(
                     onPressed: () {
-                      Navigator.pushReplacementNamed(context, '/dashboard');
+                      // Navigator.pushReplacementNamed(context, '/dashboard');
+                      Navigator.push(
+                          context, SlideRightRoute(page: DashBoardPage()));
                       // Navigator.push(
                       //   context,
                       //   MyCustomRoute(builder: (context) => DashBoardPage()),
@@ -299,37 +355,63 @@ class _VinPageState extends State<VinPage> {
       ),
     );
   }
-<<<<<<< HEAD
 
-  _checkInternetConnectivity() async {
-    var result = await Connectivity().checkConnectivity();
-    if (result == ConnectivityResult.none) {
-      _showDialog('No internet', "You're not connected to a network");
-    } // else if (result == ConnectivityResult.mobile) {
-    //   _showDialog('Internet access', "You're connected over mobile data");
-    // } else if (result == ConnectivityResult.wifi) {
-    //   _showDialog('Internet access', "You're connected over wifi");
-    // }
-  }
+  // _checkInternetConnectivity() async {
+  //   var result = await Connectivity().checkConnectivity();
+  //   if (result == ConnectivityResult.none) {
+  //     _showDialog('No internet', "You're not connected to a network");
+  //   } else if (result == ConnectivityResult.mobile) {
+  //     _showDialog('Internet access', "You're connected over mobile data");
+  //   } else if (result == ConnectivityResult.wifi) {
+  //     _showDialog('Internet access', "You're connected over wifi");
+  //   }
+  // }
 
-  _showDialog(title, text) {
+  // _showDialog(title, text) {
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text(title),
+  //           content: Text(text),
+  //           actions: <Widget>[
+  //             FlatButton(
+  //               child: Text('Ok'),
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //             )
+  //           ],
+  //         );
+  //       });
+  // }
+  void _showDialog(String msg) {
     showDialog(
         context: context,
-        builder: (context) {
+        builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(title),
-            content: Text(text),
+            title: new Text('خطأ'),
+            content: new Text('$msg'),
             actions: <Widget>[
-              FlatButton(
-                child: Text('Ok'),
+              new FlatButton(
+                child: new Text(
+                  'موافق',
+                  style: TextStyle(color: Colors.black),
+                  textAlign: TextAlign.right,
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-              )
+              ),
             ],
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20.0),
+              ),
+            ),
+            backgroundColor: Colors.yellowAccent[300],
           );
         });
   }
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 }

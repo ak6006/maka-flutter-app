@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-import 'dart:async';
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:connectivity/connectivity.dart';
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -23,12 +19,9 @@ import 'package:maka/screen/homepage.dart';
 import 'package:maka/screen/qrcode.dart';
 import 'package:maka/screen/vinpage.dart';
 import 'package:maka/utils/animation.dart';
-<<<<<<< HEAD
-import 'package:maka/utils/connectivity.dart';
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
+import 'package:maka/utils/slideAnimations.dart';
 import 'package:maka/utils/speech.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
@@ -42,15 +35,6 @@ class DashBoardPage extends StatefulWidget {
 }
 
 class _DashBoardPageState extends State<DashBoardPage> {
-<<<<<<< HEAD
-  // StreamSubscription _connectionChangeStream;
-  // bool isOffline = false;
-  var _connectionStatus = 'Unknown';
-  Connectivity connectivity;
-  StreamSubscription<ConnectivityResult> subscription;
-
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   SharedPreferences logindata;
   String username;
   // static String _email;
@@ -108,39 +92,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
     super.initState();
     showSpinner = false;
     //  initial();
-<<<<<<< HEAD
-    // ConnectionStatusSingleton connectionStatus =
-    //     ConnectionStatusSingleton.getInstance();
-    // _connectionChangeStream =
-    //     connectionStatus.connectionChange.listen(connectionChanged);
-
-    connectivity = new Connectivity();
-    subscription =
-        connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-      _connectionStatus = result.toString();
-      print(_connectionStatus);
-      if (result == ConnectivityResult.wifi ||
-          result == ConnectivityResult.mobile) {
-        setState(() {});
-      }
-    });
   }
 
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
-  }
-
-  // void connectionChanged(dynamic hasConnection) {
-  //   setState(() {
-  //     isOffline = !hasConnection;
-  //   });
-  // }
-=======
-  }
-
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   // @override
   // void dispose() {
   //   blocData.dispose();
@@ -308,27 +261,37 @@ class _DashBoardPageState extends State<DashBoardPage> {
                           ),
                           //===================================================================
 
-                          //rowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+                          //rowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               GestureDetector(
                                 onTap: () async {
-<<<<<<< HEAD
-                                  _checkInternetConnectivity();
-                                  // var brcode = await scanBarcodeNormal();
-                                  dynamic result =
-                                      await databaseHelper.getData('88');
-                                  if (result == '') {
-=======
-                                  var brcode = await scanBarcodeNormal();
-                                  dynamic result =
-                                      await databaseHelper.getData(brcode);
-                                  if (result.contains('error') ||
-                                      result == '') {
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
-                                    return;
-                                  } else {
+                                  var result1 =
+                                      await Connectivity().checkConnectivity();
+                                  if (result1 == ConnectivityResult.none) {
+                                    alertDialog(
+                                        DialogType.ERROR,
+                                        context,
+                                        'خطاء في الاتصال',
+                                        'لا يوجد اتصال بالسرفر',
+                                        Icons.cancel,
+                                        Colors.red);
+                                  }
+                                  // else if (result1 == ConnectivityResult.mobile) {
+                                  //   alertDialog(DialogType.ERROR, context, 'خطاء في الاتصال',
+                                  //       'انت متصل علي شبكة الموبايل', Icons.cancel, Colors.red);
+                                  // }
+                                  // else if (result == ConnectivityResult.wifi) {
+                                  //   _showDialog(
+                                  //       'Internet access', "You're connected over wifi");
+                                  // }
+
+                                  else {
+                                    var brcode = await scanBarcodeNormal();
+                                    dynamic result =
+                                        await databaseHelper.getData(brcode);
+
                                     String output = _textSelect(result);
                                     queryBarCode = queryBarCodeFromJson(output);
                                     print(queryBarCode.customerName);
@@ -379,15 +342,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               ),
                               GestureDetector(
                                 onTap: () async {
-<<<<<<< HEAD
-                                  _checkInternetConnectivity();
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
-                                  Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) => AddOrderScreen()),
-                                  );
+                                  Navigator.push(context,
+                                      SlideLeftRoute(page: AddOrderScreen()));
                                   //return;
                                 },
                                 child: Container(
@@ -448,15 +404,13 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-<<<<<<< HEAD
-                                  _checkInternetConnectivity();
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) => VinPage()),
+                                  // );
                                   Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) => VinPage()),
-                                  );
+                                      context, SlideLeftRoute(page: VinPage()));
                                 },
                                 // child:
                                 // ScopedModelDescendant<MovieModel>(
@@ -489,8 +443,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                         Text(
                                           snapshotdata.data.status ==
                                                   Status.COMPLETED
-                                              ? agentCustomerName
+                                              ? 'agentCustomerName'
                                               : 'تحميل...',
+
                                           //'عربات النقل'
                                           // snapshot.data.status ==
                                           //         Status.COMPLETED
@@ -534,10 +489,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
                               GestureDetector(
                                 onTap: () async {
-<<<<<<< HEAD
-                                  _checkInternetConnectivity();
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                                   // var brcode = await scanBarcodeNormal();
                                   // dynamic result = await databaseHelper.getData(brcode);
                                   // if (result == '') {
@@ -547,12 +498,14 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   //   queryBarCode = queryBarCodeFromJson(output);
                                   //   print(queryBarCode.customerName);
 
-                                  Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) =>
-                                            FilterScreenPage()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) =>
+                                  //           FilterScreenPage()),
+                                  // );
+                                  Navigator.push(context,
+                                      SlideLeftRoute(page: FilterScreenPage()));
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -623,7 +576,9 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   // }
 
                                   // return;
-                                  Navigator.pushNamed(context, '/FeedPrices');
+                                  //  Navigator.pushNamed(context, '/FeedPrices');
+                                  Navigator.push(context,
+                                      SlideLeftRoute(page: FeedPrices()));
                                   // Navigator.pushReplacementNamed(
                                   //     context, '/FeedPrices');
                                   // Navigator.push(
@@ -670,19 +625,43 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               ),
                               GestureDetector(
                                 onTap: () async {
-<<<<<<< HEAD
-                                  _checkInternetConnectivity();
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
-                                  var ss = await scanQR();
-                                  // print('ddddddddddddd $ss');
-                                  Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) => QrCode(
-                                              qr: ss,
-                                            )),
-                                  );
+                                  var result1 =
+                                      await Connectivity().checkConnectivity();
+                                  if (result1 == ConnectivityResult.none) {
+                                    alertDialog(
+                                        DialogType.ERROR,
+                                        context,
+                                        'خطاء في الاتصال',
+                                        'لا يوجد اتصال بالسرفر',
+                                        Icons.cancel,
+                                        Colors.red);
+                                  }
+                                  // else if (result1 == ConnectivityResult.mobile) {
+                                  //   alertDialog(DialogType.ERROR, context, 'خطاء في الاتصال',
+                                  //       'انت متصل علي شبكة الموبايل', Icons.cancel, Colors.red);
+                                  // }
+                                  // else if (result == ConnectivityResult.wifi) {
+                                  //   _showDialog(
+                                  //       'Internet access', "You're connected over wifi");
+                                  // }
+
+                                  else {
+                                    var ss = await scanQR();
+                                    // print('ddddddddddddd $ss');
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MyCustomRoute(
+                                    //       builder: (context) => QrCode(
+                                    //             qr: ss,
+                                    //           )),
+                                    // );
+                                    Navigator.push(
+                                        context,
+                                        SlideLeftRoute(
+                                            page: QrCode(
+                                          qr: ss,
+                                        )));
+                                  }
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -730,12 +709,14 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
-                                  Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) =>
-                                            AddVanScreen()), //FilterScreenPage()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) =>
+                                  //           AddVanScreen()), //FilterScreenPage()),
+                                  // );
+                                  Navigator.push(context,
+                                      SlideLeftRoute(page: FilterScreenPage()));
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -770,12 +751,16 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               ),
                               GestureDetector(
                                 onTap: () async {
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) =>
+                                  //           GiftDashBoardScreen()),
+                                  // );
                                   Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) =>
-                                            GiftDashBoardScreen()),
-                                  );
+                                      context,
+                                      SlideLeftRoute(
+                                          page: GiftDashBoardScreen()));
                                 },
                                 child: Container(
                                   height: size.height * 0.2,
@@ -869,37 +854,4 @@ class _DashBoardPageState extends State<DashBoardPage> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.clear();
   }
-<<<<<<< HEAD
-
-  _checkInternetConnectivity() async {
-    var result = await Connectivity().checkConnectivity();
-    if (result == ConnectivityResult.none) {
-      _showDialog('No internet', "You're not connected to a network");
-    } // else if (result == ConnectivityResult.mobile) {
-    //   _showDialog('Internet access', "You're connected over mobile data");
-    // } else if (result == ConnectivityResult.wifi) {
-    //   _showDialog('Internet access', "You're connected over wifi");
-    // }
-  }
-
-  _showDialog(title, text) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(title),
-            content: Text(text),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        });
-  }
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 }

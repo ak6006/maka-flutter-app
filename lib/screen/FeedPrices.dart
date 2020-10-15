@@ -93,10 +93,7 @@ class _FeedPricesState extends State<FeedPrices> {
                 width: 160,
                 child: new FlatButton(
                   onPressed: () {
-<<<<<<< HEAD
                     return;
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                     Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => DashBoardPage()),
@@ -118,10 +115,6 @@ class _FeedPricesState extends State<FeedPrices> {
   }
 
   Expanded buildExpanded(int index) {
-<<<<<<< HEAD
-=======
-    //******************************************** */
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
     ListView.builder(
       itemCount: index,
       itemBuilder: (context, i) {

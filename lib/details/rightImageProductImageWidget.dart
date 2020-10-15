@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 import 'dart:math';
 
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:flutter/material.dart';
 import 'package:maka/details/blubutton.dart';
 import 'package:maka/details/products.dart';

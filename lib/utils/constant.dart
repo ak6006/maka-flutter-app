@@ -15,10 +15,6 @@ AsyncSnapshot snapshotdata;
 DataBloc blocData;
 bool datastate = false;
 BuildContext currentcontext;
-<<<<<<< HEAD
-=======
-String tokenapi;
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 
 //StreamSubscription<ApiResponse<DropDownList>> streamSubscription;
 String agentCustomerName;
@@ -36,7 +32,6 @@ List<DropDownItem> measureItems = [];
 List<DropDownItem> vanDriver = [];
 List<CustomerOrder> orders = new List<CustomerOrder>();
 DatabaseHelper databaseHelper = new DatabaseHelper();
-<<<<<<< HEAD
 //final prefs = SharedPreferences.getInstance();
 
 // List<String> gifttitles =
@@ -55,16 +50,6 @@ Future inislizedata(DropDownList data) async {
   // gifttitles.clear();
   // giftimages.clear();
   // giftimagesdata.clear();
-=======
-
-List<GiftRoot> giftroot = [];
-
-Future inislizedata(DropDownList data) async {
-  dropDownList = data;
-
-  productItems.clear();
-
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   giftroot.clear();
   measureItems.clear();
   weghtItems.clear();
@@ -132,7 +117,6 @@ Future inislizedata(DropDownList data) async {
         ),
       ),
     );
-<<<<<<< HEAD
 
     //------------------------------------
     // giftimagesdata.add(image);
@@ -153,9 +137,6 @@ Future inislizedata(DropDownList data) async {
 
   // var b = giftroot.map((e) => e.giftname).toList();
   // print(b);
-=======
-  }
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 }
 
 class DropDownItem {

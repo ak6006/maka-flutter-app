@@ -1,15 +1,12 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
-<<<<<<< HEAD
-import 'package:maka/models/orderQuntitySum.dart';
-import 'package:maka/models/productlist.dart';
-=======
 import 'package:maka/bloca/apiresponse.dart';
 import 'package:maka/models/orderQuntitySum.dart';
 
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:maka/utils/animation.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/data_picker_style.dart';
@@ -51,13 +48,6 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
     );
     //List fixedList = widget.plist.asMap();
     productItems.clear();
-<<<<<<< HEAD
-    for (var h in dropDownList.prodNames) {
-      _products.add(h.productName);
-      productItems.add(DropDownItem(
-          id: h.productId == 0 ? 0 : h.productId, name: h.productName));
-      //print(productItems[1].name);
-=======
     if (snapshotdata.data.status == Status.COMPLETED) {
       for (var h in dropDownList.prodNames) {
         _products.add(h.productName);
@@ -65,7 +55,6 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
             id: h.productId == 0 ? 0 : h.productId, name: h.productName));
         //print(productItems[1].name);
       }
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
     }
     // print('fggggg${fixedList[1]}');
   }
@@ -134,78 +123,7 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
             new Padding(
               padding: new EdgeInsets.only(top: 0.0),
             ),
-<<<<<<< HEAD
-            Container(
-              height: 60,
-              margin: EdgeInsets.only(
-                  top: MediaQuery.of(context).size.height * 0.03),
-              child: Center(
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.orange[100], width: 2),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: DropdownButton(
-                      hint: Text(
-                        'اختر المنتج',
-                        style: TextStyle(color: Colors.orange),
-                      ),
-                      dropdownColor: Colors.black87,
-                      elevation: 20,
-                      icon: Icon(Icons.arrow_drop_down),
-                      iconSize: 36,
-                      iconEnabledColor: Colors.deepOrange,
-                      underline: SizedBox(),
-                      isExpanded: true,
-                      value: _productsVal,
-                      //style: TextStyle(color: Colors.black),
-                      onChanged: (value) {
-                        print(value);
-                        setState(() {
-                          // _prodId = value;
-
-                          _productsVal = value;
-                          productval = value;
-                          if (_productsVal == 'كل المنتجات') {
-                            productval = '';
-                          }
-                        });
-                      },
-                      items:
-                          // productItems
-                          //     .map(
-                          //       (e) => DropdownMenuItem(
-                          //         value: e.id.toInt(),
-                          //         child: Text(
-                          //           e.name.toString(),
-                          //           style: TextStyle(
-                          //             color: Colors.white,
-                          //             fontFamily: 'beIN',
-                          //             fontWeight: FontWeight.bold,
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     )
-                          //     .toList(),
-                          _products.map((value) {
-                        return DropdownMenuItem(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-=======
             check(context),
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
             SizedBox(
               height: 18.0,
             ),
@@ -222,39 +140,44 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                 onPressed: () async {
                   //  DateFormat("yyy-mm-dd", 'en').format(begin.dateTime)
                   var result = await databaseHelper.getQantityData(
-                      //   DateFormat.yMEd('en').format(begin.dateTime).toString(),
+                      // DateFormat.yMEd('en').format(begin.dateTime).toString(),
                       // DateFormat.yMEd('en').format(end.dateTime).toString(),
                       begin.dateTime.toString(),
                       end.dateTime.toString(),
                       productval.toString());
+                  var result1 = await Connectivity().checkConnectivity();
+                  if (result1 == ConnectivityResult.none) {
+                    alertDialog(DialogType.ERROR, context, 'خطاء في الاتصال',
+                        'لا يوجد اتصال بالسرفر', Icons.cancel, Colors.red);
+                  }
+                  // else if (result1 == ConnectivityResult.mobile) {
+                  //   alertDialog(DialogType.ERROR, context, 'خطاء في الاتصال',
+                  //       'انت متصل علي شبكة الموبايل', Icons.cancel, Colors.red);
+                  // }
+                  // else if (result == ConnectivityResult.wifi) {
+                  //   _showDialog(
+                  //       'Internet access', "You're connected over wifi");
+                  // }
 
-                  // var plist =
-<<<<<<< HEAD
-                  //await databaseHelper.getProductData();
-                  //plist.add('كل المنتجات');
-                  //plist["c"] = 3
-=======
-                  //               await databaseHelper.getProductData();
-                  //plist.add('كل المنتجات');
-                  //plist["c"] = 3
-                  if (databaseHelper.status == true) {
+                  else {
+                    //var plist =
+                    //await databaseHelper.getProductData();
+                    //plist.add('كل المنتجات');
+                    //plist["c"] = 3
+                    orderquantitysumquery =
+                        orderQuantitySumQueryFromJson(result);
+                    // productlist.add('gffhfg');
+                    //  print(orderquantitysumquery.length);
+                    Navigator.push(
+                      context,
+                      MyCustomRoute(
+                          builder: (context) => OrderQuantityScreen(
+                                orderquantitysumquery: orderquantitysumquery,
+                              )),
+                    );
+
                     return;
                   }
-
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
-                  orderquantitysumquery = orderQuantitySumQueryFromJson(result);
-                  // productlist.add('gffhfg');
-                  //  print(orderquantitysumquery.length);
-                  Navigator.push(
-                    context,
-                    MyCustomRoute(
-                        builder: (context) => OrderQuantityScreen(
-                              orderquantitysumquery: orderquantitysumquery,
-                            )),
-                  );
-
-                  return;
-
                   //  Navigator.pushReplacementNamed(context, '/totalFilterResult');
                 },
                 color: Color.fromRGBO(254, 88, 0, 1),
@@ -300,8 +223,6 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
       ),
     );
   }
-<<<<<<< HEAD
-=======
 
   Container check(BuildContext context) {
     if (snapshotdata.hasData) {
@@ -399,5 +320,64 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
       ),
     );
   }
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
+
+  // _checkInternetConnectivity() async {
+  //   var result = await Connectivity().checkConnectivity();
+  //   if (result == ConnectivityResult.none) {
+  //     _showDialog('No internet', "You're not connected to a network");
+  //   } else if (result == ConnectivityResult.mobile) {
+  //     _showDialog('Internet access', "You're connected over mobile data");
+  //   } else if (result == ConnectivityResult.wifi) {
+  //     _showDialog('Internet access', "You're connected over wifi");
+  //   }
+  // }
+
+  void _niceDialog(String msg) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: new Text('خطأ'),
+            content: new Text('$msg'),
+            actions: <Widget>[
+              new FlatButton(
+                child: new Text(
+                  'موافق',
+                  style: TextStyle(color: Colors.black),
+                  textAlign: TextAlign.right,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+            elevation: 2,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(20.0),
+              ),
+            ),
+            backgroundColor: Colors.yellowAccent[300],
+          );
+        });
+  }
+
+  // _showDialog(title, text) {
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: Text(title),
+  //           content: Text(text),
+  //           actions: <Widget>[
+  //             FlatButton(
+  //               child: Text('Ok'),
+  //               onPressed: () {
+  //                 Navigator.of(context).pop();
+  //               },
+  //             )
+  //           ],
+  //         );
+  //       });
+  // }
 }

@@ -1,17 +1,9 @@
-<<<<<<< HEAD
-import 'dart:convert';
-
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:maka/models/vanmodel.dart';
-<<<<<<< HEAD
-import 'package:maka/screen/dashboard.dart';
-=======
 
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/primary_number_field.dart';
 import 'package:maka/utils/primary_text_field.dart';
@@ -30,11 +22,7 @@ class _AddVanScreenState extends State<AddVanScreen> {
   final GlobalKey<FormState> _valkey = GlobalKey<FormState>();
   bool showSpinner = false;
   VanModel vanModel = new VanModel();
-<<<<<<< HEAD
-  DropDownItem selectedweghtItems = new DropDownItem();
-=======
   // DropDownItem selectedweghtItems = new DropDownItem();
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   TextEditingController _carNumber = TextEditingController();
   TextEditingController _carModel = TextEditingController();
   TextEditingController _carDriver = TextEditingController();
@@ -236,55 +224,73 @@ class _AddVanScreenState extends State<AddVanScreen> {
                               width: 120,
                               child: new FlatButton(
                                 onPressed: () async {
-                                  if (_valkey.currentState.validate()) {
-                                    //  print(jsonEncode(vanModel.toJson()));
-                                    setState(() {
-                                      showSpinner = true;
-                                    });
+                                  var result1 =
+                                      await Connectivity().checkConnectivity();
+                                  if (result1 == ConnectivityResult.none) {
+                                    alertDialog(
+                                        DialogType.ERROR,
+                                        context,
+                                        'خطاء في الاتصال',
+                                        'لا يوجد اتصال بالسرفر',
+                                        Icons.cancel,
+                                        Colors.red);
+                                  }
+                                  // else if (result1 == ConnectivityResult.mobile) {
+                                  //   alertDialog(DialogType.ERROR, context, 'خطاء في الاتصال',
+                                  //       'انت متصل علي شبكة الموبايل', Icons.cancel, Colors.red);
+                                  // }
+                                  // else if (result == ConnectivityResult.wifi) {
+                                  //   _showDialog(
+                                  //       'Internet access', "You're connected over wifi");
+                                  // }
 
-                                    final res = await databaseHelper
-                                        .addvanData(vanModel);
+                                  else {
+                                    if (_valkey.currentState.validate()) {
+                                      //  print(jsonEncode(vanModel.toJson()));
+                                      setState(() {
+                                        showSpinner = true;
+                                      });
 
-                                    print(res);
-                                    if (res == '"تمت الاضافه بنجاح"') {
-                                      //++++++++++++++++++++++++++++++++++++++
-                                      //  await inislizedata();
-                                      //++++++++++++++++++++++++++++++++++++++++++
-<<<<<<< HEAD
-=======
-                                      blocData.fetchdata();
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
-                                      alertDialog(
-                                          DialogType.SUCCES,
-                                          context,
-                                          'تمت العملية بنجاح',
-                                          '',
-                                          Icons.add,
-                                          Colors.green);
+                                      final res = await databaseHelper
+                                          .addvanData(vanModel);
+
+                                      print(res);
+                                      if (res == '"تمت الاضافه بنجاح"') {
+                                        //++++++++++++++++++++++++++++++++++++++
+                                        //  await inislizedata();
+                                        //++++++++++++++++++++++++++++++++++++++++++
+                                        alertDialog(
+                                            DialogType.SUCCES,
+                                            context,
+                                            'تمت العملية بنجاح',
+                                            '',
+                                            Icons.add,
+                                            Colors.green);
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             DashBoardPage()));
+                                      } else {
+                                        alertDialog(
+                                            DialogType.ERROR,
+                                            context,
+                                            '$res',
+                                            '',
+                                            Icons.delete_forever,
+                                            Colors.red);
+                                      }
+                                      setState(() {
+                                        showSpinner = false;
+                                      });
+
                                       // Navigator.push(
-                                      //     context,
-                                      //     MaterialPageRoute(
-                                      //         builder: (context) =>
-                                      //             DashBoardPage()));
-                                    } else {
-                                      alertDialog(
-                                          DialogType.ERROR,
-                                          context,
-                                          '$res',
-                                          '',
-                                          Icons.delete_forever,
-                                          Colors.red);
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //       builder: (context) =>
+                                      //           AddOrderScreen()), //FilterScreenPage()),
+                                      // );
                                     }
-                                    setState(() {
-                                      showSpinner = false;
-                                    });
-
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //       builder: (context) =>
-                                    //           AddOrderScreen()), //FilterScreenPage()),
-                                    // );
                                   }
                                 },
                                 color: Color.fromRGBO(254, 88, 0, 1),

@@ -1,30 +1,19 @@
 import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
-<<<<<<< HEAD
 import 'package:connectivity/connectivity.dart';
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:maka/bloca/apiresponse.dart';
-<<<<<<< HEAD
-=======
-import 'package:maka/bloca/dataMbloc.dart';
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:maka/details/products.dart';
 import 'package:maka/details/rightImageProductImageWidget.dart';
 import 'package:maka/models/datatable.dart';
 import 'package:maka/models/orderQuntitySum.dart';
-
+import 'package:maka/utils/slideAnimations.dart';
 import 'package:maka/screen/dashboard.dart';
 import 'package:maka/utils/animation.dart';
-<<<<<<< HEAD
-import 'package:maka/utils/connectivity.dart';
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 //import 'package:maka/models/productlist.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/custom_paginated_data_table.dart';
@@ -34,11 +23,7 @@ import 'package:maka/utils/databasehelper.dart';
 //import 'package:maka/utils/primary_text_field.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-<<<<<<< HEAD
-import 'dart:async';
-=======
 
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 //import 'orderQuantityScreen.dart';
 
 class AddOrderScreen extends StatefulWidget {
@@ -50,15 +35,6 @@ class AddOrderScreen extends StatefulWidget {
 }
 
 class _AddOrderScreenState extends State<AddOrderScreen> {
-<<<<<<< HEAD
-  // StreamSubscription _connectionChangeStream;
-  // bool isOffline = false;
-
-  var _connectionStatus = 'Unknown';
-  Connectivity connectivity;
-  StreamSubscription<ConnectivityResult> subscription;
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   // DateTime timeBeginSelected;
   //DateTime timeEndSelected;
   // DataPicker begin;
@@ -110,38 +86,8 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
 
     //refreshList();
     //print('refresheddd');
-<<<<<<< HEAD
-    // ConnectionStatusSingleton connectionStatus =
-    //     ConnectionStatusSingleton.getInstance();
-    // _connectionChangeStream =
-    //     connectionStatus.connectionChange.listen(connectionChanged);
-    connectivity = new Connectivity();
-    subscription =
-        connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-      _connectionStatus = result.toString();
-      print(_connectionStatus);
-      if (result == ConnectivityResult.wifi ||
-          result == ConnectivityResult.mobile) {
-        setState(() {});
-      }
-    });
   }
 
-  @override
-  void dispose() {
-    subscription.cancel();
-    super.dispose();
-  }
-
-  // void connectionChanged(dynamic hasConnection) {
-  //   setState(() {
-  //     isOffline = !hasConnection;
-  //   });
-  // }
-=======
-  }
-
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   // Future<Null> refreshList() async {
   //   refreshkey.currentState?.show(atTop: false);
   //   await Future.delayed(Duration(seconds: 1));
@@ -198,10 +144,6 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                     width: 190,
                     alignment: Alignment.center,
                     color: Color.fromRGBO(254, 88, 0, 1),
-<<<<<<< HEAD
-
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                     child: new Text(
                       'اهلا  $agentCustomerName',
                       style: new TextStyle(
@@ -233,10 +175,6 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                           //++++++++++++++++++++++++++++++++++++++
                           //  await inislizedata();
                           //++++++++++++++++++++++++++++++++++++++++++
-<<<<<<< HEAD
-=======
-                          blocData.fetchdata();
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                           setState(() {});
                           print('refressssssssssssssssssssssssh');
                         },
@@ -253,14 +191,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                             : Container(
                                 height: 60,
                                 child: Center(
-<<<<<<< HEAD
-                                  child: Text(
-                                    'خطأ في الاتصال بالشبكة',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-=======
                                   child: CircularProgressIndicator(),
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                                 ),
                               ),
 
@@ -269,15 +200,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                             : Container(
                                 height: 60,
                                 child: Center(
-<<<<<<< HEAD
-                                  child: Text(
-                                    'حاول الاتصال',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  //CircularProgressIndicator(),
-=======
                                   child: CircularProgressIndicator(),
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                                 ),
                               ),
                         //   orderdate,
@@ -301,11 +224,13 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                                 onPressed: () {
                                   // print('vbn${productItems[2].name}');
 
-                                  Navigator.push(
-                                    context,
-                                    MyCustomRoute(
-                                        builder: (context) => DashBoardPage()),
-                                  );
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) => DashBoardPage()),
+                                  // );
+                                  Navigator.push(context,
+                                      SlideRightRoute(page: DashBoardPage()));
                                 },
                                 color: Color.fromRGBO(254, 88, 0, 1),
                                 child: new Text(
@@ -331,63 +256,80 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                               width: 120,
                               child: new FlatButton(
                                 onPressed: () async {
-                                  // var json = jsonEncode(
-                                  //     orders.map((e) => e.toJson()).toList());
-                                  // dropDownList.customerOrders.
-                                  setState(() {
-                                    showSpinner = true;
-                                  });
-
-                                  // print(json);
-                                  var res =
-                                      await databaseHelper.addproductData(json);
-                                  //++++++++++++++++++++++++++++++++++++++
-                                  //  await inislizedata();
-                                  //++++++++++++++++++++++++++++++++++++++++++
-<<<<<<< HEAD
-=======
-                                  blocData.fetchdata();
-
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
-                                  print('gbddddd$res');
-                                  if (res == '"Done"') {
-                                    alertDialog(
-                                        DialogType.SUCCES,
-                                        context,
-                                        'تمت العملية بنجاح',
-                                        '',
-                                        Icons.add,
-                                        Colors.green);
-                                  } else {
+                                  var result1 =
+                                      await Connectivity().checkConnectivity();
+                                  if (result1 == ConnectivityResult.none) {
                                     alertDialog(
                                         DialogType.ERROR,
                                         context,
-                                        'يوجد مشكله في الاتصال',
-                                        '',
-                                        Icons.delete_forever,
+                                        'خطاء في الاتصال',
+                                        'لا يوجد اتصال بالسرفر',
+                                        Icons.cancel,
                                         Colors.red);
                                   }
-                                  setState(() {
-                                    showSpinner = false;
-                                  });
+                                  // else if (result1 == ConnectivityResult.mobile) {
+                                  //   alertDialog(DialogType.ERROR, context, 'خطاء في الاتصال',
+                                  //       'انت متصل علي شبكة الموبايل', Icons.cancel, Colors.red);
+                                  // }
+                                  // else if (result == ConnectivityResult.wifi) {
+                                  //   _showDialog(
+                                  //       'Internet access', "You're connected over wifi");
+                                  // }
 
-                                  // var result = await databaseHelper.getQantityData(
+                                  else {
+                                    // var json = jsonEncode(
+                                    //     orders.map((e) => e.toJson()).toList());
+                                    // dropDownList.customerOrders.
+                                    setState(() {
+                                      showSpinner = true;
+                                    });
 
-                                  //     begin.dateTime.toString(),
-                                  //     end.dateTime.toString(),
-                                  //     productval.toString());
+                                    // print(json);
+                                    var res = await databaseHelper
+                                        .addproductData(json);
+                                    //++++++++++++++++++++++++++++++++++++++
+                                    //  await inislizedata();
+                                    //++++++++++++++++++++++++++++++++++++++++++
+                                    print('gbddddd$res');
+                                    if (res == '"Done"') {
+                                      alertDialog(
+                                          DialogType.SUCCES,
+                                          context,
+                                          'تمت العملية بنجاح',
+                                          '',
+                                          Icons.add,
+                                          Colors.green);
+                                    } else {
+                                      alertDialog(
+                                          DialogType.ERROR,
+                                          context,
+                                          'يوجد مشكله في الاتصال',
+                                          '',
+                                          Icons.delete_forever,
+                                          Colors.red);
+                                    }
+                                    setState(() {
+                                      showSpinner = false;
+                                    });
 
-                                  // orderquantitysumquery = orderQuantitySumQueryFromJson(result);
+                                    // var result = await databaseHelper.getQantityData(
 
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //       builder: (context) => OrderQuantityScreen(
-                                  //             orderquantitysumquery: orderquantitysumquery,
-                                  //           )),
-                                  // );
+                                    //     begin.dateTime.toString(),
+                                    //     end.dateTime.toString(),
+                                    //     productval.toString());
 
-                                  // return;
+                                    // orderquantitysumquery = orderQuantitySumQueryFromJson(result);
+
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) => OrderQuantityScreen(
+                                    //             orderquantitysumquery: orderquantitysumquery,
+                                    //           )),
+                                    // );
+
+                                    // return;
+                                  }
                                 },
                                 color: Color.fromRGBO(254, 88, 0, 1),
                                 child: new Text(
@@ -993,36 +935,4 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   //     ),
   //   );
   // }
-<<<<<<< HEAD
-  _checkInternetConnectivity() async {
-    var result = await Connectivity().checkConnectivity();
-    if (result == ConnectivityResult.none) {
-      _showDialog('No internet', "You're not connected to a network");
-    } else if (result == ConnectivityResult.mobile) {
-      _showDialog('Internet access', "You're connected over mobile data");
-    } else if (result == ConnectivityResult.wifi) {
-      _showDialog('Internet access', "You're connected over wifi");
-    }
-  }
-
-  _showDialog(title, text) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(title),
-            content: Text(text),
-            actions: <Widget>[
-              FlatButton(
-                child: Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              )
-            ],
-          );
-        });
-  }
-=======
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 }

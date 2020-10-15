@@ -248,7 +248,6 @@ class _LogInState extends State<LogIn> {
                                     showSpinner = true;
                                   });
                                 }
-<<<<<<< HEAD
                                 databaseHelper
                                     .loginData(_usernameController.text,
                                         _passwordController.text)
@@ -324,53 +323,6 @@ class _LogInState extends State<LogIn> {
                                     }
                                   },
                                 );
-=======
-                                var result = await databaseHelper.loginData(
-                                    _usernameController.text,
-                                    _passwordController.text);
-                                // .whenComplete(
-                                //   () async {},
-                                // );
-
-                                if (databaseHelper.status) {
-                                  // if (databaseHelper.connection) {
-                                  alertDialog(
-                                      DialogType.ERROR,
-                                      context,
-                                      'خطاء  ',
-                                      result,
-                                      Icons.cancel,
-                                      Colors.red);
-
-                                  setState(() {
-                                    showSpinner = false;
-                                  });
-                                  // } else {
-
-                                  // }
-                                } else {
-                                  // setState(() {
-                                  //   showSpinner = false;
-                                  //   _passwordController.text = '';
-                                  //   _formKey.currentState.validate();
-                                  // });
-                                  //++++++++++++++++++++++++++++++++++++++
-                                  //  await inislizedata();
-                                  //++++++++++++++++++++++++++++++++++++++++++
-                                  // blocData = DataBloc();
-
-                                  await initSpeechState();
-                                  await databaseHelper.saveUserData(
-                                      _usernameController.text,
-                                      _passwordController.text);
-                                  if (datastate == false) {
-                                    blocData.fetchdata();
-                                  }
-
-                                  Navigator.pushReplacementNamed(
-                                      context, '/dashboard');
-                                }
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                               },
                               color: Color.fromRGBO(254, 88, 0, 1),
                               child: Container(

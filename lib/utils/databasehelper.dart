@@ -2,13 +2,7 @@ import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-<<<<<<< HEAD
-=======
-
 import 'package:maka/bloca/appexcepcetion.dart';
-import 'package:maka/bloca/callapiresponse.dart';
-import 'package:maka/bloca/datarespotory.dart';
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:maka/models/vanmodel.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,7 +22,24 @@ class DatabaseHelper {
   var connection;
   var token;
 
-<<<<<<< HEAD
+  dynamic _returnResponse(http.Response response) {
+    switch (response.statusCode) {
+      case 200:
+        var responseJson = json.decode(response.body.toString());
+        // print(responseJson);
+        return responseJson;
+      case 400:
+        throw BadRequestException(response.body.toString());
+      case 401:
+      case 403:
+        throw UnauthorisedException(response.body.toString());
+      case 500:
+      default:
+        throw FetchDataException(
+            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+    }
+  }
+
   loginData(String name, String password) async {
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -79,97 +90,6 @@ class DatabaseHelper {
         setFirebaseToken(value);
       });
     }
-=======
-  dynamic _returnResponse(http.Response response) {
-    switch (response.statusCode) {
-      case 200:
-        var responseJson = json.decode(response.body.toString());
-        // print(responseJson);
-        return responseJson;
-      case 400:
-        throw BadRequestException(response.body.toString());
-      case 401:
-      case 403:
-        throw UnauthorisedException(response.body.toString());
-      case 500:
-      default:
-        throw FetchDataException(
-            'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
-    }
-  }
-
-  loginData(String name, String password) async {
-    DatatRepository _datatRepository = DatatRepository();
-    var repsonse;
-
-    try {
-      repsonse = await _datatRepository.login(name, password);
-      status = false;
-      final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-      await _save(repsonse["access_token"]);
-      tokenapi = repsonse["access_token"];
-      _firebaseMessaging.getToken().then((value) {
-        setFirebaseToken(value);
-      });
-    } catch (e) {
-      CallApiResponse.error(e.toString());
-      print('vavaaa$e');
-      status = true;
-      return e.toString();
-    }
-
-    // return;
-    // try {
-    //   final result = await InternetAddress.lookup('google.com');
-    //   if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
-    //     print('connected');
-    //   }
-    // } on SocketException catch (_) {
-    //   print('not connected');
-    //   status = true;
-    //   connection = true;
-    //   return;
-    // }
-    // String myUrl = "$serverUrl/login";
-    // final response = await http.post(myUrl, headers: {
-    //   'Accept': 'application/json'
-    // }, body: {
-    //   "UserName": "$name",
-    //   "password": "$password",
-    //   "grant_type": "password"
-    // }).timeout(
-    //   Duration(seconds: 10),
-    //   onTimeout: () {
-    //     status = true;
-    //     connection = true;
-
-    //     return null;
-    //   },
-    // );
-    // if (response == null) {
-    //   status = true;
-    //   connection = true;
-    //   return;
-    // } else {
-    //   connection = false;
-    // }
-
-    // status = response.body.contains('error');
-
-    // var data = json.decode(response.body);
-
-    // if (status) {
-    //   print('data : ${data["error_description"]}');
-    //   stateMsg = data["error_description"];
-    // } else {
-    //   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-    //   await _save(data["access_token"]);
-    //   tokenapi = data["access_token"];
-    //   _firebaseMessaging.getToken().then((value) {
-    //     setFirebaseToken(value);
-    //   });
-    // }
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   }
 
   Future<bool> isLoggedIn() async {
@@ -460,10 +380,6 @@ class DatabaseHelper {
       headers: {'Accept': 'application/json', 'Authorization': 'bearer $value'},
     ).then((response) {
       tdata = response.body;
-<<<<<<< HEAD
-=======
-      status = false;
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
     }).timeout(
       Duration(seconds: 10),
       onTimeout: () {
@@ -764,11 +680,7 @@ class DatabaseHelper {
       // stateMsg = data["error_description"];
     } else {
       // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-<<<<<<< HEAD
-      await _saveCustomerName(data["CustomerName"]);
-=======
       //  await _saveCustomerName(data["CustomerName"]);
->>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 
       // _firebaseMessaging.getToken().then((value) {
       //   setFirebaseToken(value);
