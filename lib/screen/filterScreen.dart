@@ -209,7 +209,7 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                       productval.toString());
 
                   // var plist =
-                  //               await databaseHelper.getProductData();
+                  //await databaseHelper.getProductData();
                   //plist.add('كل المنتجات');
                   //plist["c"] = 3
                   orderquantitysumquery = orderQuantitySumQueryFromJson(result);
