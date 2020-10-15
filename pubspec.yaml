@@ -45,7 +45,10 @@ dependencies:
   clippy_flutter: ^1.1.1
   scoped_model: ^1.0.1
   provider: ^4.0.4
+<<<<<<< HEAD
   connectivity: ^0.4.9+3
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 
 dev_dependencies:
   flutter_test:

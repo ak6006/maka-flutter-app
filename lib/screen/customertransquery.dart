@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as material;
 import 'package:flutter/rendering.dart';
@@ -9,7 +12,10 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
 import 'package:maka/models/customertransquery.dart';
+<<<<<<< HEAD
 import 'package:maka/utils/connectivity.dart';
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:maka/utils/databasehelper.dart';
 
 class CustomerTransPage extends StatefulWidget {
@@ -20,6 +26,7 @@ class CustomerTransPage extends StatefulWidget {
 }
 
 class _CustomerTransPageState extends State<CustomerTransPage> {
+<<<<<<< HEAD
   // StreamSubscription _connectionChangeStream;
   // bool isOffline = false;
 
@@ -27,6 +34,8 @@ class _CustomerTransPageState extends State<CustomerTransPage> {
   Connectivity connectivity;
   StreamSubscription<ConnectivityResult> subscription;
 
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   List<CustomerTransQuery> customertransquery;
   DatabaseHelper databaseHelper = new DatabaseHelper();
   DateTime choosedDate;
@@ -73,6 +82,7 @@ class _CustomerTransPageState extends State<CustomerTransPage> {
     refreshList();
     print('refreshed');
 
+<<<<<<< HEAD
     connectivity = new Connectivity();
     subscription =
         connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
@@ -102,6 +112,11 @@ class _CustomerTransPageState extends State<CustomerTransPage> {
   //   });
   // }
 
+=======
+    super.initState();
+  }
+
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   //بيانات عربيات الوكيل
   Widget build(BuildContext context) {
     //final size = MediaQuery.of(context).size;

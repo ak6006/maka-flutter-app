@@ -1,10 +1,17 @@
+<<<<<<< HEAD
 import 'dart:convert';
 
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:maka/models/vanmodel.dart';
+<<<<<<< HEAD
 import 'package:maka/screen/dashboard.dart';
+=======
+
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/primary_number_field.dart';
 import 'package:maka/utils/primary_text_field.dart';
@@ -23,7 +30,11 @@ class _AddVanScreenState extends State<AddVanScreen> {
   final GlobalKey<FormState> _valkey = GlobalKey<FormState>();
   bool showSpinner = false;
   VanModel vanModel = new VanModel();
+<<<<<<< HEAD
   DropDownItem selectedweghtItems = new DropDownItem();
+=======
+  // DropDownItem selectedweghtItems = new DropDownItem();
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   TextEditingController _carNumber = TextEditingController();
   TextEditingController _carModel = TextEditingController();
   TextEditingController _carDriver = TextEditingController();
@@ -239,6 +250,10 @@ class _AddVanScreenState extends State<AddVanScreen> {
                                       //++++++++++++++++++++++++++++++++++++++
                                       //  await inislizedata();
                                       //++++++++++++++++++++++++++++++++++++++++++
+<<<<<<< HEAD
+=======
+                                      blocData.fetchdata();
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                                       alertDialog(
                                           DialogType.SUCCES,
                                           context,

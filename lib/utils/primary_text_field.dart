@@ -34,7 +34,11 @@ class PrimaryTextField extends StatelessWidget {
       maxLines: expandable ? null : 1,
       textAlignVertical: TextAlignVertical.top,
       decoration: InputDecoration(
+<<<<<<< HEAD
         //  labelText: label,
+=======
+        // labelText: label,
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
         hintText: label,
         hintStyle: TextStyle(color: Colors.white54),
         //labelStyle: TextStyle(fontFamily: "Subtitle"),

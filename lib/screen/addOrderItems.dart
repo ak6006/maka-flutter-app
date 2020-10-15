@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import 'dart:convert';
+=======
+// import 'dart:convert';
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -10,7 +14,12 @@ import 'package:maka/utils/animation.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/data_picker_style.dart';
 import 'package:maka/utils/primary_number_field.dart';
+<<<<<<< HEAD
 import 'package:maka/utils/primary_text_field.dart';
+=======
+// import 'package:maka/utils/primary_text_field.dart';
+// import 'package:maka/utils/customdropdown.dart' as custom;
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 
 // ignore: must_be_immutable
 class AddOrderItemsScreen extends StatefulWidget {
@@ -26,12 +35,20 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
   final GlobalKey<FormState> _valkey = GlobalKey<FormState>();
   DateTime timeEndSelected;
   DataPicker orderdate;
+<<<<<<< HEAD
   int _weghtId;
+=======
+  // int _weghtId;
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   int _vanId = null;
   String quantity = '0';
   TextEditingController _weightController = TextEditingController();
   DropDownItem selectedweghtItems = DropDownItem();
   List<OrderCar> selectedvanDriver = [];
+<<<<<<< HEAD
+=======
+
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   @override
   void initState() {
     for (var h in vanDriver) {
@@ -247,7 +264,11 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                                             AddOrderScreen()), //FilterScreenPage()),
                                   );
                                 }
+<<<<<<< HEAD
                                 setState(() {});
+=======
+                                //  setState(() {});
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                                 //  return;
                               },
                               color: Color.fromRGBO(254, 88, 0, 1),
@@ -273,6 +294,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
     );
   }
 
+<<<<<<< HEAD
   Container buildWeghtContainer(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.09,
@@ -352,10 +374,125 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
             ),
           ),
         ),
+=======
+  DropdownButtonHideUnderline buildWeghtContainer(BuildContext context) {
+    return DropdownButtonHideUnderline(
+      child: DropdownButtonFormField(
+        //DropdownButton
+
+        // style: TextStyle(height: 0.5),
+        style: TextStyle(
+            height: 0.1,
+            color: Colors.white,
+            fontFamily: 'beIN',
+            fontWeight: FontWeight.bold,
+            fontSize: 16),
+        // hint: Container(
+        //   child: Padding(
+        //     padding: const EdgeInsets.all(0.0),
+        //     child: Text(
+        //       'اختار حجم الشكارة',
+        //       // textAlign: TextAlign.center,
+        //       style: TextStyle(color: Colors.orange, fontSize: 17),
+        //     ),
+        //   ),
+        // ),
+        hint: Text(
+          'اختار حجم الشكارة',
+          style: TextStyle(color: Colors.white54),
+        ),
+
+        dropdownColor: Colors.black87,
+
+        elevation: 20,
+        isDense: true,
+
+        // decoration: InputDecoration(
+        //   //  labelText: label,
+        //   // hintText: 'label',
+        //   hintStyle: TextStyle(color: Colors.white54),
+        //   //labelStyle: TextStyle(fontFamily: "Subtitle"),
+        //   fillColor: Colors.white,
+        //   focusedBorder: OutlineInputBorder(
+        //     borderRadius: BorderRadius.circular(15.0),
+        //     borderSide: BorderSide(
+        //       color: Colors.amber,
+        //     ),
+        //   ),
+        //   enabledBorder: OutlineInputBorder(
+        //     borderRadius: BorderRadius.circular(15.0),
+        //     borderSide: BorderSide(
+        //       color: Colors.orange[800],
+        //       width: 0.5,
+        //     ),
+        //   ),
+        //   border: OutlineInputBorder(
+        //     borderRadius: BorderRadius.circular(16),
+        //   ),
+        // ),
+        icon: Icon(Icons.arrow_drop_down),
+        iconSize: 36,
+        iconEnabledColor: Colors.deepOrange,
+        //underline: SizedBox(),
+        isExpanded: true,
+        //value: selectedweghtItems.id,
+        validator: (value) {
+          if (value == null) {
+            print(value);
+            return 'الرجاء اختيار حجم الشيكارة';
+          } else
+            return null;
+        },
+        onTap: () {
+          print('gggg');
+        },
+        //style: TextStyle(color: Colors.black),
+        onChanged: (value) {
+          // setState(() {
+          //   _weghtId = value;
+          // });
+        },
+        items: weghtItems
+            .map(
+              (e) => DropdownMenuItem(
+                value: e.id.toInt(),
+                onTap: () {
+                  setState(() {
+                    selectedweghtItems = e;
+                  });
+
+                  print('hjjhgfjhjhf${e.name}');
+                },
+                child: Container(
+                  margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                  child: Text(
+                    e.name.toString(),
+                    textAlign: TextAlign.right,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'beIN',
+                      //    fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            )
+            .toList(),
+        //     product.map((value) {
+        //   return DropdownMenuItem(
+        //     value: value,
+        //     child: Text(
+        //       value,
+        //       style: TextStyle(color: Colors.white),
+        //     ),
+        //   );
+        // }).toList(),
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
       ),
     );
   }
 
+<<<<<<< HEAD
   Container buildVanDriverContainer(BuildContext context) {
     return Container(
       height: MediaQuery.of(context).size.height * 0.09,
@@ -463,6 +600,106 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
           ),
         ),
       ),
+=======
+  DropdownButtonFormField buildVanDriverContainer(BuildContext context) {
+    return DropdownButtonFormField(
+      style: TextStyle(
+          //height: 0.1,
+          color: Colors.white,
+          fontFamily: 'beIN',
+          fontWeight: FontWeight.bold,
+          fontSize: 16),
+      hint: Text(
+        'اختر عربية النقل',
+        style: TextStyle(color: Colors.white54, fontSize: 17),
+      ),
+      dropdownColor: Colors.black87,
+      elevation: 20,
+      icon: Icon(Icons.arrow_drop_down),
+      iconSize: 36,
+      iconEnabledColor: Colors.deepOrange,
+      // underline: SizedBox(),
+      isExpanded: true,
+      value: _vanId,
+      //style: TextStyle(color: Colors.black),
+      onChanged: (value) {
+        print(value);
+        setState(() {
+          _vanId = value;
+
+          // prodval = value;
+          //productval = value;
+          // if (productval == 'كل المنتجات') {
+          //   productval = '';
+          // }
+        });
+      },
+
+      validator: (value) =>
+          selectedvanDriver.isEmpty ? 'الرجاء اختيار عربية نقل' : null,
+      items: vanDriver
+          .map(
+            (e) => DropdownMenuItem(
+              value: e.id.toInt(),
+              child: Container(
+                margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
+                child: Row(
+                  children: [
+                    Theme(
+                      data: ThemeData(
+                        primarySwatch: Colors.deepOrange,
+                        unselectedWidgetColor: Colors.deepOrange,
+                      ),
+                      child: Checkbox(
+                        hoverColor: Colors.deepOrange,
+                        onChanged: (bool value) {
+                          setState(() {
+                            // sel.add()
+                            if (value) {
+                              selectedvanDriver
+                                  .add(OrderCar(vId: e.id, driverName: e.name));
+                              e.state = value;
+                            } else {
+                              setState(() {
+                                e.state = false;
+                                selectedvanDriver
+                                    .removeWhere((item) => item.vId == e.id);
+                                // selectedvanDriver.removeWhere((item) {
+                                //   item.vId = e.id;
+                                //   return;
+                                // });
+                              });
+                            }
+                          });
+                        },
+                        value: e.state, // sel[e.id - 3],
+                      ),
+                    ),
+                    Text(
+                      e.name.toString(),
+                      textAlign: TextAlign.right,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'beIN',
+                        //  fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          )
+          .toList(),
+      //     product.map((value) {
+      //   return DropdownMenuItem(
+      //     value: value,
+      //     child: Text(
+      //       value,
+      //       style: TextStyle(color: Colors.white),
+      //     ),
+      //   );
+      // }).toList(),
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
     );
   }
 //   Expanded buildExpanded(int index) {

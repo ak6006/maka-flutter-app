@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 import 'dart:async';
 
 import 'package:connectivity/connectivity.dart';
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -20,7 +23,10 @@ import 'package:maka/screen/homepage.dart';
 import 'package:maka/screen/qrcode.dart';
 import 'package:maka/screen/vinpage.dart';
 import 'package:maka/utils/animation.dart';
+<<<<<<< HEAD
 import 'package:maka/utils/connectivity.dart';
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'package:maka/utils/speech.dart';
@@ -36,12 +42,15 @@ class DashBoardPage extends StatefulWidget {
 }
 
 class _DashBoardPageState extends State<DashBoardPage> {
+<<<<<<< HEAD
   // StreamSubscription _connectionChangeStream;
   // bool isOffline = false;
   var _connectionStatus = 'Unknown';
   Connectivity connectivity;
   StreamSubscription<ConnectivityResult> subscription;
 
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   SharedPreferences logindata;
   String username;
   // static String _email;
@@ -99,6 +108,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
     super.initState();
     showSpinner = false;
     //  initial();
+<<<<<<< HEAD
     // ConnectionStatusSingleton connectionStatus =
     //     ConnectionStatusSingleton.getInstance();
     // _connectionChangeStream =
@@ -127,6 +137,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
   //     isOffline = !hasConnection;
   //   });
   // }
+=======
+  }
+
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
   // @override
   // void dispose() {
   //   blocData.dispose();
@@ -300,11 +314,19 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
+<<<<<<< HEAD
                                   _checkInternetConnectivity();
                                   // var brcode = await scanBarcodeNormal();
                                   dynamic result =
                                       await databaseHelper.getData('88');
                                   if (result == '') {
+=======
+                                  var brcode = await scanBarcodeNormal();
+                                  dynamic result =
+                                      await databaseHelper.getData(brcode);
+                                  if (result.contains('error') ||
+                                      result == '') {
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                                     return;
                                   } else {
                                     String output = _textSelect(result);
@@ -357,7 +379,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               ),
                               GestureDetector(
                                 onTap: () async {
+<<<<<<< HEAD
                                   _checkInternetConnectivity();
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                                   Navigator.push(
                                     context,
                                     MyCustomRoute(
@@ -423,7 +448,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
                             children: [
                               GestureDetector(
                                 onTap: () async {
+<<<<<<< HEAD
                                   _checkInternetConnectivity();
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                                   Navigator.push(
                                     context,
                                     MyCustomRoute(
@@ -506,7 +534,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
 
                               GestureDetector(
                                 onTap: () async {
+<<<<<<< HEAD
                                   _checkInternetConnectivity();
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                                   // var brcode = await scanBarcodeNormal();
                                   // dynamic result = await databaseHelper.getData(brcode);
                                   // if (result == '') {
@@ -639,7 +670,10 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               ),
                               GestureDetector(
                                 onTap: () async {
+<<<<<<< HEAD
                                   _checkInternetConnectivity();
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                                   var ss = await scanQR();
                                   // print('ddddddddddddd $ss');
                                   Navigator.push(
@@ -835,6 +869,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
     SharedPreferences preferences = await SharedPreferences.getInstance();
     await preferences.clear();
   }
+<<<<<<< HEAD
 
   _checkInternetConnectivity() async {
     var result = await Connectivity().checkConnectivity();
@@ -865,4 +900,6 @@ class _DashBoardPageState extends State<DashBoardPage> {
           );
         });
   }
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 }

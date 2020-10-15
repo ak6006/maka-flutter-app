@@ -17,15 +17,27 @@ class DataBloc {
   DataBloc() {
     _dataController = StreamController<ApiResponse<DropDownList>>();
     _datatRepository = DatatRepository();
+<<<<<<< HEAD
     fetchdata();
   }
 
   fetchdata() async {
     dataSink.add(ApiResponse.loading('Fetching Popular Movies'));
+=======
+    // fetchdata();
+  }
+
+  fetchdata() async {
+    dataSink.add(ApiResponse.loading('Fetching Popular data'));
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 
     try {
       DropDownList dropDownListv = await _datatRepository.fetchData();
       dataSink.add(ApiResponse.completed(dropDownListv));
+<<<<<<< HEAD
+=======
+
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
       datastate = true;
     } catch (e) {
       dataSink.add(ApiResponse.error(e.toString()));

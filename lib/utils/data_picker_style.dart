@@ -47,7 +47,11 @@ class _DataPickerState extends State<DataPicker> {
                   : new DateFormat("dd/MM/yyyy", "ar").format(widget.dateTime),
               style: TextStyle(
                   fontSize: 18.0,
+<<<<<<< HEAD
                   color: Colors.white,
+=======
+                  color: Colors.white54,
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                   fontWeight: FontWeight.bold),
             ),
             // subtitle: Text(

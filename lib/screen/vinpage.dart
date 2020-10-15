@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import 'package:connectivity/connectivity.dart';
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -228,7 +231,10 @@ class _VinPageState extends State<VinPage> {
                             //   Navigator.pushReplacementNamed(context, '/login');
                             // },
                             onPressed: () async {
+<<<<<<< HEAD
                               _checkInternetConnectivity();
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
                               // var brcode = await scanBarcodeNormal();
 
                               //for (CustomerTransQuery f in customertransquery) {
@@ -293,6 +299,7 @@ class _VinPageState extends State<VinPage> {
       ),
     );
   }
+<<<<<<< HEAD
 
   _checkInternetConnectivity() async {
     var result = await Connectivity().checkConnectivity();
@@ -323,4 +330,6 @@ class _VinPageState extends State<VinPage> {
           );
         });
   }
+=======
+>>>>>>> f1b41dfb01906add7f94ad088b788b338b054fae
 }
