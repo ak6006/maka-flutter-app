@@ -210,8 +210,10 @@ class CardControllerWidget extends StatelessWidget {
       this.currentPostion,
       this.align,
       this.textStyle})
-      : cardMaxHeight = cardViewPagerHeight * (1 / 2),
-        cardMaxWidth = cardViewPagerHeight * (1 / 2);
+      : cardMaxHeight = cardViewPagerHeight * (1 / 1.7),
+        cardMaxWidth = cardViewPagerHeight * (1 / 1.7);
+
+  /// card width and height
 
   @override
   Widget build(BuildContext context) {
@@ -246,14 +248,17 @@ class CardControllerWidget extends StatelessWidget {
                   child: images[i],
                 ),
                 Positioned(
+                  ///
                   top: 230,
                   left: 20,
                   child: Text(
                     titles[i],
                     style: TextStyle(
+                      backgroundColor: Colors.black12,
                       color: Colors.black,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
+                      fontFamily: 'beIN',
                     ),
                     //titleTextStyle.copyWith(fontSize: getFontSize(i)),
                     textAlign: TextAlign.end,

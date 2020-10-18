@@ -15,7 +15,7 @@ import 'package:maka/utils/databasehelper.dart';
 import 'orderQuantityScreen.dart';
 
 class FilterScreenPage extends StatefulWidget {
-  // List<ProductList> plist;
+  //List<ProductList> plist;
   //FilterScreenPage({this.plist});
   @override
   _FilterScreenPageState createState() => _FilterScreenPageState();

@@ -26,8 +26,22 @@ class _GiftDashBoardScreenState extends State<GiftDashBoardScreen> {
   // List<String> gifttitles =
   //     []; //= []; //dropDownList.gifts.map((e) => e.giftname);
   // List<Widget> giftimages = [];
-
+  var refreshkey = GlobalKey<RefreshIndicatorState>();
   // @override
+  Future<Null> refreshList() async {
+    refreshkey.currentState?.show(atTop: false);
+    await Future.delayed(Duration(seconds: 1));
+    // dynamic result = await databaseHelper.getCustomerQueryData();
+    //print(result);
+    // customertransquery = customerTransQueryFromJson(result);
+    // print(customertransquery.length);
+    // setState(() {
+    //   databaseHelper.getCustomerQueryData();
+    // });
+
+    return null;
+  }
+
   void initState() {
     super.initState();
 
@@ -122,83 +136,119 @@ class _GiftDashBoardScreenState extends State<GiftDashBoardScreen> {
 
   SafeArea buildGiftWidget(Size size, BuildContext context) {
     return SafeArea(
-      child: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/back.jpg"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 30,
+      child: Scaffold(
+        body: Container(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/back.jpg"),
+              fit: BoxFit.cover,
             ),
-            Container(
-              decoration: BoxDecoration(
-                color: Color.fromRGBO(254, 88, 0, 1),
-                borderRadius: BorderRadius.circular(5),
+          ),
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 0,
               ),
-              // color: Color.fromRGBO(254, 88, 0, 1),
-              height: 50, //size.height * 0.07,
-              width: 220, //size.width * 0.7,
-              child: Row(
-                children: <Widget>[
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Image(
-                    height: size.height * 0.07,
-                    image: AssetImage('assets/images/gift.png'),
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.05,
-                  ),
+              Column(
+                children: [
                   Container(
-                    // height: size.height * 0.07,
-                    // width: size.width * 0.4,
-                    child: new Text(
-                      'جوائز مكه هاي فيد',
-                      style: new TextStyle(
-                          color: Color.fromRGBO(255, 255, 255, 1),
-                          fontFamily: 'beIN',
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20),
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(254, 88, 0, 1),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    // color: Color.fromRGBO(254, 88, 0, 1),
+                    height: 50, //size.height * 0.07,
+                    width: 250, //size.width * 0.7,
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 5,
+                        ),
+                        Image(
+                          height: size.height * 0.06,
+                          image: AssetImage('assets/images/gift.png'),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.05,
+                        ),
+                        Container(
+                          height: size.height * 0.07,
+                          width: size.width * 0.4,
+                          child: new Text(
+                            'جوائز مكه هاي فيد',
+                            style: new TextStyle(
+                                color: Color.fromRGBO(255, 255, 255, 1),
+                                fontFamily: 'beIN',
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ),
-            Expanded(
-              child: Container(
-                child: GivtView(
-                  // textStyle: TextStyle(color : Colors.red),
-                  titles: giftroot.map((e) => e.giftname).toList(),
-                  images: giftroot.map((e) => e.imageHero).toList(),
-                  onPageChanged: (page) {
-                    // print(page);
-                  },
-                  onSelectedItem: (index) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => DetailView(
-                                champion: Champion(
-                                    name: giftroot[index].giftname,
-                                    image: giftroot[index].giftimg,
-                                    role: Role.ASSASIN,
-                                    difficulty: Difficulty.MODERATE,
-                                    nickName: 'جائزة تستحق التجربة',
-                                    count: (index * 8).toString(),
-                                    description:
-                                        "تقدم هذه الجائزة كهدية من مكة هاي فيد عند شراء كمية معينة من العلف"),
-                              )),
-                    );
-                  },
+              Expanded(
+                child: Container(
+                  child: RefreshIndicator(
+                    key: refreshkey,
+                    color: Colors.deepOrange,
+                    backgroundColor: Colors.white,
+                    onRefresh: () async {
+                      setState(() {});
+                      print('refressssssssssssssssssssssssh gift page');
+                    },
+                    child: GivtView(
+                      // textStyle: TextStyle(color : Colors.red),
+                      titles: giftroot.map((e) => e.giftname).toList(),
+                      images: giftroot.map((e) => e.imageHero).toList(),
+                      onPageChanged: (page) {
+                        // print(page);
+                      },
+                      onSelectedItem: (index) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DetailView(
+                                    champion: Champion(
+                                        name: giftroot[index].giftname,
+                                        image: giftroot[index].giftimg,
+                                        role: Role.ASSASIN,
+                                        difficulty: Difficulty.MODERATE,
+                                        nickName: 'جائزة تستحق التجربة',
+                                        count: (index * 8).toString(),
+                                        description:
+                                            "تقدم هذه الجائزة كهدية من مكة هاي فيد عند شراء كمية معينة من العلف"),
+                                  )),
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ),
-            ),
-          ],
+              Container(
+                decoration: BoxDecoration(
+                  // color: Color.fromRGBO(254, 88, 0, 1),
+                  borderRadius: BorderRadius.circular(60),
+                ),
+                height: 40,
+                width: 120,
+                child: new FlatButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  color: Color.fromRGBO(254, 88, 0, 1),
+                  child: new Text(
+                    'رجوع',
+                    style: new TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'beIN',
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
