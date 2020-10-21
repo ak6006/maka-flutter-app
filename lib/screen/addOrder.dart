@@ -61,6 +61,9 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
       lable: 'تاريخ الطلبية',
     );
 
+    for (var h in productItems) {
+      print(h.price);
+    }
     //List fixedList = widget.plist.asMap();
     // productItems.clear();
     // measureItems.clear();
@@ -169,7 +172,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                         headerAnimationLoop: false,
                         animType: AnimType.BOTTOMSLIDE,
                         title: 'تحذير',
-                        desc: 'هل انت متاكد من حذف هذه الطلبية',
+                        desc: 'هل تريد نحديث الصفحة',
                         btnCancelOnPress: () {},
                         btnOkOnPress: () async {
                           //++++++++++++++++++++++++++++++++++++++
@@ -364,8 +367,13 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
         actions: <IconButton>[
           IconButton(
             splashColor: Colors.transparent,
-            icon: const Icon(Icons.refresh),
-            onPressed: () {},
+            icon: const Icon(
+              Icons.refresh,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              setState(() {});
+            },
           ),
         ],
         header: Text(

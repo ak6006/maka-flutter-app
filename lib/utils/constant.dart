@@ -60,6 +60,7 @@ Future inislizedata(DropDownList data) async {
   agentCustomerName = dropDownList.custName.custName;
   for (var h in dropDownList.prodNames) {
     if (h.productName != 'كل المنتجات') {
+      print('fffffgghjkll${h.price}');
       productItems.add(DropDownItem(
           id: h.productId == 0 ? 0 : h.productId,
           name: h.productName,

@@ -63,10 +63,10 @@ class TableData extends DataTableSource {
                           Colors.red);
                     }
 
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => AddOrderScreen()),
-                    );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(builder: (context) => AddOrderScreen()),
+                    // );
                   }
                 },
                 btnOkText: 'نعم',

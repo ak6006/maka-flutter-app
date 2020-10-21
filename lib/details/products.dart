@@ -10,8 +10,8 @@ class Product {
       this.description,
       this.buttonText,
       this.backgroundColor,
-      this.price = "",
-      this.productInfo = ""});
+      this.price,
+      this.productInfo});
 }
 
 final Product pixelStand = Product(

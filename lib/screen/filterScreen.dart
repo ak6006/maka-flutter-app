@@ -47,15 +47,19 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
       lable: 'الى تاريخ',
     );
     //List fixedList = widget.plist.asMap();
-    productItems.clear();
+    // productItems.clear();
     if (snapshotdata.data.status == Status.COMPLETED) {
       for (var h in dropDownList.prodNames) {
         _products.add(h.productName);
         productItems.add(DropDownItem(
-            id: h.productId == 0 ? 0 : h.productId, name: h.productName));
+            id: h.productId == 0 ? 0 : h.productId,
+            name: h.productName,
+            price: h.price,
+            priceUpdateTime: h.priceUpdateTime));
         //print(productItems[1].name);
       }
     }
+
     // print('fggggg${fixedList[1]}');
   }
 
