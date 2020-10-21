@@ -32,11 +32,11 @@ class _GiftDashBoardScreenState extends State<GiftDashBoardScreen> {
     refreshkey.currentState?.show(atTop: false);
     await Future.delayed(Duration(seconds: 1));
     // dynamic result = await databaseHelper.getCustomerQueryData();
-    //print(result);
+    // print(result);
     // customertransquery = customerTransQueryFromJson(result);
     // print(customertransquery.length);
     // setState(() {
-    //   databaseHelper.getCustomerQueryData();
+    // databaseHelper.getCustomerQueryData();
     // });
 
     return null;
@@ -44,7 +44,7 @@ class _GiftDashBoardScreenState extends State<GiftDashBoardScreen> {
 
   void initState() {
     super.initState();
-
+    refreshList();
     // giftimages.add(
     //   Hero(
     //     tag: "Iphone 11",

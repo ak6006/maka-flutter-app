@@ -13,6 +13,8 @@ import 'package:maka/models/orderQuntitySum.dart';
 import 'package:maka/models/querybarcode.dart';
 import 'package:maka/screen/FeedPrices.dart';
 import 'package:maka/screen/addOrder.dart';
+//import 'package:maka/screen/addVanScreen.dart';
+//import 'package:maka/screen/addVan.dart';
 import 'package:maka/screen/addvan.dart';
 import 'package:maka/screen/filterScreen.dart';
 import 'package:maka/screen/homepage.dart';
@@ -291,6 +293,16 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                     var brcode = await scanBarcodeNormal();
                                     dynamic result =
                                         await databaseHelper.getData(brcode);
+                                    if (result == '') {
+                                      alertDialog(
+                                          DialogType.ERROR,
+                                          context,
+                                          'خطاء في السريال ',
+                                          'هذه السريال ليس لمكة هاي فيد',
+                                          Icons.cancel,
+                                          Colors.red);
+                                      return;
+                                    }
 
                                     String output = _textSelect(result);
                                     queryBarCode = queryBarCodeFromJson(output);
@@ -716,7 +728,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   //           AddVanScreen()), //FilterScreenPage()),
                                   // );
                                   Navigator.push(context,
-                                      SlideLeftRoute(page: FilterScreenPage()));
+                                      SlideLeftRoute(page: AddVanScreen()));
                                 },
                                 child: Container(
                                   height: size.height * 0.2,

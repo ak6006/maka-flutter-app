@@ -259,6 +259,7 @@ class _AddVanScreenState extends State<AddVanScreen> {
                                         //++++++++++++++++++++++++++++++++++++++
                                         //  await inislizedata();
                                         //++++++++++++++++++++++++++++++++++++++++++
+                                        blocData.fetchdata();
                                         alertDialog(
                                             DialogType.SUCCES,
                                             context,

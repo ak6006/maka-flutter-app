@@ -175,6 +175,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                           //++++++++++++++++++++++++++++++++++++++
                           //  await inislizedata();
                           //++++++++++++++++++++++++++++++++++++++++++
+                          blocData.fetchdata();
                           setState(() {});
                           print('refressssssssssssssssssssssssh');
                         },
@@ -203,9 +204,8 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                                   child: CircularProgressIndicator(),
                                 ),
                               ),
-                        //   orderdate,
-
-                        //  datatableScrollview(context),
+                        // orderdate,
+                        // datatableScrollview(context),
                         // buildStoreContainer(context),
                         SizedBox(
                           height: 18.0,
@@ -290,6 +290,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                                     //++++++++++++++++++++++++++++++++++++++
                                     //  await inislizedata();
                                     //++++++++++++++++++++++++++++++++++++++++++
+                                    blocData.fetchdata();
                                     print('gbddddd$res');
                                     if (res == '"Done"') {
                                       alertDialog(
