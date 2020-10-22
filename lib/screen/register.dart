@@ -354,6 +354,66 @@ class _RegisterPageState extends State<RegisterPage> {
                                   height: 35,
                                   width: 140,
                                   child: new FlatButton(
+                                    // onPressed: () async {
+                                    //   var result;
+                                    //   SystemChannels.textInput
+                                    //       .invokeMethod('TextInput.hide');
+
+                                    //   if (_formKey.currentState.validate()) {
+                                    //     setState(() {
+                                    //       showSpinner = true;
+                                    //     });
+                                    //   } else {
+                                    //     return;
+                                    //   }
+
+                                    //   setState(() {
+                                    //     showSpinner = true;
+                                    //   });
+                                    //   result = await databaseHelper
+                                    //       .registerData(
+                                    //     _name,
+                                    //     _mobile,
+                                    //     _password, /*_confirmPass*/
+                                    //   )
+                                    //       .whenComplete(() {
+                                    //     if (databaseHelper.status) {
+                                    //       //databaseHelper.codest > 299
+                                    //       if (databaseHelper.connection) {
+                                    //         print('aassddff$result');
+                                    //         _alertDialog(
+                                    //             'aaaلا يوجد اتصال بالسيرفر');
+                                    //         setState(() {
+                                    //           showSpinner = false;
+                                    //         });
+                                    //       } else {
+                                    //         setState(() {
+                                    //           showSpinner = false;
+                                    //         });
+                                    //       }
+
+                                    //       // setState(() {
+                                    //       //   showSpinner = false;
+                                    //       // });
+                                    //       //_showDialog('تاكد من صحة البيانات');
+                                    //       msgStatus = 'Check email or password';
+                                    //       print(msgStatus);
+                                    //     } else {
+                                    //       // _showDialog();
+                                    //       Navigator.pushReplacementNamed(
+                                    //           context, '/login');
+                                    //     }
+                                    //     //-------
+                                    //   });
+                                    //   if (result.contains('taken')) {
+                                    //     _alertDialog('هذا الاسم موجود من قبل');
+                                    //     setState(() {
+                                    //       showSpinner = false;
+                                    //     });
+                                    //     return;
+                                    //   }
+                                    //   print('mmssdf$result');
+                                    // },
                                     onPressed: () {
                                       SystemChannels.textInput
                                           .invokeMethod('TextInput.hide');
@@ -376,32 +436,35 @@ class _RegisterPageState extends State<RegisterPage> {
                                         _password, /*_confirmPass*/
                                       )
                                           .whenComplete(() {
-                                        if (databaseHelper.status) {
-                                          //databaseHelper.codest > 299
-                                          if (databaseHelper.connection) {
-                                            _alertDialog(
-                                                'لا يوجد اتصال بالسيرفر');
-                                            setState(() {
-                                              showSpinner = false;
-                                            });
-                                          } else {
-                                            setState(() {
-                                              showSpinner = false;
-                                            });
-                                          }
-
-                                          // setState(() {
-                                          //   showSpinner = false;
-                                          // });
-                                          //_showDialog('تاكد من صحة البيانات');
-                                          msgStatus = 'Check email or password';
-                                          print(msgStatus);
-                                        } else {
-                                          // _showDialog();
+                                        if (databaseHelper.status == 'conEr') {
+                                          _alertDialog(
+                                              'لا يوجد اتصال بالسيرفر');
+                                          setState(() {
+                                            showSpinner = false;
+                                          });
+                                        } else if (databaseHelper.status ==
+                                            'taken') {
+                                          _alertDialog(
+                                              'اسم المستخدم موجود من قبل');
+                                          setState(() {
+                                            showSpinner = false;
+                                          });
+                                        } else if (databaseHelper.status ==
+                                            'Phone') {
+                                          _alertDialog(
+                                              'رقم الهاتف غير مسجل لدى مكة هاي فيد');
+                                          setState(() {
+                                            showSpinner = false;
+                                          });
+                                        } else if (databaseHelper.status ==
+                                            'con') {
+                                          setState(() {
+                                            showSpinner = false;
+                                          });
                                           Navigator.pushReplacementNamed(
                                               context, '/login');
                                         }
-                                        //-------
+                                        return;
                                       });
                                     },
                                     color: Color.fromRGBO(254, 88, 0, 1),
@@ -440,7 +503,7 @@ class _RegisterPageState extends State<RegisterPage> {
         animType: AnimType.RIGHSLIDE,
         headerAnimationLoop: false,
         title: 'خطاء في الاتصال',
-        desc: 'لا يوجد اتصال بالسيرفر حاول لاحقا',
+        desc: msg, //'يوجد اتصال بالسيرفر حاول لاحقا',
         btnOkOnPress: () {},
         btnOkIcon: Icons.cancel,
         btnOkColor: Colors.red)

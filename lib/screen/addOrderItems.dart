@@ -297,9 +297,12 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
         //     ),
         //   ),
         // ),
-        hint: Text(
-          'اختار حجم الشكارة',
-          style: TextStyle(color: Colors.white54),
+        hint: Padding(
+          padding: const EdgeInsets.only(left: 12.0),
+          child: Text(
+            'اختار حجم الشكارة',
+            style: TextStyle(color: Colors.white54),
+          ),
         ),
 
         dropdownColor: Colors.black87,
@@ -399,9 +402,12 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
           fontFamily: 'beIN',
           fontWeight: FontWeight.bold,
           fontSize: 16),
-      hint: Text(
-        'اختر عربية النقل',
-        style: TextStyle(color: Colors.white54, fontSize: 17),
+      hint: Padding(
+        padding: const EdgeInsets.only(left: 12.0),
+        child: Text(
+          'اختر عربية النقل',
+          style: TextStyle(color: Colors.white54, fontSize: 17),
+        ),
       ),
       dropdownColor: Colors.black87,
       elevation: 20,
@@ -418,7 +424,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
           _vanId = value;
 
           // prodval = value;
-          //productval = value;
+          // productval = value;
           // if (productval == 'كل المنتجات') {
           //   productval = '';
           // }

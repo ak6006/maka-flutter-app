@@ -289,8 +289,64 @@ class DatabaseHelper {
 
   //==================================================================
   //=================================================================
-  registerData(String name, String mobile,
-      String password /*,String confirmPass*/) async {
+  // registerData(String name, String mobile,
+  //     String password /*,String confirmPass*/) async {
+  //   var result;
+  //   try {
+  //     final result = await InternetAddress.lookup('google.com');
+  //     if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+  //       print('connected');
+  //     }
+  //   } on SocketException catch (_) {
+  //     print('not connected');
+  //     status = true;
+  //     connection = true;
+  //     return;
+  //   }
+
+  //   String myUrl = "$serverUrl/api/account/Register/";
+  //   codest = 0;
+  //   final response1 = await http.post(myUrl, headers: {
+  //     'Accept': 'application/json'
+  //   }, body: {
+  //     "UserName": "$name",
+  //     "PhoneNumber": "$mobile",
+  //     "password": "$password",
+  //     "ConfirmPassword": "$password",
+  //   }).then((response) {
+  //     codest = response.statusCode;
+  //     print('mmmmamr ${response.body}');
+  //     result = response.body;
+  //   }).timeout(
+  //     Duration(seconds: 10),
+  //     onTimeout: () {
+  //       connection = true;
+  //       status = true;
+
+  //       return null;
+  //     },
+  //   );
+  //   if (codest != 201) {
+  //     status = true;
+  //     if (result.contains('taken') || result.contains('phone')) {
+  //       connection = false;
+  //     } else
+  //       connection = true;
+
+  //     return result;
+  //   } else {
+  //     //connection = false;
+  //     if (result.contains('taken') || result.contains('phone')) {
+  //       connection = true;
+  //     } else
+  //       connection = false;
+  //     status = false;
+  //     return result;
+  //   }
+
+  //   print(codest);
+  // }
+  registerData(String name, String mobile, String password) async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -298,14 +354,14 @@ class DatabaseHelper {
       }
     } on SocketException catch (_) {
       print('not connected');
-      status = true;
-      connection = true;
-      return;
+      status = 'conEr';
+
+      return status;
     }
 
     String myUrl = "$serverUrl/api/account/Register/";
-    codest = 0;
-    final response1 = await http.post(myUrl, headers: {
+
+    await http.post(myUrl, headers: {
       'Accept': 'application/json'
     }, body: {
       "UserName": "$name",
@@ -313,27 +369,23 @@ class DatabaseHelper {
       "password": "$password",
       "ConfirmPassword": "$password",
     }).then((response) {
-      codest = response.statusCode;
+      if (response.body.contains('taken')) {
+        status = 'taken';
+      } else if (response.body.contains('Phone')) {
+        status = 'Phone';
+      } else
+        status = 'con';
+
       print(response.body);
     }).timeout(
       Duration(seconds: 10),
       onTimeout: () {
-        connection = true;
-        status = true;
+        status = 'conEr';
 
-        return null;
+        return status;
       },
     );
-    if (codest != 201) {
-      status = true;
-      connection = true;
-
-      return;
-    } else {
-      connection = false;
-      status = false;
-    }
-    print(codest);
+    return status;
   }
 
 //==========================================================

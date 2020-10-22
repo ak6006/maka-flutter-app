@@ -455,7 +455,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                         Text(
                                           snapshotdata.data.status ==
                                                   Status.COMPLETED
-                                              ? agentCustomerName //'مصر الفيوم'
+                                              ? agentCustomerName
+                                              //'مصر الفيوم'
                                               : 'تحميل...',
 
                                           //'عربات النقل'
