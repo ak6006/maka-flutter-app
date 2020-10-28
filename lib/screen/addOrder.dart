@@ -46,10 +46,10 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   String title = 'DropDownButton';
   var refreshkey = GlobalKey<RefreshIndicatorState>();
   String prodval;
-  int _prodId;
-  int _storId;
-  int _measureId;
-  int _weghtId;
+  // int _prodId;
+  // int _storId;
+  // int _measureId;
+  // int _weghtId;
   String productval = '';
   bool showSpinner = false;
   @override

@@ -191,11 +191,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                     if (value.isEmpty) {
                                       return '  كلمة السر لا يمكن ان تكون فارغة ';
                                     } else if (value.length < 6) {
-                                      return 'الرجاء التأكد من اسم المستخدم او كلمة السر';
-                                    } else if (!(value
-                                        .contains(new RegExp(r'[A-Z]')))) {
-                                      return 'كلمة السر يجب ان تحتوي على حرف كبير';
-                                    } else {
+                                      return 'كلمة السر يجب ان لا تقل عن 6 احرف';
+                                    }
+                                    // else if (!(value
+                                    //     .contains(new RegExp(r'[A-Z]')))) {
+                                    //   return 'كلمة السر يجب ان تحتوي على حرف كبير';
+                                    // }
+                                    else {
                                       return null;
                                     }
                                   },

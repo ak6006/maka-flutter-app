@@ -1,3 +1,4 @@
+import 'package:clippy_flutter/clippy_flutter.dart';
 import 'package:flutter/material.dart';
 
 class PasswordTextField extends StatefulWidget {
@@ -32,7 +33,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           fontSize: 16),
       obscureText: _obscure,
       decoration: InputDecoration(
-        hintText: "كلمة السر",
+        hintText: widget.label,
         hintStyle: TextStyle(color: Colors.white54),
         // labelText: "كلمة السر",
         fillColor: Colors.white,

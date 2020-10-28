@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:maka/screen/passwordcode.dart';
-import 'package:maka/screen/resetpassword.dart';
+import 'package:maka/screen/login.dart';
 
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'package:maka/utils/password_text_field.dart';
+import 'package:maka/utils/primary_number_field.dart';
 import 'package:maka/utils/primary_text_field.dart';
 import 'package:maka/utils/slideAnimations.dart';
 import 'package:maka/utils/speech.dart';
@@ -17,27 +17,29 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 //   SharedPreferences prefs = await SharedPreferences.getInstance();
 //   var _name = prefs.getString('email');
 //   print(_name);
-//   runApp(MaterialApp(home: _name == null ? LogIn() : MyHomePage()));
+//   runApp(MaterialApp(home: _name == null ? ResetPassWordScreen() : MyHomePage()));
 // }
 
-class LogIn extends StatefulWidget {
+class ResetPassWordScreen extends StatefulWidget {
   @override
-  _LogInState createState() => _LogInState();
+  _ResetPassWordScreenState createState() => _ResetPassWordScreenState();
 }
 
-class _LogInState extends State<LogIn> {
+class _ResetPassWordScreenState extends State<ResetPassWordScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   DatabaseHelper databaseHelper = new DatabaseHelper();
-  static String _name = '';
+  static String _code = '';
+  static String _mobile = '';
   static String _password = '';
   bool isValid;
   bool showSpinner = false;
 
+  final TextEditingController _phoneController = new TextEditingController();
+  final TextEditingController _codeController = new TextEditingController();
   final TextEditingController _passwordController = new TextEditingController();
-  final TextEditingController _usernameController = new TextEditingController();
 
-  // SharedPreferences logindata;
+  // SharedPreferences ResetPassWordScreendata;
   // bool newuser;
 
   @override
@@ -48,41 +50,10 @@ class _LogInState extends State<LogIn> {
 
   void initState() {
     // super.initState();
-    _name = '';
-    _password = '';
+    //_name = '';
+
     showSpinner = false;
-    // _usernameController.addListener(() {
-    //   _printLatestValueUser();
-    // });
-    // _printLatestValueUser();
-    //_printLatestValuePass();
-    //check_if_already_login();
-    //_passwordController.addListener(_printLatestValue);
-    readLogin();
   }
-
-  readLogin() async {
-    final prefs = await SharedPreferences.getInstance();
-    final keyUser = 'user';
-    final keyPass = 'pass';
-    //final keyPass = _passwordController;
-    final valueUser = prefs.get(keyUser) ?? '';
-    final valuePass = prefs.get(keyPass) ?? '';
-    print('read : $valueUser');
-    print('read : $valuePass');
-    _usernameController.text = valueUser;
-    _passwordController.text = valuePass;
-  }
-
-  // _printLatestValueUser() {
-  //   print("First text field: ${_name}");
-  //   // _usernameController.text = '';
-  // }
-
-  // _printLatestValuePass() {
-  //   print("Second text field: ${_password}");
-  //   // _passwordController.text = '';
-  // }
 
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -139,34 +110,76 @@ class _LogInState extends State<LogIn> {
                           ),
                           child: Image(
                             height: 30,
+                            image: AssetImage('assets/images/arrow.png'),
+                          ),
+                        ),
+                        PrimaryNumberField(
+                          label: 'موبايل',
+                          onChanged: (value) {
+                            _mobile = value.trim();
+                            //   isValid = EmailValidator.validate(_email);
+                          },
+                          validate: (String value) {
+                            //00000000000000
+                            //00000000000000000000
+                            if (value.isEmpty) {
+                              return '  يجب ادخال رقم الموبايل ';
+                            } else if (value.length < 6) {
+                              return 'كلمة السر يجب ان تكون اكبر';
+                            } else if ((value.contains(new RegExp(r'[A-Z]')))) {
+                              return 'الموبايل يقبل ارقام فقط';
+                            } else if ((value.contains(new RegExp(r'[a-z]')))) {
+                              return 'الموبايل يقبل ارقام فقط';
+                            } else {
+                              return null;
+                            }
+                          },
+                          controller: _phoneController,
+                        ),
+                      ],
+                    ),
+
+                    new Padding(
+                      padding: new EdgeInsets.only(top: size.height * 0.03),
+                    ),
+
+                    Stack(
+                      children: <Widget>[
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: size.width - 80,
+                            top: 10,
+                            right: 0,
+                            bottom: 0,
+                          ),
+                          child: Image(
+                            height: 30,
                             image: AssetImage('assets/images/log.png'),
                           ),
                         ),
-                        PrimaryTextField(
-                          label: 'اسم المستخدم',
+                        PrimaryNumberField(
+                          label: 'كود التفعيل',
                           onChanged: (value) {
-                            _name = value.trim();
+                            _code = value.trim();
                             print("First text field: $value");
                             //isValid = EmailValidator.validate(_email);
                           },
                           validate: (String value) {
                             if (value.isEmpty) {
-                              return 'الرجاء ادخال اسم المستخدم';
-                            } //else if (isValid == false) {
-                            //return 'Please enter a valid email';
-                            //}
-                            else {
+                              return 'الرجاء ادخال رمز التفعيل';
+                            } else if (value.length < 4) {
+                              return 'رمز التفعيل اربعة ارقام';
+                            } else {
                               return null;
                             }
                           },
-                          controller: _usernameController,
+                          controller: _codeController,
                         ),
                       ],
                     ),
-                    // SizedBox(height: 30,),
 
                     SizedBox(
-                      height: 30.0,
+                      height: 12.0,
                     ),
 
                     Stack(
@@ -184,7 +197,7 @@ class _LogInState extends State<LogIn> {
                           ),
                         ),
                         PasswordTextField(
-                          label: 'كلمة السر',
+                          label: 'كلمة السر الجديده',
                           onChanged: (value) {
                             _password = value.trim();
                           },
@@ -202,10 +215,6 @@ class _LogInState extends State<LogIn> {
                       ],
                     ),
 
-                    new Padding(
-                      padding: new EdgeInsets.only(top: size.height * 0.01),
-                    ),
-
                     Container(
                       margin: EdgeInsets.fromLTRB(20, 50, 0, 0),
                       child: Row(
@@ -217,12 +226,12 @@ class _LogInState extends State<LogIn> {
                             width: 140,
                             child: new FlatButton(
                               onPressed: () {
-                                Navigator.pushReplacementNamed(
-                                    context, '/register');
+                                Navigator.push(
+                                    context, SlideRightRoute(page: LogIn()));
                               },
                               color: Color.fromRGBO(254, 88, 0, 1),
                               child: new Text(
-                                ' تسجيل حساب جديد',
+                                ' تسجيل دخول',
                                 ////  tasgeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeel gdeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed
                                 style: new TextStyle(
                                   color: Colors.white,
@@ -253,39 +262,64 @@ class _LogInState extends State<LogIn> {
                                   });
                                 }
                                 databaseHelper
-                                    .loginData(_usernameController.text,
+                                    .resetpassword(
+                                        _phoneController.text,
+                                        _codeController.text,
                                         _passwordController.text)
                                     .whenComplete(
                                   () async {
-                                    _name = _usernameController.text;
-                                    _password = _passwordController.text;
+                                    // _name = _usernameController.text;
+                                    _mobile = _phoneController.text;
                                     if (databaseHelper.status == 'conEr') {
                                       _alertDialog('لا يوجد اتصال بالسيرفر');
                                       setState(() {
                                         showSpinner = false;
                                       });
                                     } else if (databaseHelper.status ==
-                                        'error') {
+                                        'expierd') {
                                       _alertDialog(
-                                          'اسم المستخدم او كلمة السر خطاء');
+                                          'رمز التفعيل انتهت مده الصلاحية');
                                       setState(() {
                                         showSpinner = false;
                                       });
-                                    } else if (databaseHelper.status == 'con') {
+                                    } else if (databaseHelper.status ==
+                                        'Phone') {
+                                      _alertDialog('رقم الهاتف غير صحيح');
                                       setState(() {
                                         showSpinner = false;
                                       });
-
-                                      await initSpeechState();
-                                      await databaseHelper.saveUserData(
-                                          _usernameController.text,
-                                          _passwordController.text);
-                                      if (datastate == false) {
-                                        blocData.fetchdata();
-                                      }
-
-                                      Navigator.pushReplacementNamed(
-                                          context, '/dashboard');
+                                    } else if (databaseHelper.status ==
+                                        'Code') {
+                                      _alertDialog('كود التفعيل غير صحيح');
+                                      setState(() {
+                                        showSpinner = false;
+                                      });
+                                    } else if (databaseHelper.status ==
+                                        'Done') {
+                                      setState(() {
+                                        showSpinner = false;
+                                      });
+                                      // alertDialog(
+                                      //     DialogType.SUCCES,
+                                      //     context,
+                                      //     '',
+                                      //     'تم تغيير كلمة السر بنجاح',
+                                      //     Icons.add,
+                                      //     Colors.green);
+                                      AwesomeDialog(
+                                          context: context,
+                                          dialogType: DialogType.SUCCES,
+                                          animType: AnimType.RIGHSLIDE,
+                                          headerAnimationLoop: false,
+                                          title: 'تمت بنجاح',
+                                          desc: 'تم تغيير كلمة السر بنجاح',
+                                          btnOkOnPress: () {
+                                            Navigator.push(context,
+                                                SlideRightRoute(page: LogIn()));
+                                          },
+                                          btnOkIcon: Icons.add,
+                                          btnOkColor: Colors.green)
+                                        ..show();
                                     }
                                     return;
 
@@ -329,7 +363,7 @@ class _LogInState extends State<LogIn> {
                               child: Container(
                                 // width: size.width * 0.1,
                                 child: new Text(
-                                  'دخول',
+                                  'استعادة كلمة السر',
 
                                   /// d5oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolllll
                                   style: new TextStyle(
@@ -346,28 +380,9 @@ class _LogInState extends State<LogIn> {
                     ),
 
                     //000000000000000000000000
-                    new Padding(
-                      padding: new EdgeInsets.only(top: size.height * 0.05),
-                    ),
-
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(context,
-                            SlideRightRoute(page: PasswordCodeScreen()));
-                      },
-                      child: Container(
-                        child: Text(
-                          'نسيت كلمة السر',
-
-                          /// d5oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolllll
-                          style: new TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'beIN',
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // new Padding(
+                    //   padding: new EdgeInsets.only(top: size.height * 0.05),
+                    // ),
                   ],
                 ),
               ),
@@ -384,7 +399,7 @@ class _LogInState extends State<LogIn> {
         dialogType: DialogType.ERROR,
         animType: AnimType.RIGHSLIDE,
         headerAnimationLoop: false,
-        title: 'خطاء في الاتصال',
+        title: 'خطاء  ',
         desc: msg, //'يوجد اتصال بالسيرفر حاول لاحقا',
         btnOkOnPress: () {},
         btnOkIcon: Icons.cancel,
@@ -422,9 +437,9 @@ class _LogInState extends State<LogIn> {
         });
   }
 
-  // void check_if_already_login() async {
-  //   logindata = await SharedPreferences.getInstance();
-  //   newuser = (logindata.getBool('login') ?? true);
+  // void check_if_already_ResetPassWordScreen() async {
+  //   ResetPassWordScreendata = await SharedPreferences.getInstance();
+  //   newuser = (ResetPassWordScreendata.getBool('ResetPassWordScreen') ?? true);
   //   print(newuser);
   //   if (newuser == false) {
   //     Navigator.pushReplacement(

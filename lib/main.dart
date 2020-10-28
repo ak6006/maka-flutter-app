@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -45,6 +48,7 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
+  Timer _timer;
   @override
   void initState() {
     super.initState();
@@ -52,11 +56,17 @@ class _MyAppState extends State<MyApp> {
 
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
+        // var data = json.decode(message.toString());
+        print("onMessage: xxxxxxx${message}"); //["notification"]["body"]
+        if (message["notification"]["body"].length == 4) {
+          //  print("ggggggggggg");
+
+          passwordCode = message["notification"]["body"];
+        }
         final notification = message['notification'];
         FlutterLocalNotificationsPlugin flp = FlutterLocalNotificationsPlugin();
         var android =
-            AndroidInitializationSettings('@mipmap-xhdpi/ic_launcher.png');
+            AndroidInitializationSettings('assets/images/ic_launcher.png');
         var iOS = IOSInitializationSettings();
         var initSetttings = InitializationSettings(android, iOS);
         flp.initialize(initSetttings);
@@ -69,17 +79,50 @@ class _MyAppState extends State<MyApp> {
         final notification = message['data'];
       },
       onResume: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
+        print("onMessage:aaaaaaaa $message");
         final notification = message['notification'];
       },
     );
 
     _firebaseMessaging.requestNotificationPermissions(
         const IosNotificationSettings(sound: true, badge: true, alert: true));
+
+    _initializeTimer();
+  }
+
+  void _initializeTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 3), (_) => _logOutUser());
+
+    print('intializeTimer');
+  }
+
+  void _logOutUser() {
+    // Navigator.of(ContextClass.CONTEXT)
+    //     .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => true);
+    //Navigator.pushReplacementNamed(context, '/MyHomePage');
+    // Log out the user if they're logged in, then cancel the timer.
+    // You'll have to make sure to cancel the timer if the user manually logs out
+    // and to call _initializeTimer once the user logs in
+    print('timer execution');
+
+    _timer.cancel();
+  }
+
+  // You'll probably want to wrap this function in a debounce
+  void _handleUserInteraction([_]) {
+    print('interaction');
+    if (!_timer.isActive) {
+      // This means the user has been logged out
+      return;
+    }
+
+    _timer.cancel();
+    _initializeTimer();
   }
 
   @override
   Widget build(BuildContext context) {
+    ContextClass.CONTEXT = context;
     currentcontext = context;
     return
         // ChangeNotifierProvider<DataProvider>(
@@ -93,34 +136,44 @@ class _MyAppState extends State<MyApp> {
             stream: blocData.datastream,
             builder: (context, snapshot) {
               snapshotdata = snapshot;
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                title: 'Maka High Feed',
-                theme: ThemeData(
-                  primarySwatch: Colors.deepOrange,
-                  fontFamily: 'Roboto',
+              return GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: _handleUserInteraction,
+                onPanDown: _handleUserInteraction,
+                onScaleStart: _handleUserInteraction,
+                child: MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  title: 'Maka High Feed',
+                  theme: ThemeData(
+                    primarySwatch: Colors.deepOrange,
+                    fontFamily: 'Roboto',
+                  ),
+                  home: Splash(),
+                  // home: QrCode(
+                  //   qr: 'السريال' +
+                  //       '\n' +
+                  //       '127665443243353354' +
+                  //       '\n' +
+                  //       'تاريخ الانتاج' +
+                  //       '\n' +
+                  //       '8/7/2020',
+                  // ), //MyHomePage(),
+                  routes: <String, WidgetBuilder>{
+                    '/dashboard': (BuildContext context) => new DashBoardPage(),
+                    '/vinpage': (BuildContext context) => new VinPage(),
+                    '/MyHomePage': (BuildContext context) => new MyHomePage(),
+                    '/register': (BuildContext context) => new RegisterPage(),
+                    '/login': (BuildContext context) => new LogIn(),
+                    '/FeedPrices': (BuildContext context) => new FeedPrices(),
+                    '/giftscreen': (BuildContext context) =>
+                        new GiftDashBoardScreen(),
+                  },
                 ),
-                home: Splash(),
-                // home: QrCode(
-                //   qr: 'السريال' +
-                //       '\n' +
-                //       '127665443243353354' +
-                //       '\n' +
-                //       'تاريخ الانتاج' +
-                //       '\n' +
-                //       '8/7/2020',
-                // ), //MyHomePage(),
-                routes: <String, WidgetBuilder>{
-                  '/dashboard': (BuildContext context) => new DashBoardPage(),
-                  '/vinpage': (BuildContext context) => new VinPage(),
-                  '/MyHomePage': (BuildContext context) => new MyHomePage(),
-                  '/register': (BuildContext context) => new RegisterPage(),
-                  '/login': (BuildContext context) => new LogIn(),
-                  '/FeedPrices': (BuildContext context) => new FeedPrices(),
-                  '/giftscreen': (BuildContext context) =>
-                      new GiftDashBoardScreen(),
-                },
               );
             });
   }
+}
+
+class ContextClass {
+  static BuildContext CONTEXT;
 }

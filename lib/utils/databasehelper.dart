@@ -40,6 +40,117 @@ class DatabaseHelper {
     }
   }
 
+  passwordCode(String phone) async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      // status = true;
+      // connection = true;
+      status = 'conEr';
+      return;
+    }
+    String myUrl = "$serverUrl/api/account/PassWordCode?PhoneNumber=$phone";
+    final response = await http
+        .post(myUrl, headers: {'Accept': 'application/json'}).then((response) {
+      if (response.body.contains('invalid888888  ')) {
+        status = 'error';
+      } else
+        status = 'con';
+      print('valvalval${response.body}');
+      return response.body;
+    }).timeout(
+      Duration(seconds: 10),
+      onTimeout: () {
+        // status = true;
+        // connection = true;
+        status = 'conEr';
+        return null;
+      },
+    );
+    // if (response == null) {
+    //   status = true;
+    //   connection = true;
+    //   return;
+    // } else {
+    //   connection = false;
+    // }
+
+    // status = response.body.contains('error');
+
+    // var data = json.decode(response.body);
+
+    // if (status) {
+
+    // } else {
+    //   stateMsg = data["new_password"];
+
+    // }
+  }
+
+  resetpassword(String phone, String code, String password) async {
+    try {
+      final result = await InternetAddress.lookup('google.com');
+      if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
+        print('connected');
+      }
+    } on SocketException catch (_) {
+      print('not connected');
+      // status = true;
+      // connection = true;
+      status = 'conEr';
+      return;
+    }
+    String myUrl = "$serverUrl/api/Account/ChangePassword";
+    final response = await http.post(myUrl, headers: {
+      'Accept': 'application/json'
+    }, body: {
+      "Phone": "$phone",
+      "Code": "$code",
+      "Password": "$password"
+    }).then((response) {
+      print("fasfas : ${response.body}");
+      if (response.body.contains('expierd')) {
+        status = 'expierd';
+      } else if (response.body.contains('Phone')) {
+        status = 'Phone';
+      } else if (response.body.contains('Code')) {
+        status = 'Code';
+      } else if (response.body.contains('Done')) {
+        status = 'Done';
+      }
+    }).timeout(
+      Duration(seconds: 10),
+      onTimeout: () {
+        // status = true;
+        // connection = true;
+        status = 'conEr';
+        return null;
+      },
+    );
+    // if (response == null) {
+    //   status = true;
+    //   connection = true;
+    //   return;
+    // } else {
+    //   connection = false;
+    // }
+
+    // status = response.body.contains('error');
+
+    // var data = json.decode(response.body);
+
+    // if (status) {
+
+    // } else {
+    //   stateMsg = data["new_password"];
+
+    // }
+  }
+
   loginData(String name, String password) async {
     try {
       final result = await InternetAddress.lookup('google.com');
@@ -48,48 +159,73 @@ class DatabaseHelper {
       }
     } on SocketException catch (_) {
       print('not connected');
-      status = true;
-      connection = true;
+      // status = true;
+      // connection = true;
+      status = 'conEr';
       return;
     }
     String myUrl = "$serverUrl/login";
-    final response = await http.post(myUrl, headers: {
+    var response;
+    await http.post(myUrl, headers: {
       'Accept': 'application/json'
     }, body: {
       "UserName": "$name",
       "password": "$password",
       "grant_type": "password"
+    }).then((responseE) {
+      print(responseE.body);
+
+      response = responseE;
+
+      if (responseE.body.contains('error')) {
+        status = 'error';
+      } else {
+        status = 'con';
+        var data = json.decode(response.body);
+        print('rolssssssss : ${data["roles"]}');
+        if (data['roles'] == '["Customer"]') {
+          customerRoles = true;
+        } else
+          customerRoles = false;
+
+        print(customerRoles);
+      }
+      //return responseE;
     }).timeout(
       Duration(seconds: 10),
       onTimeout: () {
-        status = true;
-        connection = true;
-
+        // status = true;
+        // connection = true;
+        status = 'conEr';
         return null;
       },
     );
-    if (response == null) {
-      status = true;
-      connection = true;
-      return;
-    } else {
-      connection = false;
-    }
+    // print(response);
+    // if (response == null) {
+    //   status = true;
+    //   connection = true;
+    //   return;
+    // } else {
+    //   connection = false;
+    // }
+    // return;
 
-    status = response.body.contains('error');
+    bool statusv = response.body.contains('error');
 
     var data = json.decode(response.body);
 
-    if (status) {
+    if (statusv) {
       print('data : ${data["error_description"]}');
       stateMsg = data["error_description"];
     } else {
       final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
       await _save(data["access_token"]);
+      mToken = data["access_token"];
       _firebaseMessaging.getToken().then((value) {
         setFirebaseToken(value);
       });
     }
+    print('mmmmmmmmm$status');
   }
 
   Future<bool> isLoggedIn() async {

@@ -17,7 +17,7 @@ class _MessagingWidgetState extends State<MessagingWidget> {
     print(_firebaseMessaging.getToken());
     _firebaseMessaging.configure(
       onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
+        print("onMessage:wwwwwwwwwwww $message");
 
         final notification = message['notification'];
         setState(() {

@@ -15,6 +15,9 @@ AsyncSnapshot snapshotdata;
 DataBloc blocData;
 bool datastate = false;
 BuildContext currentcontext;
+String mToken;
+String passwordCode = '';
+var customerRoles;
 
 //StreamSubscription<ApiResponse<DropDownList>> streamSubscription;
 String agentCustomerName;

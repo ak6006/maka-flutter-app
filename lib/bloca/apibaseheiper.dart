@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:maka/bloca/appexcepcetion.dart';
+import 'package:maka/utils/constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiBaseHelper {
@@ -14,7 +15,7 @@ class ApiBaseHelper {
     try {
       final response = await http.get(url, headers: {
         'Accept': 'application/json',
-        'Authorization': 'bearer $value'
+        'Authorization': 'bearer $mToken'
       });
       responseJson = _returnResponse(response);
     } on SocketException {
