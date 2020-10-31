@@ -151,11 +151,11 @@ class _FilterScreenPageState extends State<FilterScreenPage> {
                       productval.toString());
                   var result1 = await Connectivity().checkConnectivity();
                   if (result1 == ConnectivityResult.none) {
-                    alertDialog(DialogType.ERROR, context, 'خطاء في الاتصال',
+                    alertDialog(DialogType.ERROR, context, 'خطأ في الاتصال',
                         'لا يوجد اتصال بالسرفر', Icons.cancel, Colors.red);
                   }
                   // else if (result1 == ConnectivityResult.mobile) {
-                  //   alertDialog(DialogType.ERROR, context, 'خطاء في الاتصال',
+                  //   alertDialog(DialogType.ERROR, context, 'خطأ في الاتصال',
                   //       'انت متصل علي شبكة الموبايل', Icons.cancel, Colors.red);
                   // }
                   // else if (result == ConnectivityResult.wifi) {

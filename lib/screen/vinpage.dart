@@ -167,7 +167,7 @@ class _VinPageState extends State<VinPage> {
                                 alertDialog(
                                     DialogType.ERROR,
                                     context,
-                                    'خطاء في الاتصال',
+                                    'خطأ في الاتصال',
                                     'لا يوجد اتصال بالسرفر',
                                     Icons.cancel,
                                     Colors.red);
@@ -176,7 +176,7 @@ class _VinPageState extends State<VinPage> {
                               //   alertDialog(
                               //       DialogType.ERROR,
                               //       context,
-                              //       'خطاء في الاتصال',
+                              //       'خطأ في الاتصال',
                               //       'لا يوجد اتصال بالسرفر',
                               //       Icons.cancel,
                               //       Colors.red);

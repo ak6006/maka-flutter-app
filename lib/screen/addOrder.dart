@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -39,6 +40,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   //DateTime timeEndSelected;
   // DataPicker begin;
   //DataPicker end;
+  Timer _timer;
   DatabaseHelper databaseHelper = new DatabaseHelper();
   List<OrderQuantitySumQuery> orderquantitysumquery;
   DateTime timeEndSelected;
@@ -89,8 +91,38 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
 
     //refreshList();
     //print('refresheddd');
+    _initializeTimer();
   }
 
+  void _initializeTimer() {
+    _timer = Timer.periodic(const Duration(minutes: 20), (_) => _logOutUser());
+    //print('intializeTimer');
+  }
+
+  void _logOutUser() {
+    // Navigator.of(ContextClass.CONTEXT)
+    //     .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => true);
+
+    Navigator.pushReplacementNamed(context, '/MyHomePage');
+
+    // Log out the user if they're logged in, then cancel the timer.
+    // You'll have to make sure to cancel the timer if the user manually logs out
+    //   and to call _initializeTimer once the user logs in
+    //print('timer execution');
+    _timer.cancel();
+  }
+
+  // You'll probably want to wrap this function in a debounce
+  void _handleUserInteraction([_]) {
+    //print('interaction');
+    if (!_timer.isActive) {
+      // This means the user has been logged out
+      return;
+    }
+
+    _timer.cancel();
+    _initializeTimer();
+  }
   // Future<Null> refreshList() async {
   //   refreshkey.currentState?.show(atTop: false);
   //   await Future.delayed(Duration(seconds: 1));
@@ -259,13 +291,14 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                               width: 120,
                               child: new FlatButton(
                                 onPressed: () async {
+                                  _handleUserInteraction();
                                   var result1 =
                                       await Connectivity().checkConnectivity();
                                   if (result1 == ConnectivityResult.none) {
                                     alertDialog(
                                         DialogType.ERROR,
                                         context,
-                                        'خطاء في الاتصال',
+                                        'خطأ في الاتصال',
                                         'لا يوجد اتصال بالسرفر',
                                         Icons.cancel,
                                         Colors.red);

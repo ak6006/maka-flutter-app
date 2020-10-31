@@ -230,7 +230,7 @@ class _AddVanScreenState extends State<AddVanScreen> {
                                     alertDialog(
                                         DialogType.ERROR,
                                         context,
-                                        'خطاء في الاتصال',
+                                        'خطأ في الاتصال',
                                         'لا يوجد اتصال بالسرفر',
                                         Icons.cancel,
                                         Colors.red);

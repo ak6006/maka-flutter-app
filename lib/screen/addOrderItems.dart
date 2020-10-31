@@ -89,7 +89,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                   alignment: Alignment.center,
                   color: Color.fromRGBO(254, 88, 0, 1),
                   child: new Text(
-                    'اضافة طلبية جديده',
+                    'اضافة طلبية جديدة',
                     style: new TextStyle(
                       color: Colors.white,
                       fontFamily: 'beIN',
@@ -300,7 +300,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
         hint: Padding(
           padding: const EdgeInsets.only(left: 12.0),
           child: Text(
-            'اختار حجم الشكارة',
+            'اختر حجم الشكارة',
             style: TextStyle(color: Colors.white54),
           ),
         ),

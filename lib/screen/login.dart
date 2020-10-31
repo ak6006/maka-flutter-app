@@ -267,7 +267,7 @@ class _LogInState extends State<LogIn> {
                                     } else if (databaseHelper.status ==
                                         'error') {
                                       _alertDialog(
-                                          'اسم المستخدم او كلمة السر خطاء');
+                                          'اسم المستخدم او كلمة السر خطأ');
                                       setState(() {
                                         showSpinner = false;
                                       });
@@ -294,7 +294,7 @@ class _LogInState extends State<LogIn> {
                                     //     alertDialog(
                                     //         DialogType.ERROR,
                                     //         context,
-                                    //         'خطاء في الاتصال',
+                                    //         'خطأ في الاتصال',
                                     //         'لا يوجد اتصال بالسرفر',
                                     //         Icons.cancel,
                                     //         Colors.red);
@@ -357,11 +357,11 @@ class _LogInState extends State<LogIn> {
                       },
                       child: Container(
                         child: Text(
-                          'نسيت كلمة السر',
+                          'هل نسيت كلمة السر ؟ ',
 
                           /// d5oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolllll
                           style: new TextStyle(
-                            color: Colors.white,
+                            color: Colors.grey,
                             fontFamily: 'beIN',
                             fontWeight: FontWeight.bold,
                           ),
@@ -384,7 +384,7 @@ class _LogInState extends State<LogIn> {
         dialogType: DialogType.ERROR,
         animType: AnimType.RIGHSLIDE,
         headerAnimationLoop: false,
-        title: 'خطاء في الاتصال',
+        title: 'خطأ في الاتصال',
         desc: msg, //'يوجد اتصال بالسيرفر حاول لاحقا',
         btnOkOnPress: () {},
         btnOkIcon: Icons.cancel,

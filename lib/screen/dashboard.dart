@@ -90,14 +90,11 @@ class _DashBoardPageState extends State<DashBoardPage> {
   }
 
   void _initializeTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 6), (_) => _logOutUser());
+    _timer = Timer.periodic(const Duration(minutes: 20), (_) => _logOutUser());
     //print('intializeTimer');
   }
 
   void _logOutUser() {
-    // Navigator.pushReplacement(
-    //     context, MaterialPageRoute(builder: (BuildContext context) => LogIn()));
-
     // Navigator.of(ContextClass.CONTEXT)
     //     .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => true);
 
@@ -550,7 +547,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   //   alertDialog(
                                   //       DialogType.ERROR,
                                   //       context,
-                                  //       'خطاء في الاتصال',
+                                  //       'خطأ في الاتصال',
                                   //       'لا يوجد اتصال بالسرفر',
                                   //       Icons.cancel,
                                   //       Colors.red);

@@ -228,7 +228,7 @@ class _ManualScanScreenState extends State<ManualScanScreen> {
                                   // alertDialog(
                                   //     DialogType.ERROR,
                                   //     context,
-                                  //     'خطاء في الاتصال',
+                                  //     'خطأ في الاتصال',
                                   //     'لا يوجد اتصال بالسرفر',
                                   //     Icons.cancel,
                                   //     Colors.red);

@@ -102,8 +102,10 @@ class _ScanDashBoardScreenState extends State<ScanDashBoardScreen> {
                           borderRadius: BorderRadius.circular(5),
                         ),
                         // color: Color.fromRGBO(254, 88, 0, 1),
-                        height: 50, //size.height * 0.07,
-                        width: 220, //size.width * 0.7,
+                        height: //50,
+                            size.height * 0.06,
+                        width: // 250,
+                            size.width * 0.63,
                         child: Row(
                           children: <Widget>[
                             SizedBox(
@@ -197,7 +199,7 @@ class _ScanDashBoardScreenState extends State<ScanDashBoardScreen> {
                                     alertDialog(
                                         DialogType.ERROR,
                                         context,
-                                        'خطاء في الاتصال',
+                                        'خطأ في الاتصال',
                                         'لا يوجد اتصال بالسرفر',
                                         Icons.cancel,
                                         Colors.red);
@@ -212,7 +214,7 @@ class _ScanDashBoardScreenState extends State<ScanDashBoardScreen> {
                                       alertDialog(
                                           DialogType.ERROR,
                                           context,
-                                          'خطاء في السريال ',
+                                          'خطأ في السريال ',
                                           'هذه السريال ليس لمكة هاي فيد',
                                           Icons.cancel,
                                           Colors.red);

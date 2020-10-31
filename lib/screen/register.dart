@@ -504,7 +504,7 @@ class _RegisterPageState extends State<RegisterPage> {
         dialogType: DialogType.ERROR,
         animType: AnimType.RIGHSLIDE,
         headerAnimationLoop: false,
-        title: 'خطاء في الاتصال',
+        title: 'خطأ في الاتصال',
         desc: msg, //'يوجد اتصال بالسيرفر حاول لاحقا',
         btnOkOnPress: () {},
         btnOkIcon: Icons.cancel,
