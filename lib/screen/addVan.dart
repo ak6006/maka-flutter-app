@@ -9,6 +9,8 @@ import 'package:maka/utils/primary_number_field.dart';
 import 'package:maka/utils/primary_text_field.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 
+import 'dashboard.dart';
+
 class AddVanScreen extends StatefulWidget {
   @override
   _AddVanScreenState createState() => _AddVanScreenState();
@@ -260,6 +262,12 @@ class _AddVanScreenState extends State<AddVanScreen> {
                                         //  await inislizedata();
                                         //++++++++++++++++++++++++++++++++++++++++++
                                         blocData.fetchdata();
+
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DashBoardPage()));
                                         alertDialog(
                                             DialogType.SUCCES,
                                             context,
@@ -267,11 +275,6 @@ class _AddVanScreenState extends State<AddVanScreen> {
                                             '',
                                             Icons.add,
                                             Colors.green);
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             DashBoardPage()));
                                       } else {
                                         alertDialog(
                                             DialogType.ERROR,

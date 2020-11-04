@@ -143,7 +143,7 @@ class _VinPageState extends State<VinPage> {
                                 margin: EdgeInsets.fromLTRB(
                                     size.width * 0.1, 0, size.width * 0.01, 0),
                                 child: Text(
-                                  'طلبيات عربية نقل',
+                                  'فحص عربية نقل ',
                                   style: TextStyle(
                                       color: Color.fromRGBO(255, 255, 255, 1),
                                       fontFamily: 'beIN',

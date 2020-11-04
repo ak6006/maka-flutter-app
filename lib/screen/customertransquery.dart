@@ -258,7 +258,7 @@ class _CustomerTransPageState extends State<CustomerTransPage> {
                   ),
                   Wrow(
                     lable: "الكمية",
-                    val: customertransquery[i].quantity,
+                    val: customertransquery[i].quantity.toString(),
                   ),
                   Wrow(
                     lable: "وحدة القياس",

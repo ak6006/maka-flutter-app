@@ -33,7 +33,7 @@ class QueryBarCode {
   String productName;
   int weightNet;
   String barcodeSerialNumber;
-  String quantity;
+  double quantity;
   String measreName;
 
   factory QueryBarCode.fromJson(Map<String, dynamic> json) => QueryBarCode(
@@ -58,7 +58,9 @@ class QueryBarCode {
         barcodeSerialNumber: json["barcode_serialNumber"] == null
             ? null
             : json["barcode_serialNumber"],
-        quantity: json["Quantity"] == null ? null : json["Quantity"],
+        quantity: json["Quantity"] == null
+            ? null
+            : double.parse(json["Quantity"].toString()),
         measreName: json["measre_name"] == null ? null : json["measre_name"],
       );
 

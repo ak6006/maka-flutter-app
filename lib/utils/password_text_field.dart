@@ -35,7 +35,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       decoration: InputDecoration(
         hintText: widget.label,
         hintStyle: TextStyle(color: Colors.white54),
-        // labelText: "كلمة السر",
+       //  labelText: "كلمة السر",
         fillColor: Colors.white,
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15.0),

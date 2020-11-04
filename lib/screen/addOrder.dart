@@ -103,7 +103,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
     // Navigator.of(ContextClass.CONTEXT)
     //     .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => true);
 
-    Navigator.pushReplacementNamed(context, '/MyHomePage');
+  //  Navigator.pushReplacementNamed(context, '/MyHomePage');
 
     // Log out the user if they're logged in, then cancel the timer.
     // You'll have to make sure to cancel the timer if the user manually logs out
@@ -475,11 +475,11 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
   Container productSlideImage(BuildContext context) {
     final size = MediaQuery.of(context).size;
     return Container(
-      height: size.height * 0.22,
+      height: size.height * 0.5,
       width: MediaQuery.of(context).size.width,
       child: CarouselSlider(
         options: CarouselOptions(
-          height: 400.0,
+          height: 500.0,
           autoPlay: true, // widget.autoplay,
           aspectRatio: 16 / 9,
           autoPlayInterval: Duration(seconds: 2),

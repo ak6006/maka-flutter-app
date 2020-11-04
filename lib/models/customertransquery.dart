@@ -26,7 +26,7 @@ class CustomerTransQuery {
   String transVehcileDriverName;
   String transVehcileNum;
   String productName;
-  String quantity;
+  double quantity;
   String measreName;
   int orderHasProductState;
   DateTime orderHasProductInDate;
@@ -42,7 +42,9 @@ class CustomerTransQuery {
         transVehcileNum:
             json["transVehcile_num"] == null ? null : json["transVehcile_num"],
         productName: json["productName"] == null ? null : json["productName"],
-        quantity: json["Quantity"] == null ? null : json["Quantity"],
+        quantity: json["Quantity"] == null
+            ? null
+            : double.parse(json["Quantity"].toString()),
         measreName: json["measre_name"] == null ? null : json["measre_name"],
         orderHasProductState: json["order_has_product_state"] == null
             ? null

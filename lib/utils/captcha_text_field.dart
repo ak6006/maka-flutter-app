@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
-class PrimaryNumberField extends StatelessWidget {
+class CaptchaTextField extends StatelessWidget {
   final Function onChanged;
   final String label;
   final Function validate;
@@ -9,33 +8,28 @@ class PrimaryNumberField extends StatelessWidget {
   //final String onSaved;
   FormFieldSetter<String> onSaved;
   final bool expandable;
-  //final TextInputType;
+  final TextInputType;
 
-  PrimaryNumberField({
-    @required this.label,
-    this.onChanged,
-    this.validate,
-    this.onSaved,
-    this.expandable = false,
-    this.controller,
-    //this.TextInputType.number
-  });
+  CaptchaTextField(
+      {@required this.label,
+      this.onChanged,
+      this.validate,
+      this.onSaved,
+      this.expandable = false,
+      this.controller,
+      this.TextInputType});
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return TextFormField(
       controller: controller,
       style: TextStyle(
-          height: 0.5,
+          height: 1.7,
           color: Colors.white,
           fontFamily: 'beIN',
           fontWeight: FontWeight.bold,
           fontSize: 16),
-      keyboardType: TextInputType.numberWithOptions(decimal: true),
-      inputFormatters: <TextInputFormatter>[
-        FilteringTextInputFormatter.singleLineFormatter
-      ], // Only numbers can be entered
+      keyboardType: TextInputType,
       expands: expandable,
       maxLines: expandable ? null : 1,
       textAlignVertical: TextAlignVertical.top,

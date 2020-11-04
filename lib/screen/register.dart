@@ -2,7 +2,9 @@ import 'dart:math';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:maka/utils/captcha_text_field.dart';
 import 'package:maka/utils/confirm_pass_text_field.dart';
+import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'package:maka/utils/password_text_field.dart';
 import 'package:maka/utils/primary_number_field.dart';
@@ -15,6 +17,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
+  String tem = "";
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static String _name;
   static String _mobile;
@@ -151,7 +154,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     if (value.isEmpty) {
                                       return '  يجب ادخال رقم الموبايل ';
                                     } else if (value.length < 6) {
-                                      return 'كلمة السر يجب ان تكون اكبر';
+                                      return 'ادخل رقم تليفون صحيح';
                                     } else if ((value
                                         .contains(new RegExp(r'[A-Z]')))) {
                                       return 'الموبايل يقبل ارقام فقط';
@@ -183,7 +186,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                 ),
                                 PasswordTextField(
-                                  label: '',
+                                  label: 'كلمة السر',
                                   onChanged: (value) {
                                     _password = value.trim();
                                   },
@@ -293,9 +296,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                     right: size.width - 220,
                                     bottom: 0,
                                   ),
-                                  child: PrimaryTextField(
-                                    label:
-                                        'اكتب رمز التحقق الموجود على يمين الحقل',
+                                  child: CaptchaTextField(
+                                    label: 'اكتب رمز التحقق علي اليمين',
                                     onChanged: (value) {
                                       _verCode = value.trim();
                                       //   isValid = EmailValidator.validate(_email);
@@ -321,39 +323,14 @@ class _RegisterPageState extends State<RegisterPage> {
                             new Padding(
                               padding: new EdgeInsets.only(top: 30.0),
                             ),
-                            Row(
+                            Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Container(
-                                  height: 35,
-                                  width: 140,
-                                  child: new FlatButton(
-                                    onPressed: () {
-                                      Navigator.pushReplacementNamed(
-                                          context, '/login');
-                                    },
-                                    color: Color.fromRGBO(254, 88, 0, 1),
-                                    child: Container(
-                                      width: size.width * 0.6,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            left: size.width * 0.09),
-                                        child: new Text(
-                                          'دخول',
-                                          style: new TextStyle(
-                                            color: Colors.white,
-                                            fontFamily: 'beIN',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
                                 new Padding(
                                   padding: new EdgeInsets.only(right: 10.0),
                                 ),
                                 Container(
-                                  height: 35,
+                                  height: 45,
                                   width: 140,
                                   child: new FlatButton(
                                     // onPressed: () async {
@@ -454,7 +431,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                         } else if (databaseHelper.status ==
                                             'Phone') {
                                           _alertDialog(
-                                              'رقم الهاتف غير مسجل لدى مكة هاي فيد');
+                                              'رقم الهاتف مسجل من قبل');
                                           setState(() {
                                             showSpinner = false;
                                           });
@@ -463,8 +440,35 @@ class _RegisterPageState extends State<RegisterPage> {
                                           setState(() {
                                             showSpinner = false;
                                           });
-                                          Navigator.pushReplacementNamed(
-                                              context, '/login');
+                                          setState(() {
+                                            tem = 'تم التسجيل بنجاح';
+                                          });
+                                          Future.delayed(
+                                              const Duration(
+                                                  milliseconds: 3000), () {
+                                            // alertDialog(
+                                            //     DialogType.SUCCES,
+                                            //     context,
+                                            //     '',
+                                            //     'رمز التفعيل الخاص بك هو $passwordCode',
+                                            //     Icons.add,
+                                            //     Colors.green);
+
+                                            // setState(() {
+                                            //   tem = "الرجاء المحاولة لاحقا";
+                                            //   showSpinner = false;
+                                            // });
+                                            Navigator.pushReplacementNamed(
+                                                context, '/login');
+                                          });
+
+                                          // alertDialog(
+                                          //     DialogType.SUCCES,
+                                          //     context,
+                                          //     'تم التسجيل بنجاح',
+                                          //     '',
+                                          //     Icons.add,
+                                          //     Colors.green);
                                         }
                                         return;
                                       });
@@ -475,6 +479,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                       style: new TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'beIN',
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
                                   ),
@@ -482,6 +488,78 @@ class _RegisterPageState extends State<RegisterPage> {
                                 new Padding(
                                   padding: new EdgeInsets.only(top: 20.0),
                                 ),
+                                Container(
+                                  child: Text(
+                                    '$tem',
+
+                                    /// d5oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolllll
+                                    style: new TextStyle(
+                                      color: Colors.orangeAccent,
+                                      fontFamily: 'beIN',
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 25),
+                                      child: Container(
+                                        height: 40,
+                                        width: 120,
+                                        child: new FlatButton(
+                                          onPressed: () {
+                                            Navigator.pushReplacementNamed(
+                                                context, '/login');
+                                          },
+                                          color: Color.fromRGBO(254, 88, 0, 1),
+                                          child: Container(
+                                            width: size.width * 0.6,
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  left: size.width * 0.09),
+                                              child: new Text(
+                                                'دخول',
+                                                style: new TextStyle(
+                                                  color: Colors.white,
+                                                  fontFamily: 'beIN',
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    new Padding(
+                                      padding: new EdgeInsets.only(left: 40.0),
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        // color: Color.fromRGBO(254, 88, 0, 1),
+                                        borderRadius: BorderRadius.circular(60),
+                                      ),
+                                      height: 40,
+                                      width: 120,
+                                      child: new FlatButton(
+                                        onPressed: () {
+                                          // Navigator.pop(context);
+                                          Navigator.pushReplacementNamed(
+                                              context, '/MyHomePage');
+                                        },
+                                        color: Color.fromRGBO(254, 88, 0, 1),
+                                        child: new Text(
+                                          'رجوع',
+                                          style: new TextStyle(
+                                            color: Colors.white,
+                                            fontFamily: 'beIN',
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                ///dddd
                               ],
                             ),
                           ],

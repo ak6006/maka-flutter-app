@@ -93,11 +93,11 @@ class CustName {
   String custName;
 
   factory CustName.fromJson(Map<String, dynamic> json) => CustName(
-        custName: json["custName"] == null ? null : json["custName"],
+        custName: json["custName"] == null ? "ليس وكيل" : json["custName"],
       );
 
   Map<String, dynamic> toJson() => {
-        "custName": custName == null ? null : custName,
+        "custName": custName == null ? "ليس وكيل" : custName,
       };
 }
 
@@ -125,7 +125,7 @@ class CustomerOrder {
   int wieghtName;
   int measureId;
   String measureName;
-  String quantity;
+  double quantity;
   List<OrderCar> orderCars;
 
   factory CustomerOrder.fromJson(Map<String, dynamic> json) => CustomerOrder(

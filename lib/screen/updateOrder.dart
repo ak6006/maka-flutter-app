@@ -28,7 +28,7 @@ class _UpdateOrderItemsScreenState extends State<UpdateOrderItemsScreen> {
   DataPicker orderdate;
   int _weghtId;
   int _vanId = null;
-  String quantity;
+  double quantity;
   DropDownItem selectedweghtItems = new DropDownItem();
   List<OrderCar> selectedvanDriver = [];
   @override
@@ -57,7 +57,7 @@ class _UpdateOrderItemsScreenState extends State<UpdateOrderItemsScreen> {
       lable: 'تاريخ الطلبية',
     );
 
-    _quantity.text = widget.updateorders.quantity;
+    _quantity.text = widget.updateorders.quantity.toString();
   }
 
   Widget build(BuildContext context) {

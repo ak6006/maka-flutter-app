@@ -29,7 +29,7 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
   DataPicker orderdate;
   // int _weghtId;
   int _vanId = null;
-  String quantity = '0';
+  double quantity = 0;
   TextEditingController _weightController = TextEditingController();
   DropDownItem selectedweghtItems = DropDownItem();
   List<OrderCar> selectedvanDriver = [];
@@ -144,10 +144,10 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
 
                           controller: _weightController,
                           onChanged: (value) {
-                            quantity = value;
+                            quantity = double.parse(value);
 
                             // _name = value.trim();
-                            print("First text field: ${value.toInt()}");
+                            print("First text field: ${value}");
                             //isValid = EmailValidator.validate(_email);
                           },
                           validate: (String value) {
@@ -454,17 +454,17 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                             if (value) {
                               selectedvanDriver
                                   .add(OrderCar(vId: e.id, driverName: e.name));
-                              e.state = value;
+                              e.state = true;
                             } else {
-                              setState(() {
-                                e.state = false;
-                                selectedvanDriver
-                                    .removeWhere((item) => item.vId == e.id);
-                                // selectedvanDriver.removeWhere((item) {
-                                //   item.vId = e.id;
-                                //   return;
-                                // });
-                              });
+                              // setState(() {
+                              e.state = false;
+                              selectedvanDriver
+                                  .removeWhere((item) => item.vId == e.id);
+                              // selectedvanDriver.removeWhere((item) {
+                              //   item.vId = e.id;
+                              //   return;
+                              // });
+                              // });
                             }
                           });
                         },

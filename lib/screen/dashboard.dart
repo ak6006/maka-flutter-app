@@ -192,6 +192,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                         width: size.width * 0.08,
                         child: new IconButton(
                           onPressed: () {
+                            datastate = false;
                             Navigator.push(
                               context,
                               MyCustomRoute(builder: (context) => MyHomePage()),
@@ -244,48 +245,57 @@ class _DashBoardPageState extends State<DashBoardPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              GestureDetector(
-                                behavior: HitTestBehavior.translucent,
-                                onPanDown: _handleUserInteraction,
-                                onScaleStart: _handleUserInteraction,
-                                onTap: () async {
-                                  _handleUserInteraction();
-                                  Navigator.push(
-                                      context,
-                                      SlideLeftRoute(
-                                          page: ScanDashBoardScreen()));
-                                },
-                                child: Container(
-                                  height: size.height * 0.2,
-                                  width: size.width * 0.42,
-                                  child: Card(
-                                    elevation: 20,
-                                    color: Colors.deepOrange,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 100,
-                                          height: 70,
-                                          child: Image.asset(
-                                              'assets/images/arrow.png'),
-                                        ),
-                                        Center(
-                                          child: Text(
-                                            'فحص شكارة بالسيريال',
+                              IgnorePointer(
+                                ignoring: !customerRoles,
+                                child: GestureDetector(
+                                  behavior: HitTestBehavior.translucent,
+                                  onPanDown: _handleUserInteraction,
+                                  onScaleStart: _handleUserInteraction,
+                                  onTap: () async {
+                                    _handleUserInteraction();
+                                    Navigator.push(context,
+                                        SlideLeftRoute(page: VinPage()));
+                                  },
+                                  child: Container(
+                                    height: size.height * 0.2,
+                                    width: size.width * 0.42,
+                                    child: Card(
+                                      elevation: 20,
+                                      color: Colors.deepOrange,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Container(
+                                            width: 100,
+                                            height: 70,
+                                            child: Image.asset(
+                                              'assets/images/customer.png',
+                                              color: customerRoles
+                                                  ? Color.fromRGBO(
+                                                      255, 255, 255, 1)
+                                                  : Colors.white54,
+                                            ),
+                                          ),
+                                          Text(
+                                            snapshotdata.data.status ==
+                                                    Status.COMPLETED
+                                                ? agentCustomerName
+                                                //'مصر الفيوم'
+                                                : 'تحميل...',
                                             style: TextStyle(
-                                                color: Color.fromRGBO(
-                                                    255, 255, 255, 1),
+                                                color: customerRoles
+                                                    ? Color.fromRGBO(
+                                                        255, 255, 255, 1)
+                                                    : Colors.white54,
                                                 fontFamily: 'beIN',
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -367,57 +377,48 @@ class _DashBoardPageState extends State<DashBoardPage> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              IgnorePointer(
-                                ignoring: !customerRoles,
-                                child: GestureDetector(
-                                  behavior: HitTestBehavior.translucent,
-                                  onPanDown: _handleUserInteraction,
-                                  onScaleStart: _handleUserInteraction,
-                                  onTap: () async {
-                                    _handleUserInteraction();
-                                    Navigator.push(context,
-                                        SlideLeftRoute(page: VinPage()));
-                                  },
-                                  child: Container(
-                                    height: size.height * 0.2,
-                                    width: size.width * 0.42,
-                                    child: Card(
-                                      elevation: 20,
-                                      color: Colors.deepOrange,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: 100,
-                                            height: 70,
-                                            child: Image.asset(
-                                              'assets/images/customer.png',
-                                              color: customerRoles
-                                                  ? Color.fromRGBO(
-                                                      255, 255, 255, 1)
-                                                  : Colors.white54,
-                                            ),
-                                          ),
-                                          Text(
-                                            snapshotdata.data.status ==
-                                                    Status.COMPLETED
-                                                ? agentCustomerName
-                                                //'مصر الفيوم'
-                                                : 'تحميل...',
+                              GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onPanDown: _handleUserInteraction,
+                                onScaleStart: _handleUserInteraction,
+                                onTap: () async {
+                                  _handleUserInteraction();
+                                  Navigator.push(
+                                      context,
+                                      SlideLeftRoute(
+                                          page: ScanDashBoardScreen()));
+                                },
+                                child: Container(
+                                  height: size.height * 0.2,
+                                  width: size.width * 0.42,
+                                  child: Card(
+                                    elevation: 20,
+                                    color: Colors.deepOrange,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 100,
+                                          height: 70,
+                                          child: Image.asset(
+                                              'assets/images/arrow.png'),
+                                        ),
+                                        Center(
+                                          child: Text(
+                                            'فحص شكارة بالسيريال',
                                             style: TextStyle(
-                                                color: customerRoles
-                                                    ? Color.fromRGBO(
-                                                        255, 255, 255, 1)
-                                                    : Colors.white54,
+                                                color: Color.fromRGBO(
+                                                    255, 255, 255, 1),
                                                 fontFamily: 'beIN',
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 16),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
