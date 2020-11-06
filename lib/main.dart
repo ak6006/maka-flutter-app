@@ -20,7 +20,7 @@ import 'package:maka/screen/register.dart';
 import 'package:maka/screen/splash.dart';
 import 'package:maka/screen/vinpage.dart';
 import 'package:maka/utils/constant.dart';
-
+import 'package:maka/screen/addOrder.dart';
 void main() {
   runApp(MyApp());
 }
@@ -91,7 +91,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _initializeTimer() {
-    _timer = Timer.periodic(const Duration(seconds: 3), (_) => _logOutUser());
+    _timer = Timer.periodic(const Duration(minutes: 20), (_) => _logOutUser());
 
     print('intializeTimer');
   }
@@ -167,6 +167,7 @@ class _MyAppState extends State<MyApp> {
                     '/FeedPrices': (BuildContext context) => new FeedPrices(),
                     '/giftscreen': (BuildContext context) =>
                         new GiftDashBoardScreen(),
+                    '/addorder': (BuildContext context) => new AddOrderScreen(),
                   },
                 ),
               );

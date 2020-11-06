@@ -9,6 +9,7 @@ import 'package:maka/screen/addOrder.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/data_picker_style.dart';
 import 'package:maka/utils/primary_text_field.dart';
+import 'package:maka/utils/primary_number_field.dart';
 
 // ignore: must_be_immutable
 class UpdateOrderItemsScreen extends StatefulWidget {
@@ -151,10 +152,10 @@ class _UpdateOrderItemsScreenState extends State<UpdateOrderItemsScreen> {
                         padding: new EdgeInsets.only(top: 20.0),
                       ),
                       SingleChildScrollView(
-                        child: PrimaryTextField(
+                        child: PrimaryNumberField(
                           label: ' الكمية بالطن',
                           onChanged: (value) {
-                            quantity = value;
+                            quantity = double.parse(value.toString());
 
                             // _name = value.trim();
                             print("First text field: ${value.toInt()}");
@@ -166,6 +167,13 @@ class _UpdateOrderItemsScreenState extends State<UpdateOrderItemsScreen> {
                             if (value.isEmpty) {
                               return 'الرجاء ادخال الكمية';
                             } else {}
+                            if (value.contains('.')) {
+                              int b = value.indexOf('.');
+                              int c = int.parse(value.substring(b + 1));
+                              if (c != 5) {
+                                return 'الوزن بداية من نصف طن و مضاعفتها فقط';
+                              }
+                            }
                           },
                           // validate: (String value) {
                           //   if (value.isEmpty) {

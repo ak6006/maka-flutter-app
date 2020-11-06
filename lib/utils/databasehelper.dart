@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:maka/bloca/appexcepcetion.dart';
@@ -187,6 +188,9 @@ class DatabaseHelper {
           customerRoles = true;
         } else
           customerRoles = false;
+        if (customerRoles == false) {
+          showToast();
+        }
 
         print(customerRoles);
       }
@@ -883,5 +887,13 @@ class DatabaseHelper {
     final key = 'CustomerName';
     final value = customerName;
     prefs.setString(key, value);
+  }
+
+  showToast() {
+    Fluttertoast.showToast(
+        msg: "عفوا ..انت لست وكيل",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.BOTTOM // also possible "TOP" and "CENTER"
+        );
   }
 }

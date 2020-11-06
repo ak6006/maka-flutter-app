@@ -6,20 +6,16 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'package:maka/models/querybarcode.dart';
 
-import 'package:maka/screen/addOrder.dart';
-
 import 'package:maka/screen/barcodescannr.dart';
 import 'package:maka/screen/dashboard.dart';
 
-import 'package:maka/screen/homepage.dart';
 import 'package:maka/screen/manualscan.dart';
-import 'package:maka/screen/mlkit.dart';
 
 import 'package:maka/utils/animation.dart';
 import 'package:maka/utils/constant.dart';
 import 'package:maka/utils/databasehelper.dart';
 import 'package:maka/utils/slideAnimations.dart';
-import 'package:maka/utils/speech.dart';
+
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -327,53 +323,53 @@ class _ScanDashBoardScreenState extends State<ScanDashBoardScreen> {
                             height: 30,
                           ),
 
-                          GestureDetector(
-                            onTap: () async {
-                              Navigator.push(
-                                  context,
-                                  SlideLeftRoute(
-                                      page: TextrecognetionScreen()));
-                              //return;
-                            },
-                            child: Container(
-                              padding: EdgeInsets.only(left: 95, right: 95),
-                              height: size.height * 0.2,
-                              width: size.width * 0.42,
-                              child: Card(
-                                elevation: 20,
-                                color: Colors.deepOrange,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 100,
-                                      height: 70,
-                                      child: Image.asset(
-                                        'assets/images/qrcode.png',
-                                        color: Color.fromRGBO(255, 255, 255, 1),
-                                      ),
-                                    ),
-                                    Container(
-                                      // margin: EdgeInsets.only(
-                                      //     left: size.width * 0.02),
-                                      child: Text(
-                                        'مسح نصي كاميرا',
-                                        style: TextStyle(
-                                            color: Color.fromRGBO(
-                                                255, 255, 255, 1),
-                                            fontFamily: 'beIN',
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
+                          // GestureDetector(
+                          //   onTap: () async {
+                          //     Navigator.push(
+                          //         context,
+                          //         SlideLeftRoute(
+                          //             page: TextrecognetionScreen()));
+                          //     //return;
+                          //   },
+                          //   child: Container(
+                          //     padding: EdgeInsets.only(left: 95, right: 95),
+                          //     height: size.height * 0.2,
+                          //     width: size.width * 0.42,
+                          //     child: Card(
+                          //       elevation: 20,
+                          //       color: Colors.deepOrange,
+                          //       shape: RoundedRectangleBorder(
+                          //         borderRadius: BorderRadius.circular(20.0),
+                          //       ),
+                          //       child: Column(
+                          //         mainAxisAlignment: MainAxisAlignment.center,
+                          //         children: [
+                          //           Container(
+                          //             width: 100,
+                          //             height: 70,
+                          //             child: Image.asset(
+                          //               'assets/images/qrcode.png',
+                          //               color: Color.fromRGBO(255, 255, 255, 1),
+                          //             ),
+                          //           ),
+                          //           Container(
+                          //             // margin: EdgeInsets.only(
+                          //             //     left: size.width * 0.02),
+                          //             child: Text(
+                          //               'مسح نصي كاميرا',
+                          //               style: TextStyle(
+                          //                   color: Color.fromRGBO(
+                          //                       255, 255, 255, 1),
+                          //                   fontFamily: 'beIN',
+                          //                   fontWeight: FontWeight.bold,
+                          //                   fontSize: 16),
+                          //             ),
+                          //           ),
+                          //         ],
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ),
 
                           //===================================================================
 

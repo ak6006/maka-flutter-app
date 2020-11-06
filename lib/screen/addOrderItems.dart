@@ -151,6 +151,15 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                             //isValid = EmailValidator.validate(_email);
                           },
                           validate: (String value) {
+                            double v;
+                            if (value.contains('.')) {
+                              v = double.parse(value.toString());
+                              int b = value.indexOf('.');
+                              int c = int.parse(value.substring(b + 1));
+                              if (c != 5) {
+                                return 'الوزن بداية من نصف طن و مضاعفتها فقط';
+                              }
+                            }
                             print(value);
 
                             if (value.isEmpty) {

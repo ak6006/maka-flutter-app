@@ -494,7 +494,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                                     /// d5oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooolllll
                                     style: new TextStyle(
-                                      color: Colors.orangeAccent,
+                                      color: Colors.greenAccent,
                                       fontFamily: 'beIN',
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -503,10 +503,18 @@ class _RegisterPageState extends State<RegisterPage> {
                                 Row(
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.only(left: 25),
+                                      padding: EdgeInsets.only(
+                                          left: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.08),
                                       child: Container(
-                                        height: 40,
-                                        width: 120,
+                                        height:
+                                            MediaQuery.of(context).size.height *
+                                                0.06,
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.35,
                                         child: new FlatButton(
                                           onPressed: () {
                                             Navigator.pushReplacementNamed(
@@ -531,15 +539,22 @@ class _RegisterPageState extends State<RegisterPage> {
                                       ),
                                     ),
                                     new Padding(
-                                      padding: new EdgeInsets.only(left: 40.0),
+                                      padding: new EdgeInsets.only(
+                                          left: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.08),
                                     ),
                                     Container(
                                       decoration: BoxDecoration(
                                         // color: Color.fromRGBO(254, 88, 0, 1),
                                         borderRadius: BorderRadius.circular(60),
                                       ),
-                                      height: 40,
-                                      width: 120,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.06,
+                                      width: MediaQuery.of(context).size.width *
+                                          0.36,
                                       child: new FlatButton(
                                         onPressed: () {
                                           // Navigator.pop(context);

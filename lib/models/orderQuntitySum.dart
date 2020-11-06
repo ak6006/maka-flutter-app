@@ -16,13 +16,15 @@ class OrderQuantitySumQuery {
 
   String productName;
   String measreName;
-  int sumQuantity;
+  double sumQuantity;
 
   factory OrderQuantitySumQuery.fromJson(Map<String, dynamic> json) =>
       OrderQuantitySumQuery(
         productName: json["productName"] == null ? null : json["productName"],
         measreName: json["measre_name"] == null ? null : json["measre_name"],
-        sumQuantity: json["sumQuantity"] == null ? null : json["sumQuantity"],
+        sumQuantity: json["sumQuantity"] == null
+            ? null
+            : double.parse(json["sumQuantity"].toString()),
       );
 
   Map<String, dynamic> toJson() => {

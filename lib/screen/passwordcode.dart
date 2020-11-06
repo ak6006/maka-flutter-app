@@ -140,7 +140,7 @@ class _PasswordCodeScreenState extends State<PasswordCodeScreen> {
                             if (value.isEmpty) {
                               return '  يجب ادخال رقم الموبايل ';
                             } else if (value.length < 6) {
-                              return 'كلمة السر يجب ان تكون اكبر';
+                              return 'رقم الموبايل يجب ان يكون اكبر';
                             } else if ((value.contains(new RegExp(r'[A-Z]')))) {
                               return 'الموبايل يقبل ارقام فقط';
                             } else if ((value.contains(new RegExp(r'[a-z]')))) {

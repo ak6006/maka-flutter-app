@@ -98,7 +98,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
     // Navigator.of(ContextClass.CONTEXT)
     //     .pushNamedAndRemoveUntil('/login', (Route<dynamic> route) => true);
 
-    Navigator.pushReplacementNamed(context, '/MyHomePage');
+    // Navigator.pushReplacementNamed(context, '/MyHomePage');
 
     // Log out the user if they're logged in, then cancel the timer.
     // You'll have to make sure to cancel the timer if the user manually logs out
@@ -258,7 +258,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   },
                                   child: Container(
                                     height: size.height * 0.2,
-                                    width: size.width * 0.42,
+                                    width: size.width * 0.46,
                                     child: Card(
                                       elevation: 20,
                                       color: Colors.deepOrange,
@@ -269,8 +269,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                       child: Column(
                                         children: [
                                           Container(
-                                            width: 100,
-                                            height: 70,
+                                            width: size.width * 0.2,
+                                            height: size.height * 0.11,
                                             child: Image.asset(
                                               'assets/images/customer.png',
                                               color: customerRoles
@@ -282,7 +282,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                           Text(
                                             snapshotdata.data.status ==
                                                     Status.COMPLETED
-                                                ? agentCustomerName
+                                                ? 'طلبيات الوكيل  $agentCustomerName'
                                                 //'مصر الفيوم'
                                                 : 'تحميل...',
                                             style: TextStyle(
@@ -327,8 +327,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                             MainAxisAlignment.center,
                                         children: [
                                           Container(
-                                            width: 100,
-                                            height: 70,
+                                            width: size.width * 0.2,
+                                            height: size.height * 0.08,
                                             child: Image.asset(
                                               'assets/images/recieved.png',
                                               color: customerRoles
@@ -402,8 +402,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                           MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          width: 100,
-                                          height: 70,
+                                          width: size.width * 0.2,
+                                          height: size.height * 0.08,
                                           child: Image.asset(
                                               'assets/images/arrow.png'),
                                         ),
@@ -449,8 +449,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                       child: Column(
                                         children: [
                                           Container(
-                                            width: 100,
-                                            height: 70,
+                                            width: size.width * 0.2,
+                                            height: size.height * 0.11,
                                             child: Image.asset(
                                               'assets/images/query.png',
                                               color: customerRoles

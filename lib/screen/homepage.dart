@@ -198,8 +198,9 @@ class _MyHomePageState extends State<MyHomePage> {
                             // margin: EdgeInsets.fromLTRB(0, 0, 5, 0),
                             width: size.width * 0.5,
                             child: Container(
-                              margin: EdgeInsets.fromLTRB(
-                                  size.width * 0.06, 0, size.width * 0.01, 0),
+                              // margin: EdgeInsets.fromLTRB(
+                              //     size.width * 0.06, 0, size.width * 0.01, 0),
+                              margin: EdgeInsets.only(left: size.width * 0.1),
                               child: Text(
                                 'فحص الكيو ار كود',
                                 style: TextStyle(
