@@ -165,6 +165,9 @@ class _AddOrderItemsScreenState extends State<AddOrderItemsScreen> {
                             if (value.isEmpty) {
                               return 'الرجاء ادخال الكمية';
                             } else {}
+                            if (value == '0') {
+                              return 'الرجاء ادخال الكمية';
+                            } else {}
                           },
                           //else if (isValid == false) {
                           //   //return 'Please enter a valid email';

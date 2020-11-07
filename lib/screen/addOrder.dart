@@ -204,7 +204,7 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                         headerAnimationLoop: false,
                         animType: AnimType.BOTTOMSLIDE,
                         title: 'تحذير',
-                        desc: 'هل تريد نحديث الصفحة',
+                        desc: 'هل تريد تحديث الصفحة',
                         btnCancelOnPress: () {},
                         btnOkOnPress: () async {
                           //++++++++++++++++++++++++++++++++++++++
@@ -346,11 +346,10 @@ class _AddOrderScreenState extends State<AddOrderScreen> {
                                           Colors.red);
                                     }
                                     Future.delayed(
-                                          const Duration(milliseconds: 3000),
-                                          () {
-                                        Navigator.pushReplacementNamed(
-                                            context, '/addorder');
-                                      });
+                                        const Duration(milliseconds: 3000), () {
+                                      Navigator.pushReplacementNamed(
+                                          context, '/addorder');
+                                    });
                                     setState(() {
                                       showSpinner = false;
                                     });

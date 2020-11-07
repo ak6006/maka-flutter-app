@@ -174,6 +174,12 @@ class _UpdateOrderItemsScreenState extends State<UpdateOrderItemsScreen> {
                                 return 'الوزن بداية من نصف طن و مضاعفتها فقط';
                               }
                             }
+                            if (value.isEmpty) {
+                              return 'الرجاء ادخال الكمية';
+                            } else {}
+                            if (value == '0') {
+                              return 'الرجاء ادخال الكمية';
+                            } else {}
                           },
                           // validate: (String value) {
                           //   if (value.isEmpty) {
