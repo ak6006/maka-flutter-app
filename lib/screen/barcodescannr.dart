@@ -98,6 +98,7 @@ class _BarCodePageState extends State<BarCodePage> {
                       lable: "تاريخ البيع",
                       val: DateFormat("dd / MM / yyyy", 'ar')
                           .format(widget.queryBarCode.date),
+                      //+" 12:00:00 AM",
                     ),
                     Wrow(
                       lable: "اسم الوكيل",

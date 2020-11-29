@@ -7,16 +7,17 @@ import 'package:maka/bloca/appexcepcetion.dart';
 import 'package:maka/models/vanmodel.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:maka/utils/constant.dart';
 
 // final prefs = SharedPreferences.getInstance();
 /// DATABASE HELPER CLASS
 class DatabaseHelper {
   //String serverUrl = "http://192.168.100.65:92";
-  String serverUrl = "http://ak772000842-001-site1.etempurl.com";
+  //String serverUrl = "http://ak772000842-001-site1.etempurl.com";
+  String serverUrl = "http://teamiegypt-001-site1.atempurl.com/";
   //String serverip = "192.168.100.65:92";
-  String serverip = "ak772000842-001-site1.etempurl.com";
+  //String serverip = "ak772000842-001-site1.etempurl.com";
+  String serverip = "teamiegypt-001-site1.atempurl.com";
   var status;
   var stateMsg;
   var codest;

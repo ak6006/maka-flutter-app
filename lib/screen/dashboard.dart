@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:math';
 
+import 'package:clippy_flutter/arc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:lottie/lottie.dart';
 import 'package:maka/bloca/apiresponse.dart';
 import 'package:maka/gift/giftDashBoard.dart';
 import 'package:maka/models/orderQuntitySum.dart';
@@ -32,7 +35,10 @@ class DashBoardPage extends StatefulWidget {
   _DashBoardPageState createState() => _DashBoardPageState();
 }
 
-class _DashBoardPageState extends State<DashBoardPage> {
+class _DashBoardPageState extends State<DashBoardPage>
+    with SingleTickerProviderStateMixin {
+  // Animation<Color> animation;
+  AnimationController _controller;
   SharedPreferences logindata;
   String username;
   // static String _email;
@@ -82,11 +88,31 @@ class _DashBoardPageState extends State<DashBoardPage> {
   Timer _timer;
   @override
   void initState() {
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 4),
+      // lowerBound: 0,
+      // upperBound: 50,
+    );
+    // _controller.addListener(() {
+    //   setState(() {
+    //     /// do something !!!
+    //   });
+    // });
+    _controller.repeat(reverse: true);
     // blocData = DataBloc();
     super.initState();
+
     showSpinner = false;
     //  initial();
     _initializeTimer();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _controller.dispose();
+    super.dispose();
   }
 
   void _initializeTimer() {
@@ -239,6 +265,106 @@ class _DashBoardPageState extends State<DashBoardPage> {
                           SizedBox(
                             height: 30,
                           ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              GestureDetector(
+                                behavior: HitTestBehavior.translucent,
+                                onPanDown: _handleUserInteraction,
+                                onScaleStart: _handleUserInteraction,
+                                onTap: () async {
+                                  _handleUserInteraction();
+                                  // Navigator.push(
+                                  //   context,
+                                  //   MyCustomRoute(
+                                  //       builder: (context) =>
+                                  //           GiftDashBoardScreen()),
+                                  // );
+                                  Navigator.push(
+                                      context,
+                                      SlideLeftRoute(
+                                          page: GiftDashBoardScreen()));
+                                },
+                                // child: AnimatedBuilder(
+                                //   animation: _controller.view,
+                                //   builder: (context, child) {
+                                //     return Transform.rotate(
+                                //         angle: _controller.value * 1 * pi,
+                                //         child: child);
+                                //   },
+
+                                child: Container(
+                                  // margin:
+                                  //     EdgeInsets.only(top: _controller.value),
+
+                                  child: Container(
+                                    height: size.height * 0.26,
+                                    width: size.width * 0.44,
+                                    child: Card(
+                                      elevation: 20,
+                                      //color: Color(0x99FFFFFF),
+                                      color: Colors.white12,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          // Container(
+                                          //   width: 100,
+                                          //   height: 70,
+                                          //   child: Image.asset(
+                                          //       'assets/images/gift.png'),
+                                          // ),
+                                          Container(
+                                            width: 95,
+                                            height: 95,
+                                            child: Lottie.asset(
+                                                'assets/images/lottiefile.json'),
+                                            // child: Lottie.network(
+                                            //     'https://assets9.lottiefiles.com/packages/lf20_its7rk.json'),
+                                          ),
+                                          Container(
+                                            // margin: EdgeInsets.only(
+                                            //     bottom: size.height * 0.07),
+                                            child: Text(
+                                              'الجوائز المقدمة',
+                                              style: TextStyle(
+                                                  color: Color.fromRGBO(
+                                                      255, 255, 255, 1),
+                                                  fontFamily: 'beIN',
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 17),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    // decoration: BoxDecoration(
+                                    //     // color: Colors.deepOrange,
+                                    //     shape: BoxShape.rectangle,
+                                    //     borderRadius: BorderRadius.circular(25),
+                                    //     boxShadow: [
+                                    //       BoxShadow(
+                                    //         //offset: const Offset(3.0, 3.0),
+                                    //         color: Colors.white,
+                                    //         blurRadius: 20.0,
+                                    //         spreadRadius: 8.0,
+                                    //       ),
+                                    //     ]),
+                                  ),
+                                ),
+
+                                //),
+                              ),
+                            ],
+                          ),
+                          new Padding(
+                            padding:
+                                new EdgeInsets.only(top: size.height * 0.01),
+                          ),
+
+                          /// Finalization
                           //===================================================================
 
                           //rowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
@@ -270,7 +396,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                         children: [
                                           Container(
                                             width: size.width * 0.2,
-                                            height: size.height * 0.11,
+                                            height: size.height * 0.1,
                                             child: Image.asset(
                                               'assets/images/customer.png',
                                               color: customerRoles
@@ -279,10 +405,19 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                                   : Colors.white54,
                                             ),
                                           ),
+                                          // Text('طلبيات الوكيل',
+                                          //     style: TextStyle(
+                                          //         color: customerRoles
+                                          //             ? Color.fromRGBO(
+                                          //                 255, 255, 255, 1)
+                                          //             : Colors.white54,
+                                          //         fontFamily: 'beIN',
+                                          //         fontWeight: FontWeight.bold,
+                                          //         fontSize: 16)),
                                           Text(
                                             snapshotdata.data.status ==
                                                     Status.COMPLETED
-                                                ? 'طلبيات الوكيل  $agentCustomerName'
+                                                ? '$agentCustomerName'
                                                 //'مصر الفيوم'
                                                 : 'تحميل...',
                                             style: TextStyle(
@@ -506,7 +641,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                       SlideLeftRoute(page: FeedPrices()));
                                 },
                                 child: Container(
-                                  height: size.height * 0.2,
+                                  height: size.height * 0.22,
                                   width: size.width * 0.42,
                                   child: Card(
                                     elevation: 20,
@@ -517,19 +652,27 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                     child: Column(
                                       children: [
                                         Container(
+                                          margin: EdgeInsets.only(
+                                              top: size.height * 0.02),
                                           width: 100,
                                           height: 70,
                                           child: Image.asset(
-                                              'assets/images/price.png'),
+                                            'assets/images/suggestions2.png',
+                                            color: Colors.white,
+                                          ),
                                         ),
-                                        Text(
-                                          'اسعار الاعلاف اليوم',
-                                          style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                  255, 255, 255, 1),
-                                              fontFamily: 'beIN',
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 16),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              right: size.width * 0.01),
+                                          child: Text(
+                                            'الحلول و المقترحات',
+                                            style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    255, 255, 255, 1),
+                                                fontFamily: 'beIN',
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 16),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -566,7 +709,7 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                   //  }
                                 },
                                 child: Container(
-                                  height: size.height * 0.2,
+                                  height: size.height * 0.22,
                                   width: size.width * 0.42,
                                   child: Card(
                                     elevation: 20,
@@ -577,6 +720,8 @@ class _DashBoardPageState extends State<DashBoardPage> {
                                     child: Column(
                                       children: [
                                         Container(
+                                          margin: EdgeInsets.only(
+                                              top: size.height * 0.02),
                                           width: 100,
                                           height: 70,
                                           child: Image.asset(
@@ -602,119 +747,67 @@ class _DashBoardPageState extends State<DashBoardPage> {
                               ),
                             ],
                           ),
-                          //===================================================================
+                          //====================================================
 
                           //rowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
                           Row(
                             /// اسعار الاعلاف اليوم
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              IgnorePointer(
-                                ignoring: !customerRoles,
-                                child: GestureDetector(
-                                  behavior: HitTestBehavior.translucent,
-                                  onPanDown: _handleUserInteraction,
-                                  onScaleStart: _handleUserInteraction,
-                                  onTap: () async {
-                                    _handleUserInteraction();
-                                    Navigator.push(context,
-                                        SlideLeftRoute(page: AddVanScreen()));
-                                  },
-                                  child: Container(
-                                    height: size.height * 0.2,
-                                    width: size.width * 0.42,
-                                    child: Card(
-                                      elevation: 20,
-                                      color: Colors.deepOrange,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(20.0),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            width: 100,
-                                            height: 70,
-                                            child: Image.asset(
-                                              'assets/images/truck.png',
-                                              color: customerRoles
-                                                  ? Color.fromRGBO(
-                                                      255, 255, 255, 1)
-                                                  : Colors.white54,
-                                            ),
-                                          ),
-                                          Text(
-                                            'اضافة عربية نقل',
-                                            style: TextStyle(
-                                                color: customerRoles
-                                                    ? Color.fromRGBO(
-                                                        255, 255, 255, 1)
-                                                    : Colors.white54,
-                                                fontFamily: 'beIN',
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                behavior: HitTestBehavior.translucent,
-                                onPanDown: _handleUserInteraction,
-                                onScaleStart: _handleUserInteraction,
-                                onTap: () async {
-                                  _handleUserInteraction();
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MyCustomRoute(
-                                  //       builder: (context) =>
-                                  //           GiftDashBoardScreen()),
-                                  // );
-                                  Navigator.push(
-                                      context,
-                                      SlideLeftRoute(
-                                          page: GiftDashBoardScreen()));
-                                },
-                                child: Container(
-                                  height: size.height * 0.2,
-                                  width: size.width * 0.42,
-                                  child: Card(
-                                    elevation: 20,
-                                    color: Colors.deepOrange,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(20.0),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Container(
-                                          width: 100,
-                                          height: 70,
-                                          child: Image.asset(
-                                              'assets/images/arrow.png'),
-                                        ),
-                                        Container(
-                                          // margin:
-                                          //     EdgeInsets.only(right: size.width * 0.04),
-                                          child: Text(
-                                            'الجوائز المقدمة',
-                                            style: TextStyle(
-                                                color: Color.fromRGBO(
-                                                    255, 255, 255, 1),
-                                                fontFamily: 'beIN',
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+                              // IgnorePointer(
+                              //   ignoring: !customerRoles,
+                              //   child: GestureDetector(
+                              //     behavior: HitTestBehavior.translucent,
+                              //     onPanDown: _handleUserInteraction,
+                              //     onScaleStart: _handleUserInteraction,
+                              //     onTap: () async {
+                              //       _handleUserInteraction();
+                              //       Navigator.push(context,
+                              //           SlideLeftRoute(page: AddVanScreen()));
+                              //     },
+                              //     child: Container(
+                              //       height: size.height * 0.2,
+                              //       width: size.width * 0.42,
+                              //       child: Card(
+                              //         elevation: 20,
+                              //         color: Colors.deepOrange,
+                              //         shape: RoundedRectangleBorder(
+                              //           borderRadius:
+                              //               BorderRadius.circular(20.0),
+                              //         ),
+                              //         child: Column(
+                              //           children: [
+                              //             Container(
+                              //               width: 100,
+                              //               height: 70,
+                              //               child: Image.asset(
+                              //                 'assets/images/truck.png',
+                              //                 color: customerRoles
+                              //                     ? Color.fromRGBO(
+                              //                         255, 255, 255, 1)
+                              //                     : Colors.white54,
+                              //               ),
+                              //             ),
+                              //             Text(
+                              //               'اضافة عربية نقل',
+                              //               style: TextStyle(
+                              //                   color: customerRoles
+                              //                       ? Color.fromRGBO(
+                              //                           255, 255, 255, 1)
+                              //                       : Colors.white54,
+                              //                   fontFamily: 'beIN',
+                              //                   fontWeight: FontWeight.bold,
+                              //                   fontSize: 16),
+                              //             ),
+                              //           ],
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           ),
-                          //===================================================================
+                          //====================================================
 
                           //rowwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
                         ],
