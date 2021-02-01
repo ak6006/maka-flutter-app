@@ -19,7 +19,7 @@ class _SplashState extends State<Splash> {
       Duration(seconds: 3),
       () => Navigator.pushNamed(context, '/MyHomePage'),
       // Navigator.of(context).pushReplacement(
-      //   MaterialPageRoute(builder: (BuildContext context) => MyHomePage()),
+      // MaterialPageRoute(builder: (BuildContext context) => MyHomePage()),
       // ),
     );
     //  loggedIn ? DashBoardPage() : MyHomePage())));
